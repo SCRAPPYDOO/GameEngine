@@ -32,11 +32,20 @@ enum MovementFlag
     MOVEMENT_FLAG_SNEAK      = 8,
 };
 
+class CEntity;
+
+class CEntityContainer
+{
+    public:
+        static CEntity* GetEntity(int x, int y);
+
+};
+
 class CEntity 
 {
     public:
         static std::vector<CEntity*>    EntityList;
-
+        
     protected:
         CAnimation      Anim_Control;
 
@@ -91,14 +100,15 @@ class CEntity
 
         virtual void OnCollision(CEntity* Entity);
 
-    public: //Movement
+    public: //Movement                                
         virtual void OnMoveToPoint();                                                   //trigered by MovementGenerator
         virtual void OnMoveToPoint(int nGoPosX, int nGoPosY);                           //trigered by CApp->OnEvent->MouseRClick
 
-        virtual void OnMove(float MoveX, float MoveY);                                  //Not Used
-
         virtual bool IsOnPoint(int goX, int goY);                                       //We check if we are near point
         virtual void StopMove();
+
+        virtual int GetAnimPosX();
+        virtual int GetAnimPosY();
 
     public:
         bool    Collides(int oX, int oY, int oW, int oH);

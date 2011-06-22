@@ -65,23 +65,12 @@ bool CEntity::OnLoad(char* File, int Width, int Height, int MaxFrames)
 void CEntity::OnLoop() 
 {
     OnAnimate();
-    //OnMove(SpeedX, SpeedY);
-    //OnMoveToPoint();  CApp->OnLoop->MovementGenerator->OnLoop Handle This
 }
 
 void CEntity::OnAnimate() 
 {
     if(eMovementFlag == MOVEMENT_FLAG_NOTMOVE)
         return;
-    /* Animation Side need to be added
-    if(MoveLeft) {
-        CurrentFrameCol = 0;
-    }else
-
-    if(MoveRight) {
-        CurrentFrameCol = 1;
-    }
-    */
 
     Anim_Control.OnAnimate();
 }
@@ -90,7 +79,11 @@ void CEntity::OnRender(SDL_Surface* Surf_Display)
 {
     if(Surf_Entity == NULL || Surf_Display == NULL) return;
 
-    CSurface::OnDraw(Surf_Display, Surf_Entity, X - CCamera::CameraControl.GetX(), Y - CCamera::CameraControl.GetY(), CurrentFrameCol * Width, (CurrentFrameRow + Anim_Control.GetCurrentFrame()) * Height, Width, Height);
+    float posX, posY;
+    posX = X - CCamera::CameraControl.GetX() - (static_cast<int>(0.5 * Width));
+    posY = Y - CCamera::CameraControl.GetY() - Height;
+
+    CSurface::OnDraw(Surf_Display, Surf_Entity, posX, posY, CurrentFrameCol * Width, (CurrentFrameRow + Anim_Control.GetCurrentFrame()) * Height, Width, Height);
 }
 
 void CEntity::OnCollision(CEntity* Entity) {}
@@ -115,7 +108,6 @@ void CEntity::OnMoveToPoint()
     if(eMovementFlag == MOVEMENT_FLAG_NOTMOVE)
         return;
 
-    //Check if we reached position
     if(IsOnPoint(goX,goY))
     {
         this->StopMove(); 
@@ -140,21 +132,45 @@ void CEntity::OnMoveToPoint()
 
     switch(eDirect)
     {
-        case UpRight:   vectorX = 1.0f; vectorY = -1.0f; break;
-        case DownRight: vectorX = 1.0f; vectorY = 1.0f; break;
-        case DownLeft:  vectorX = -1.0f; vectorY = 1.0f; break;
-        case UpLeft:    vectorX = -1.0f; vectorY = -1.0f; break;
+        case UpRight:   vectorX = 1.0f;     vectorY = -1.0f;    CurrentFrameCol = 1; break;
+        case DownRight: vectorX = 1.0f;     vectorY = 1.0f;     CurrentFrameCol = 1; break;
+        case DownLeft:  vectorX = -1.0f;    vectorY = 1.0f;     CurrentFrameCol = 0; break;
+        case UpLeft:    vectorX = -1.0f;    vectorY = -1.0f;    CurrentFrameCol = 0; break;
     }
 
+    float nNewX = X; 
+    float nNewY = Y;
+
     if(X != goX)
-        X = X + nSpeed*vectorX;
+        nNewX = X + nSpeed*vectorX;
 
     if(Y != goY)
-        Y = Y + nSpeed*vectorY; 
+        nNewY = Y + nSpeed*vectorY; 
 
-    //Send actual position to object
-    this->X = X;
-    this->Y = Y;
+    X = nNewX; Y = nNewY;
+
+    // Collision Decetion 
+    /*
+    if(Flags & ENTITY_FLAG_GHOST) 
+    {
+        PosValid((int)nNewX, (int)nNewY); //We don’t care about collisions, but we need to send events to other entities
+
+        X = nNewX;
+        Y = nNewY;
+    }
+    else
+    {
+        if(PosValid((int)nNewX, (int)Y))
+            X = nNewX;
+        else
+            this->StopMove(); 
+
+        if(PosValid((int)X, (int)nNewY))        
+            Y = nNewY;
+        else
+            this->StopMove(); 
+    }
+    */
 }
 
 bool CEntity::IsOnPoint(int goX, int goY)
@@ -168,79 +184,30 @@ bool CEntity::IsOnPoint(int goX, int goY)
     if(nB < 0)
         nB *= -1;
 
-
     if( nA< 5 && nB < 5)
         return true;
 
     return false;
 }
 
-void CEntity::OnMove(float MoveX, float MoveY) 
-{
-    /*
-    if(MoveX == 0 && MoveY == 0) return;
-
-    double NewX = 0;
-    double NewY = 0;
-
-    MoveX *= CFrameControler::FrameControler.GetSpeedFactor();
-    MoveY *= CFrameControler::FrameControler.GetSpeedFactor();
-
-    if(MoveX != 0) 
-    {
-        if(MoveX >= 0)  NewX =  CFrameControler::FrameControler.GetSpeedFactor();
-        else            NewX = -CFrameControler::FrameControler.GetSpeedFactor();
-    }
-
-    if(MoveY != 0) 
-    {
-        if(MoveY >= 0)  NewY =  CFrameControler::FrameControler.GetSpeedFactor();
-        else            NewY = -CFrameControler::FrameControler.GetSpeedFactor();
-    }
-
-    while(true) 
-    {
-        if(Flags & ENTITY_FLAG_GHOST) 
-        {
-            PosValid((int)(X + NewX), (int)(Y + NewY)); //We don’t care about collisions, but we need to send events to other entities
-
-            X += NewX;
-            Y += NewY;
-        }
-        else
-        {
-            if(PosValid((int)(X + NewX), (int)(Y))) 
-                X += NewX;
-            else
-                SpeedX = 0;
-
-            if(PosValid((int)(X), (int)(Y + NewY))) 
-                Y += NewY;
-            else
-                SpeedY = 0;
-        }
-
-        MoveX += -NewX;
-        MoveY += -NewY;
-
-        if(NewX > 0 && MoveX <= 0) NewX = 0;
-        if(NewX < 0 && MoveX >= 0) NewX = 0;
-
-        if(NewY > 0 && MoveY <= 0) NewY = 0;
-        if(NewY < 0 && MoveY >= 0) NewY = 0;
-
-        if(MoveX == 0) NewX = 0;
-        if(MoveY == 0) NewY = 0;
-
-        if(MoveX == 0 && MoveY  == 0)   break;
-        if(NewX  == 0 && NewY   == 0)   break;
-    }
-    */
-}
 
 void CEntity::StopMove() 
 {
     eMovementFlag = MOVEMENT_FLAG_NOTMOVE;
+}
+
+int CEntity::GetAnimPosX()
+{
+    int Return = X - (static_cast<int>(0.5 * Width));
+
+    return Return;
+}
+
+int CEntity::GetAnimPosY()
+{
+    int Return = Y - Height;
+
+    return Return;
 }
 
 bool CEntity::Collides(int oX, int oY, int oW, int oH) 
@@ -354,4 +321,23 @@ void CEntity::OnCleanup()
     }
 
     Surf_Entity = NULL;
+}
+
+//ENTITY CONTAINER
+CEntity* CEntityContainer::GetEntity(int x, int y)
+{
+    CEntity* Entity = NULL;
+
+    for(int i = 0;i < CEntity::EntityList.size();i++) 
+    {   
+        if(!CEntity::EntityList[i]) continue;
+
+        //If the mouse is over the Entity
+        if( ( x > CEntity::EntityList[i]->GetAnimPosX() ) && ( x < CEntity::EntityList[i]->GetAnimPosX() + CEntity::EntityList[i]->Width) && ( y > CEntity::EntityList[i]->GetAnimPosY() ) && ( y < CEntity::EntityList[i]->GetAnimPosY() + CEntity::EntityList[i]->Height ) )
+        {
+            Entity = CEntity::EntityList[i];
+        }
+    }
+
+    return Entity;
 }

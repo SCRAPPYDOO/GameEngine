@@ -41,28 +41,42 @@ void CApp::OnKeyUp(SDLKey sym, SDLMod mod, Uint16 unicode)
 
 void CApp::OnRButtonDown(int x,int y)
 {
-    if(pSelectedUnit != NULL)
+    if(pSelectedUnit != NULL) 
     {
-        for(int i = 0;i < CEntity::EntityList.size();i++) 
-	    {   
-            if(!CEntity::EntityList[i]) continue;
+        CEntity *temp = NULL;
+        temp = CEntityContainer::GetEntity(x, y);
 
-            //If the mouse is over the Entity
-            if( ( x > CEntity::EntityList[i]->X ) && ( x < CEntity::EntityList[i]->X + CEntity::EntityList[i]->Width) && ( y > CEntity::EntityList[i]->Y ) && ( y < CEntity::EntityList[i]->Y + CEntity::EntityList[i]->Height ) )
-            {
-                if(CEntity::EntityList[i]->Type == ENTITY_TYPE_PLAYER)
-                    return;
-            }
+        if(temp == NULL)                                                    //we check what we can do due to targetet entity
+        {
+            x += CCamera::CameraControl.GetX();
+            y += CCamera::CameraControl.GetY();
+
+            //if we have a clear point we go there
+            pSelectedUnit->OnMoveToPoint(x, y);
+            return;
         }
 
+        if(temp->Type == ENTITY_TYPE_PLAYER)                            //if its our unit do nothing
+            return;
 
-        x += CCamera::CameraControl.GetX();
-        y += CCamera::CameraControl.GetY();
+        if(pSelectedUnit == temp)                                       // if its selected unit do nothing
+            return;
 
-        //if we have a clear point we go there
-        pSelectedUnit->OnMoveToPoint(x, y);
+            /*if(temp->FactionType != pSelectedUnit->FactionType)           // If Its Enemy We Start Basic Attack
+            {
+                pSelectedUnit->StartAttack(temp);
+                return;
+            } */
+        
+
+        //Interact with doors
+
+        //Interact with portals
+
+        //Interact with Objects
+
+        //Interact with massage box
     }
-
 }
 
 void CApp::OnLButtonDown(int x,int y)
@@ -70,17 +84,16 @@ void CApp::OnLButtonDown(int x,int y)
     if(CInterface::InterfaceControl.OnEvent(x,y))
         return;
 
-    for(int i = 0;i < CEntity::EntityList.size();i++) 
-	{   
-        if(!CEntity::EntityList[i]) continue;
+    CEntity *temp = NULL;
+    temp = CEntityContainer::GetEntity(x, y);
 
-        //If the mouse is over the Entity
-        if( ( x > CEntity::EntityList[i]->X ) && ( x < CEntity::EntityList[i]->X + CEntity::EntityList[i]->Width) && ( y > CEntity::EntityList[i]->Y ) && ( y < CEntity::EntityList[i]->Y + CEntity::EntityList[i]->Height ) )
-        {
             //If its a player unit
-            if(CEntity::EntityList[i]->Type == ENTITY_TYPE_PLAYER)
-                pSelectedUnit = CEntity::EntityList[i];
-        }
+    if(temp->Type == ENTITY_TYPE_PLAYER)
+    {
+        if(pSelectedUnit == temp)
+            return;
+
+        pSelectedUnit = temp;
     }
 }
 
