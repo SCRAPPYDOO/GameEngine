@@ -22,6 +22,7 @@ void CApp::OnCleanup()
         CObject::ObjectList[i]->OnCleanup();
     }
 
+    CObject::ObjectList.clear();
     CEntity::EntityList.clear();
 
     SDL_FreeSurface(Surf_Display);

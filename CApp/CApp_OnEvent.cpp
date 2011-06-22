@@ -43,17 +43,33 @@ void CApp::OnRButtonDown(int x,int y)
 {
     if(pSelectedUnit != NULL)
     {
-        if(CInterface::InterfaceControl.OnEvent(x,y))
-            return;
+        for(int i = 0;i < CEntity::EntityList.size();i++) 
+	    {   
+            if(!CEntity::EntityList[i]) continue;
 
-        pSelectedUnit->goX = x + CCamera::CameraControl.GetX();
-        pSelectedUnit->goY = y + CCamera::CameraControl.GetY();
+            //If the mouse is over the Entity
+            if( ( x > CEntity::EntityList[i]->X ) && ( x < CEntity::EntityList[i]->X + CEntity::EntityList[i]->Width) && ( y > CEntity::EntityList[i]->Y ) && ( y < CEntity::EntityList[i]->Y + CEntity::EntityList[i]->Height ) )
+            {
+                if(CEntity::EntityList[i]->Type == ENTITY_TYPE_PLAYER)
+                    return;
+            }
+        }
+
+
+        x += CCamera::CameraControl.GetX();
+        y += CCamera::CameraControl.GetY();
+
+        //if we have a clear point we go there
+        pSelectedUnit->OnMoveToPoint(x, y);
     }
 
 }
 
 void CApp::OnLButtonDown(int x,int y)
 {
+    if(CInterface::InterfaceControl.OnEvent(x,y))
+        return;
+
     for(int i = 0;i < CEntity::EntityList.size();i++) 
 	{   
         if(!CEntity::EntityList[i]) continue;
@@ -61,7 +77,9 @@ void CApp::OnLButtonDown(int x,int y)
         //If the mouse is over the Entity
         if( ( x > CEntity::EntityList[i]->X ) && ( x < CEntity::EntityList[i]->X + CEntity::EntityList[i]->Width) && ( y > CEntity::EntityList[i]->Y ) && ( y < CEntity::EntityList[i]->Y + CEntity::EntityList[i]->Height ) )
         {
-            pSelectedUnit = CEntity::EntityList[i];
+            //If its a player unit
+            if(CEntity::EntityList[i]->Type == ENTITY_TYPE_PLAYER)
+                pSelectedUnit = CEntity::EntityList[i];
         }
     }
 }

@@ -81,9 +81,6 @@ class CEntity
 
         virtual bool OnLoad(char* File, int Width, int Height, int MaxFrames);
 
-        //OnEvent
-                virtual void OnMoveToPoint();
-
         virtual void OnLoop();
 
         virtual void OnRender(SDL_Surface* Surf_Display);
@@ -95,11 +92,13 @@ class CEntity
         virtual void OnCollision(CEntity* Entity);
 
     public: //Movement
+        virtual void OnMoveToPoint();                                                   //trigered by MovementGenerator
+        virtual void OnMoveToPoint(int nGoPosX, int nGoPosY);                           //trigered by CApp->OnEvent->MouseRClick
 
+        virtual void OnMove(float MoveX, float MoveY);                                  //Not Used
 
-        void    OnMove(float MoveX, float MoveY);
-
-        void    StopMove();
+        virtual bool IsOnPoint(int goX, int goY);                                       //We check if we are near point
+        virtual void StopMove();
 
     public:
         bool    Collides(int oX, int oY, int oW, int oH);
@@ -112,7 +111,8 @@ class CEntity
         bool    PosValidEntity(CEntity* Entity, int NewX, int NewY);       
 };
 
-class CEntityCol {
+class CEntityCol 
+{
     public:
         static std::vector<CEntityCol>  EntityColList;
 

@@ -28,7 +28,7 @@ CEntity::CEntity()
     Height  = 0;
 
     //Others
-    Type =  ENTITY_TYPE_GENERIC;
+    Type =  ENTITY_TYPE_PLAYER;
 
     Dead = false;
     Flags = ENTITY_FLAG_GRAVITY;
@@ -71,7 +71,8 @@ void CEntity::OnLoop()
 
 void CEntity::OnAnimate() 
 {
-
+    if(eMovementFlag == MOVEMENT_FLAG_NOTMOVE)
+        return;
     /* Animation Side need to be added
     if(MoveLeft) {
         CurrentFrameCol = 0;
@@ -102,18 +103,27 @@ enum Direction
     DownLeft,
 };
 
+void CEntity::OnMoveToPoint(int nGoPosX, int nGoPosY)
+{
+    eMovementFlag = MOVEMENT_FLAG_WALK;
+    goX = static_cast<float>(nGoPosX);
+    goY = static_cast<float>(nGoPosY);
+}
+
 void CEntity::OnMoveToPoint()
 {
-    //Check if we reached position
-    if(X == goX && Y == goY)
+    if(eMovementFlag == MOVEMENT_FLAG_NOTMOVE)
         return;
 
-    float A;
-    float B;
+    //Check if we reached position
+    if(IsOnPoint(goX,goY))
+    {
+        this->StopMove(); 
+        return;
+    }
 
-    //Paulina
-    A = (Y-goY) / (X-goX); 
-    B = Y - X; 
+    float A = (Y-goY) / (X-goX);  
+    float B = Y - X; 
 
     float vectorX, vectorY;
 
@@ -145,6 +155,24 @@ void CEntity::OnMoveToPoint()
     //Send actual position to object
     this->X = X;
     this->Y = Y;
+}
+
+bool CEntity::IsOnPoint(int goX, int goY)
+{
+
+    int nA = X - goX;
+    int nB = Y - goY;
+
+    if(nA < 0)
+        nA *= -1;
+    if(nB < 0)
+        nB *= -1;
+
+
+    if( nA< 5 && nB < 5)
+        return true;
+
+    return false;
 }
 
 void CEntity::OnMove(float MoveX, float MoveY) 
