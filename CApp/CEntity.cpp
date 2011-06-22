@@ -13,40 +13,32 @@ CEntity::CEntity()
 {
     Surf_Entity = NULL;
 
-    //OnMoveToPoint variables
-    goX = 450;
-    goY = 450;
-    nSpeed = 0.05f;
-
+    //Movement Variables
     X = 500;
     Y = 500;
+
+    goX = 450;
+    goY = 450;
+
+    nSpeed = 0.05f;
+
+    eMovementFlag = MOVEMENT_FLAG_NOTMOVE;
 
     Width   = 0;
     Height  = 0;
 
-    MoveLeft  = false;
-    MoveRight = false;
-
+    //Others
     Type =  ENTITY_TYPE_GENERIC;
 
     Dead = false;
     Flags = ENTITY_FLAG_GRAVITY;
 
-    SpeedX = 0;
-    SpeedY = 0;
-
-    AccelX = 0;
-    AccelY = 0;
-
-    MaxSpeedX = 5;
-    MaxSpeedY = 5;
-
     CurrentFrameCol = 0;
     CurrentFrameRow = 0;
 
+    //Colision System Variables
     Col_X = 0;
     Col_Y = 0;
-
     Col_Width  = 0;
     Col_Height = 0;
 }
@@ -72,42 +64,15 @@ bool CEntity::OnLoad(char* File, int Width, int Height, int MaxFrames)
 
 void CEntity::OnLoop() 
 {
-    //We’re not Moving
-    if(MoveLeft == false && MoveRight == false)
-    {
-        StopMove();
-    }
-
-    if(MoveLeft)
-    {
-        AccelX = -0.5;
-    }else
-
-    if(MoveRight) 
-    {
-        AccelX = 0.5;
-    }
-
-    if(Flags & ENTITY_FLAG_GRAVITY)
-    {
-        AccelY = 0.75f;
-    }
-
-    SpeedX += AccelX * CFrameControler::FrameControler.GetSpeedFactor();
-    SpeedY += AccelY * CFrameControler::FrameControler.GetSpeedFactor();
-
-    if(SpeedX > MaxSpeedX)  SpeedX =  MaxSpeedX;
-    if(SpeedX < -MaxSpeedX) SpeedX = -MaxSpeedX;
-    if(SpeedY > MaxSpeedY)  SpeedY =  MaxSpeedY;
-    if(SpeedY < -MaxSpeedY) SpeedY = -MaxSpeedY;
-
     OnAnimate();
-    OnMove(SpeedX, SpeedY);
+    //OnMove(SpeedX, SpeedY);
     //OnMoveToPoint();  CApp->OnLoop->MovementGenerator->OnLoop Handle This
 }
 
 void CEntity::OnAnimate() 
 {
+
+    /* Animation Side need to be added
     if(MoveLeft) {
         CurrentFrameCol = 0;
     }else
@@ -115,6 +80,7 @@ void CEntity::OnAnimate()
     if(MoveRight) {
         CurrentFrameCol = 1;
     }
+    */
 
     Anim_Control.OnAnimate();
 }
@@ -145,6 +111,7 @@ void CEntity::OnMoveToPoint()
     float A;
     float B;
 
+    //Paulina
     A = (Y-goY) / (X-goX); 
     B = Y - X; 
 
@@ -182,6 +149,7 @@ void CEntity::OnMoveToPoint()
 
 void CEntity::OnMove(float MoveX, float MoveY) 
 {
+    /*
     if(MoveX == 0 && MoveY == 0) return;
 
     double NewX = 0;
@@ -239,25 +207,12 @@ void CEntity::OnMove(float MoveX, float MoveY)
         if(MoveX == 0 && MoveY  == 0)   break;
         if(NewX  == 0 && NewY   == 0)   break;
     }
+    */
 }
 
 void CEntity::StopMove() 
 {
-    if(SpeedX > 0) 
-    {
-        AccelX = -1;
-    }
-
-    if(SpeedX < 0) 
-    {
-        AccelX =  1;
-    }
-
-    if(SpeedX < 2.0f && SpeedX > -2.0f) 
-    {
-        AccelX = 0;
-        SpeedX = 0;
-    }
+    eMovementFlag = MOVEMENT_FLAG_NOTMOVE;
 }
 
 bool CEntity::Collides(int oX, int oY, int oW, int oH) 

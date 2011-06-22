@@ -13,9 +13,11 @@ bool CApp::OnInit()
     }
 
     if(CArea::AreaControl.OnLoad("./maps/1.area") == false) 
-    {
     	return false;
-    }
+
+    if(CInterface::InterfaceControl.OnLoad() == false)
+        return false;
+
 
     //SDL_EnableKeyRepeat(1, SDL_DEFAULT_REPEAT_INTERVAL / 3);
 

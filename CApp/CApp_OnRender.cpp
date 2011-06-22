@@ -27,7 +27,7 @@ void CApp::OnRender()
         CEntity::EntityList[i]->OnRender(Surf_Display);
     }
 
-
+    CInterface::InterfaceControl.OnRender(Surf_Display, -CCamera::CameraControl.GetX(), -CCamera::CameraControl.GetY());
 
 	SDL_Flip(Surf_Display);
 }

@@ -13,6 +13,7 @@
 #include "CMovementGenerator.h"
 #include "CPlayer.h"
 #include "CObject.h"
+#include "CInterface.h"
 
 class CEntity;
 

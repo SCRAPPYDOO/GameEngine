@@ -4,6 +4,7 @@ void CApp::OnCleanup()
 {
 	CArea::AreaControl.OnCleanup();
 
+    CInterface::InterfaceControl.OnCleanup();
 
     // Entities
     for(int i = 0;i < CEntity::EntityList.size();i++) 

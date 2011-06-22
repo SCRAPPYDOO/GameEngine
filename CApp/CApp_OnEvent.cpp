@@ -41,11 +41,14 @@ void CApp::OnKeyUp(SDLKey sym, SDLMod mod, Uint16 unicode)
 
 void CApp::OnRButtonDown(int x,int y)
 {
-    if(pSelectedUnit == NULL)
-        return;
+    if(pSelectedUnit != NULL)
+    {
+        if(CInterface::InterfaceControl.OnEvent(x,y))
+            return;
 
-    pSelectedUnit->goX = x + CCamera::CameraControl.GetX();
-    pSelectedUnit->goY = y + CCamera::CameraControl.GetY();
+        pSelectedUnit->goX = x + CCamera::CameraControl.GetX();
+        pSelectedUnit->goY = y + CCamera::CameraControl.GetY();
+    }
 
 }
 

@@ -20,8 +20,16 @@ enum EntityFlag
 {
 	ENTITY_FLAG_NONE    = 0x01,
     ENTITY_FLAG_GRAVITY = 0x02,
-    ENTITY_FLAG_GHOST   = 0x03,
-    ENTITY_FLAG_MAPONLY = 0x04,
+    ENTITY_FLAG_GHOST   = 0x04,
+    ENTITY_FLAG_MAPONLY = 0x08,
+};
+
+enum MovementFlag
+{
+    MOVEMENT_FLAG_NOTMOVE    = 0,
+    MOVEMENT_FLAG_RUN        = 1,
+    MOVEMENT_FLAG_WALK       = 4,
+    MOVEMENT_FLAG_SNEAK      = 8,
 };
 
 class CEntity 
@@ -46,8 +54,7 @@ class CEntity
         int             Width;
         int             Height;
 
-        bool			MoveLeft;
-        bool			MoveRight;
+        MovementFlag    eMovementFlag;
 
     public:
         int				Type;
@@ -56,21 +63,10 @@ class CEntity
         int				Flags;
 
     protected:
-        float			SpeedX;
-        float			SpeedY;
-
-        float			AccelX;
-        float			AccelY;
-
-    public:
-        float			MaxSpeedX;
-        float			MaxSpeedY;
-
-    protected:
         int             CurrentFrameCol;
         int             CurrentFrameRow;
 
-    protected:
+    protected: //Colision System Parameters
         int				Col_X;
         int				Col_Y;
         int				Col_Width;
@@ -82,7 +78,11 @@ class CEntity
         virtual ~CEntity();
 
     public:
+
         virtual bool OnLoad(char* File, int Width, int Height, int MaxFrames);
+
+        //OnEvent
+                virtual void OnMoveToPoint();
 
         virtual void OnLoop();
 
@@ -95,7 +95,7 @@ class CEntity
         virtual void OnCollision(CEntity* Entity);
 
     public: //Movement
-        virtual void OnMoveToPoint();
+
 
         void    OnMove(float MoveX, float MoveY);
 

@@ -2,6 +2,8 @@
 
 void CApp::OnLoop() 
 {
+    CInterface::InterfaceControl.OnLoop();
+
     // Entities
     for(int i = 0;i < CEntity::EntityList.size();i++) 
 	{
