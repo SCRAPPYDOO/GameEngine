@@ -2,6 +2,7 @@
     #define _CAPP_H_
 
 #include <SDL.h>
+#include "math.h"
 
 #include "Define.h"
 
@@ -28,6 +29,7 @@ class CApp : public CEvent
         CPlayer Player2;
 
         CEntity* pSelectedUnit;
+        CEntity* pSelectedTarget;
     public:
         CApp();
 
@@ -53,6 +55,9 @@ class CApp : public CEvent
         void OnRender();
 
         void OnCleanup();
+
+        CEntity* CApp::GetEntity(int x, int y);
+
 };
 
 #endif

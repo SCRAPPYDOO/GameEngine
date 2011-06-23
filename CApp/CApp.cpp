@@ -5,6 +5,7 @@ CApp::CApp()
     Surf_Display = NULL;
 
     pSelectedUnit = NULL;
+    pSelectedTarget = NULL;
 
     Running = true;
 }

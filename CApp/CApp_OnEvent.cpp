@@ -43,11 +43,10 @@ void CApp::OnRButtonDown(int x,int y)
 {
     if(pSelectedUnit != NULL) 
     {
-        CEntity *temp = NULL;
-        temp = CEntityContainer::GetEntity(x, y);
+        CEntity* pEntity = GetEntity(x,y);
 
-        if(temp == NULL)                                                    //we check what we can do due to targetet entity
-        {
+        if(pEntity == NULL)                                                    //we check what we can do due to targetet entity
+        { 
             x += CCamera::CameraControl.GetX();
             y += CCamera::CameraControl.GetY();
 
@@ -56,10 +55,10 @@ void CApp::OnRButtonDown(int x,int y)
             return;
         }
 
-        if(temp->Type == ENTITY_TYPE_PLAYER)                            //if its our unit do nothing
+        if(pEntity->Type == ENTITY_TYPE_PLAYER)                            //if its our unit do nothing
             return;
 
-        if(pSelectedUnit == temp)                                       // if its selected unit do nothing
+        if(pSelectedUnit == pEntity)                                       // if its selected unit do nothing
             return;
 
             /*if(temp->FactionType != pSelectedUnit->FactionType)           // If Its Enemy We Start Basic Attack
@@ -84,16 +83,22 @@ void CApp::OnLButtonDown(int x,int y)
     if(CInterface::InterfaceControl.OnEvent(x,y))
         return;
 
-    CEntity *temp = NULL;
-    temp = CEntityContainer::GetEntity(x, y);
+    CEntity* pEntity = GetEntity(x,y);
 
-            //If its a player unit
-    if(temp->Type == ENTITY_TYPE_PLAYER)
+    if(pEntity && pEntity->Type == ENTITY_TYPE_PLAYER)
     {
-        if(pSelectedUnit == temp)
+        if(pSelectedUnit == pEntity)
+            return;
+                
+        pSelectedUnit = pEntity;
+            return;
+    }
+    else
+    {
+        if(pSelectedTarget == pEntity)
             return;
 
-        pSelectedUnit = temp;
+        pSelectedTarget = pEntity;
     }
 }
 
@@ -102,3 +107,21 @@ void CApp::OnExit()
 	Running = false;
 }
 
+CEntity* CApp::GetEntity(int x, int y)
+{
+    CEntity* temp = NULL;
+
+    for(int i = 0;i < CEntity::EntityList.size();i++) 
+    {   
+        if(!CEntity::EntityList[i]) continue;
+
+        //If the mouse is over the Entity
+        if( ( x > CEntity::EntityList[i]->GetAnimPosX() ) && ( x < CEntity::EntityList[i]->GetAnimPosX() + CEntity::EntityList[i]->Width) && ( y > CEntity::EntityList[i]->GetAnimPosY() ) && ( y < CEntity::EntityList[i]->GetAnimPosY() + CEntity::EntityList[i]->Height ) )
+        {  
+            temp = CEntity::EntityList[i];
+            return temp;
+        }
+    }
+
+    return temp;
+}

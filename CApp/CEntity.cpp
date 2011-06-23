@@ -14,13 +14,18 @@ CEntity::CEntity()
     Surf_Entity = NULL;
 
     //Movement Variables
-    X = 500;
+    X = rand()%500;
     Y = 500;
+
+    r = Width;
 
     goX = 450;
     goY = 450;
 
-    nSpeed = 0.05f;
+    nNewX = 0; 
+    nNewY = Y;
+
+    nSpeed = 0.09f;
 
     eMovementFlag = MOVEMENT_FLAG_NOTMOVE;
 
@@ -79,11 +84,7 @@ void CEntity::OnRender(SDL_Surface* Surf_Display)
 {
     if(Surf_Entity == NULL || Surf_Display == NULL) return;
 
-    float posX, posY;
-    posX = X - CCamera::CameraControl.GetX() - (static_cast<int>(0.5 * Width));
-    posY = Y - CCamera::CameraControl.GetY() - Height;
-
-    CSurface::OnDraw(Surf_Display, Surf_Entity, posX, posY, CurrentFrameCol * Width, (CurrentFrameRow + Anim_Control.GetCurrentFrame()) * Height, Width, Height);
+    CSurface::OnDraw(Surf_Display, Surf_Entity, GetAnimPosX(), GetAnimPosY(), CurrentFrameCol * Width, (CurrentFrameRow + Anim_Control.GetCurrentFrame()) * Height, Width, Height);
 }
 
 void CEntity::OnCollision(CEntity* Entity) {}
@@ -114,8 +115,8 @@ void CEntity::OnMoveToPoint()
         return;
     }
 
-    float A = (Y-goY) / (X-goX);  
-    float B = Y - X; 
+    //float A = (Y-goY) / (X-goX);  
+    //float B = Y - X; 
 
     float vectorX, vectorY;
 
@@ -138,8 +139,8 @@ void CEntity::OnMoveToPoint()
         case UpLeft:    vectorX = -1.0f;    vectorY = -1.0f;    CurrentFrameCol = 0; break;
     }
 
-    float nNewX = X; 
-    float nNewY = Y;
+    nNewX = X; 
+    nNewY = Y;
 
     if(X != goX)
         nNewX = X + nSpeed*vectorX;
@@ -147,35 +148,50 @@ void CEntity::OnMoveToPoint()
     if(Y != goY)
         nNewY = Y + nSpeed*vectorY; 
 
-    X = nNewX; Y = nNewY;
 
-    // Collision Decetion 
-    /*
-    if(Flags & ENTITY_FLAG_GHOST) 
+    if(!IsInColision())
     {
-        PosValid((int)nNewX, (int)nNewY); //We don’t care about collisions, but we need to send events to other entities
-
-        X = nNewX;
+        X = nNewX; 
         Y = nNewY;
     }
     else
     {
-        if(PosValid((int)nNewX, (int)Y))
-            X = nNewX;
-        else
-            this->StopMove(); 
-
-        if(PosValid((int)X, (int)nNewY))        
-            Y = nNewY;
-        else
-            this->StopMove(); 
+        this->StopMove(); 
+        return;
     }
-    */
+}
+
+double CEntity::GetDistance(float x1, float y1, float x2, float y2 )
+{ 
+    return sqrt(pow( x2 - x1, 2) + pow( y2 - y1, 2));
+}
+
+bool CEntity::IsInRange(CEntity* pEntity)
+{
+    if(GetDistance(this->X, this->Y, pEntity->X,  pEntity->Y ) < this->r + pEntity->r)
+        return true;
+
+    return false;
+}
+
+bool CEntity::IsInColision()
+{
+    for(int i = 0;i < EntityList.size();i++) 
+    {
+        if(EntityList[i] == this)
+            continue;
+
+        if( GetDistance(nNewX,nNewY,EntityList[i]->X,EntityList[i]->Y) <  this->r + EntityList[i]->r + 15)
+            return true;
+    }
+
+    //ToDo: With Other Objects
+
+    return false;
 }
 
 bool CEntity::IsOnPoint(int goX, int goY)
 {
-
     int nA = X - goX;
     int nB = Y - goY;
 
@@ -190,7 +206,6 @@ bool CEntity::IsOnPoint(int goX, int goY)
     return false;
 }
 
-
 void CEntity::StopMove() 
 {
     eMovementFlag = MOVEMENT_FLAG_NOTMOVE;
@@ -198,14 +213,14 @@ void CEntity::StopMove()
 
 int CEntity::GetAnimPosX()
 {
-    int Return = X - (static_cast<int>(0.5 * Width));
+    int Return = X - (static_cast<int>(0.5 * Width)) - CCamera::CameraControl.GetX();
 
     return Return;
 }
 
 int CEntity::GetAnimPosY()
 {
-    int Return = Y - Height;
+    int Return = Y - Height - CCamera::CameraControl.GetY();
 
     return Return;
 }
@@ -321,23 +336,4 @@ void CEntity::OnCleanup()
     }
 
     Surf_Entity = NULL;
-}
-
-//ENTITY CONTAINER
-CEntity* CEntityContainer::GetEntity(int x, int y)
-{
-    CEntity* Entity = NULL;
-
-    for(int i = 0;i < CEntity::EntityList.size();i++) 
-    {   
-        if(!CEntity::EntityList[i]) continue;
-
-        //If the mouse is over the Entity
-        if( ( x > CEntity::EntityList[i]->GetAnimPosX() ) && ( x < CEntity::EntityList[i]->GetAnimPosX() + CEntity::EntityList[i]->Width) && ( y > CEntity::EntityList[i]->GetAnimPosY() ) && ( y < CEntity::EntityList[i]->GetAnimPosY() + CEntity::EntityList[i]->Height ) )
-        {
-            Entity = CEntity::EntityList[i];
-        }
-    }
-
-    return Entity;
 }

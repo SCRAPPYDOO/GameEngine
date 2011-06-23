@@ -32,15 +32,6 @@ enum MovementFlag
     MOVEMENT_FLAG_SNEAK      = 8,
 };
 
-class CEntity;
-
-class CEntityContainer
-{
-    public:
-        static CEntity* GetEntity(int x, int y);
-
-};
-
 class CEntity 
 {
     public:
@@ -54,6 +45,11 @@ class CEntity
     public:
         float           X;
         float           Y;
+
+        float           r;
+
+        float           nNewX;
+        float           nNewY;
 
         float           goX;
         float           goY;
@@ -112,6 +108,9 @@ class CEntity
 
     public:
         bool    Collides(int oX, int oY, int oW, int oH);
+        bool    IsInColision();
+        double  GetDistance( float x1, float y1, float x2, float y2 );
+        bool    IsInRange(CEntity* pEntity);
 
     private:
         bool    PosValid(int NewX, int NewY);
