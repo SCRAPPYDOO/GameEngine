@@ -12,12 +12,13 @@ CEntityCol::CEntityCol()
 CEntity::CEntity() 
 {
     Surf_Entity = NULL;
+	//Surf_Colision = NULL;
 
     //Movement Variables
     X = rand()%500;
     Y = 500;
 
-    r = Width;
+    r = 0;
 
     goX = 450;
     goY = 450;
@@ -56,11 +57,20 @@ bool CEntity::OnLoad(char* File, int Width, int Height, int MaxFrames)
     {
 		return false;
 	}
+	
+	/*
+	if((Surf_Colision = CSurface::OnLoad("colisioncircle.png")) == NULL) 
+    {
+		return false;
+	}
+	*/
 
 	CSurface::Transparent(Surf_Entity, 255, 0, 255);
 
 	this->Width = Width;
 	this->Height = Height;
+
+	r = 0.5 * Width;
 
 	Anim_Control.MaxFrames = MaxFrames;
 
@@ -85,6 +95,7 @@ void CEntity::OnRender(SDL_Surface* Surf_Display)
     if(Surf_Entity == NULL || Surf_Display == NULL) return;
 
     CSurface::OnDraw(Surf_Display, Surf_Entity, GetAnimPosX(), GetAnimPosY(), CurrentFrameCol * Width, (CurrentFrameRow + Anim_Control.GetCurrentFrame()) * Height, Width, Height);
+	//CSurface::OnDraw(Surf_Display, CSurface::Surf_Colision, GetAnimPosX(), Y - (static_cast<int>(0.5 * Width)) - CCamera::CameraControl.GetY());
 }
 
 void CEntity::OnCollision(CEntity* Entity) {}
@@ -181,7 +192,7 @@ bool CEntity::IsInColision()
         if(EntityList[i] == this)
             continue;
 
-        if( GetDistance(nNewX,nNewY,EntityList[i]->X,EntityList[i]->Y) <  this->r + EntityList[i]->r + 15)
+        if( GetDistance(nNewX,nNewY,EntityList[i]->X,EntityList[i]->Y) <  this->r + EntityList[i]->r)
             return true;
     }
 
@@ -335,5 +346,13 @@ void CEntity::OnCleanup()
         SDL_FreeSurface(Surf_Entity);
     }
 
+	/*
+	if(Surf_Colision) 
+    {
+        SDL_FreeSurface(Surf_Colision);
+    }
+	*/
+
+	//Surf_Colision = NULL;
     Surf_Entity = NULL;
 }

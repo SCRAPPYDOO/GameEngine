@@ -1,6 +1,10 @@
 #include "CSurface.h"
 
-CSurface::CSurface() {}
+CSurface::CSurface() 
+{
+}
+
+SDL_Surface* CSurface::Surf_Colision = NULL;
 
 SDL_Surface* CSurface::OnLoad(char* File) 
 {

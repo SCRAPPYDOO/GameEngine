@@ -32,15 +32,25 @@ enum MovementFlag
     MOVEMENT_FLAG_SNEAK      = 8,
 };
 
+struct Surface
+{
+	SDL_Surface* Surf_Colision;
+};
+
 class CEntity 
 {
+	private:
+	//Surface EntitySurface;
+
     public:
         static std::vector<CEntity*>    EntityList;
+
         
     protected:
         CAnimation      Anim_Control;
 
         SDL_Surface*    Surf_Entity;
+		//SDL_Surface* Surf_Colision;
 
     public:
         float           X;
@@ -117,7 +127,7 @@ class CEntity
 
         bool    PosValidTile(CTile* Tile);
 
-        bool    PosValidEntity(CEntity* Entity, int NewX, int NewY);       
+        bool    PosValidEntity(CEntity* Entity, int NewX, int NewY); 
 };
 
 class CEntityCol 

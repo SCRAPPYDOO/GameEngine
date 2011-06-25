@@ -1,16 +1,14 @@
-//==============================================================================
-// Surface functions
-//==============================================================================
 #ifndef _CSURFACE_H_
     #define _CSURFACE_H_
 
 #include <SDL.h>
 #include <SDL_image.h>
 
-//==============================================================================
 class CSurface {
 	public:
 		CSurface();
+
+		static SDL_Surface* Surf_Colision;
 
 	public:
 		static SDL_Surface* OnLoad(char* File);
@@ -21,7 +19,5 @@ class CSurface {
 
 		static bool Transparent(SDL_Surface* Surf_Dest, int R, int G, int B);
 };
-
-//==============================================================================
 
 #endif

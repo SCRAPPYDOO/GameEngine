@@ -1,37 +1,22 @@
-﻿Build started 2011-06-23 22:41:16.
-     1>Project "D:\CApp\CApp\CApp.vcxproj" on node 2 (build target(s)).
+﻿Build started 2011-06-25 19:52:50.
+     1>Project "D:\Developing\GameEngine\CApp\CApp.vcxproj" on node 2 (build target(s)).
      1>InitializeBuildStatus:
          Creating "Release\CApp.unsuccessfulbuild" because "AlwaysCreate" was specified.
        ClCompile:
-         E:\Software\Visual Studio C++\VC\bin\CL.exe /c /Zi /nologo /W3 /WX- /O2 /Oi /Oy- /GL /D _MBCS /Gm- /EHsc /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Release\\" /Fd"Release\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt CApp.cpp CApp_OnCleanup.cpp CApp_OnEvent.cpp CApp_OnInit.cpp CApp_OnLoop.cpp CApp_OnRender.cpp CEntity.cpp CMovementGenerator.cpp CPlayer.cpp
-         CApp.cpp
-         CApp_OnCleanup.cpp
-     1>CApp_OnCleanup.cpp(10): warning C4018: '<' : signed/unsigned mismatch
-     1>CApp_OnCleanup.cpp(18): warning C4018: '<' : signed/unsigned mismatch
-         CApp_OnEvent.cpp
-     1>CApp_OnEvent.cpp(114): warning C4018: '<' : signed/unsigned mismatch
-         CApp_OnInit.cpp
-         CApp_OnLoop.cpp
-     1>CApp_OnLoop.cpp(8): warning C4018: '<' : signed/unsigned mismatch
-         CApp_OnRender.cpp
-     1>CApp_OnRender.cpp(16): warning C4018: '<' : signed/unsigned mismatch
-     1>CApp_OnRender.cpp(23): warning C4018: '<' : signed/unsigned mismatch
+         D:\Programy\vc\VC\bin\CL.exe /c /Zi /nologo /W3 /WX- /O2 /Oi /Oy- /GL /D _MBCS /Gm- /EHsc /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Release\\" /Fd"Release\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt CEntity.cpp
          CEntity.cpp
-     1>CEntity.cpp(17): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
-     1>CEntity.cpp(20): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
-     1>CEntity.cpp(112): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
-     1>CEntity.cpp(112): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
-     1>CEntity.cpp(179): warning C4018: '<' : signed/unsigned mismatch
-     1>CEntity.cpp(193): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
-     1>CEntity.cpp(194): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
-     1>CEntity.cpp(214): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
-     1>CEntity.cpp(221): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
-     1>CEntity.cpp(285): warning C4018: '<' : signed/unsigned mismatch
-         CMovementGenerator.cpp
-     1>CMovementGenerator.cpp(7): warning C4018: '<' : signed/unsigned mismatch
-         CPlayer.cpp
+     1>CEntity.cpp(18): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>CEntity.cpp(73): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
+     1>CEntity.cpp(123): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
+     1>CEntity.cpp(123): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
+     1>CEntity.cpp(190): warning C4018: '<' : signed/unsigned mismatch
+     1>CEntity.cpp(206): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
+     1>CEntity.cpp(207): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
+     1>CEntity.cpp(227): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
+     1>CEntity.cpp(234): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
+     1>CEntity.cpp(298): warning C4018: '<' : signed/unsigned mismatch
        Link:
-         E:\Software\Visual Studio C++\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"D:\CApp\Release\CApp.exe" /NOLOGO SDL.lib SDLmain.lib SDL_image.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /ManifestFile:"Release\CApp.exe.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"D:\CApp\Release\CApp.pdb" /SUBSYSTEM:WINDOWS /OPT:REF /OPT:ICF /LTCG /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"D:\CApp\Release\CApp.lib" /MACHINE:X86 Release\CAnimation.obj
+         D:\Programy\vc\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"D:\Developing\GameEngine\Release\CApp.exe" /NOLOGO SDL.lib SDLmain.lib SDL_image.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /ManifestFile:"Release\CApp.exe.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"D:\Developing\GameEngine\Release\CApp.pdb" /SUBSYSTEM:WINDOWS /OPT:REF /OPT:ICF /LTCG /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"D:\Developing\GameEngine\Release\CApp.lib" /MACHINE:X86 Release\CAnimation.obj
          Release\CApp.obj
          Release\CApp_OnCleanup.obj
          Release\CApp_OnEvent.obj
@@ -52,14 +37,14 @@
          Release\CTile.obj
          Generating code
          Finished generating code
-         CApp.vcxproj -> D:\CApp\Release\CApp.exe
+         CApp.vcxproj -> D:\Developing\GameEngine\Release\CApp.exe
        Manifest:
-         C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\bin\mt.exe /nologo /verbose /outputresource:"D:\CApp\Release\CApp.exe;#1" /manifest Release\CApp.exe.intermediate.manifest
+         C:\Program Files\Microsoft SDKs\Windows\v7.0A\bin\mt.exe /nologo /verbose /outputresource:"D:\Developing\GameEngine\Release\CApp.exe;#1" /manifest Release\CApp.exe.intermediate.manifest
        FinalizeBuildStatus:
          Deleting file "Release\CApp.unsuccessfulbuild".
          Touching "Release\CApp.lastbuildstate".
-     1>Done Building Project "D:\CApp\CApp\CApp.vcxproj" (build target(s)).
+     1>Done Building Project "D:\Developing\GameEngine\CApp\CApp.vcxproj" (build target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:01.98
+Time Elapsed 00:00:01.67

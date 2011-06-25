@@ -18,6 +18,9 @@ bool CApp::OnInit()
     if(CInterface::InterfaceControl.OnLoad() == false)
         return false;
 
+	CSurface::Surf_Colision = CSurface::OnLoad("colisioncircle.png");
+	if(CSurface::Surf_Colision == NULL)
+		return false;
 
     //SDL_EnableKeyRepeat(1, SDL_DEFAULT_REPEAT_INTERVAL / 3);
 
