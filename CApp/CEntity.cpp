@@ -202,16 +202,20 @@ bool CEntity::IsInColision()
 
 bool CEntity::IsOnPoint(int goX, int goY)
 {
-    int nA = X - goX;
-    int nB = Y - goY;
-
-    if(nA < 0)
-        nA *= -1;
-    if(nB < 0)
-        nB *= -1;
-
-    if( nA< 5 && nB < 5)
+    if(GetDistance(X, Y, goX, goY) < 1)
         return true;
+
+
+    //int nA = X - goX;
+    //int nB = Y - goY;
+
+    //if(nA < 0)
+    //    nA *= -1;
+    //if(nB < 0)
+    //    nB *= -1;
+
+    //if( nA< 5 && nB < 5)
+    //    return true;
 
     return false;
 }

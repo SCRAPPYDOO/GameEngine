@@ -11,27 +11,41 @@ CButton::CButton()
 	this->eType = BUTTON_DEFAULT;
 }
 
-void CButton::OnLoad(ButtonType eType)
+bool CButton::OnLoad(ButtonType eType)
 {
 	switch(eType)
 	{
 		case BUTTON_PLAY:
 		{
-			Surf_Button = CSurface::OnLoad("./menu/button_menu.png");
-			x = 640;
-			y = 300;
-			w = 134;
-			h = 29;
+			this->x = 640;
+			this->y = 300;
+			this->w = 134;
+			this->h = 30;
+
+			break;
+		}
+
+        case BUTTON_QUIT:
+        {
+			this->x = 640;
+			this->y = 350;
+			this->w = 134;
+			this->h = 30;
 
 			break;
 		}
 
 		default: break;
 	}
+
+    return true;
 }
 
 void CButton::OnRender(SDL_Surface* Surf_Display)
 {
-	CSurface::OnDraw(Surf_Display, Surf_Button, 0, 0);
+	CSurface::OnDraw(Surf_Display, CInterface::Surf_MenuButton, x, y, 0, 0, w, h);
 }
 
+void CButton::OnCleanup()
+{
+}

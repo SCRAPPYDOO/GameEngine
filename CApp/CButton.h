@@ -4,6 +4,7 @@
 #include <vector>
 
 #include "CSurface.h"
+#include "CInterface.h"
 
 enum ButtonType
 {
@@ -16,12 +17,11 @@ class CButton
 {
 	public:
 		CButton();
+        ~CButton() {}
 
 		static std::vector<CButton*>    ButtonList;
-
-		SDL_Surface* Surf_Button;
-		
-	public:
+	
+	private:
 		ButtonType eType;
 		int x;
         int y;
@@ -29,9 +29,11 @@ class CButton
         int h;
 
 	public:
-		void OnLoad(ButtonType eType);
+		bool OnLoad(ButtonType eType);
 
 		void OnRender(SDL_Surface* Surf_Display);
+
+        void OnCleanup();
 };
 
 #endif

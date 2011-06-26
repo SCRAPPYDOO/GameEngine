@@ -2,6 +2,9 @@
 
 CInterface CInterface::InterfaceControl;
 
+//Interface Surface
+SDL_Surface* CInterface::Surf_MenuButton = NULL;
+
 CInterface::CInterface() {}
 
 bool CInterface::OnLoad(GameState eGameState)
@@ -43,7 +46,20 @@ void CInterface::OnCleanup()
 		SDL_FreeSurface(Surf_BackGround);
 	}
 
+    if(Surf_MenuButton) 
+	{
+		SDL_FreeSurface(Surf_MenuButton);
+	}
+
+    Surf_MenuButton = NULL;
 	Surf_BackGround = NULL;
+
+    //for(int i = 0;i < CButton::ButtonList.size();i++) 
+    //{
+    //    if(!CButton::ButtonList[i]) continue;
+
+    //    CButton::ButtonList[i]->OnCleanup();
+    //}
 
 	CButton::ButtonList.clear();
 }
@@ -71,6 +87,11 @@ bool CInterface::LoadSurface()
 		{
 			return false;
 		}
+
+		if((Surf_MenuButton = CSurface::OnLoad("./menu/menu_buttons.png")) == NULL) 
+		{
+			return false;
+		}  
 	}
 
 	return true;
@@ -84,9 +105,9 @@ bool CInterface::LoadButtons()
 	{
 		case MAIN_MENU:
 		{
-			for(int i=0; i<1; ++i)
+			for(int i=0; i<2; ++i)
 			{
-				CButton Button;
+				CButton *Button = new CButton();
 
 				switch(i)
 				{
@@ -94,9 +115,10 @@ bool CInterface::LoadButtons()
 					case 1: Type = BUTTON_QUIT; break;
 				}
 					
-				Button.OnLoad(Type);
+				if(Button->OnLoad(Type) == false)
+                    return false;
 
-				CButton::ButtonList.push_back(&Button);
+				CButton::ButtonList.push_back(Button);
 			}
 
 			break;

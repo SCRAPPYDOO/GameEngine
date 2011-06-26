@@ -17,6 +17,8 @@ class CInterface
 
         SDL_Surface*						Surf_BackGround;
 
+        static SDL_Surface*                 Surf_MenuButton;
+
         static CInterface					InterfaceControl;
 
 	public:

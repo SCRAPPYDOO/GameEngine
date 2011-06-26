@@ -15,6 +15,7 @@
 #include "CPlayer.h"
 #include "CObject.h"
 #include "CInterface.h"
+#include "CButton.h"
 
 class CEntity;
 

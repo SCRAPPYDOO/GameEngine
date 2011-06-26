@@ -13,7 +13,6 @@ enum GameState
 {
 	MAIN_MENU = 1,
 	TEST,
-
 };
 
 #endif

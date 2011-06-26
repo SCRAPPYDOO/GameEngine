@@ -4,7 +4,8 @@
 #include <SDL.h>
 #include <SDL_image.h>
 
-class CSurface {
+class CSurface 
+{
 	public:
 		CSurface();
 
