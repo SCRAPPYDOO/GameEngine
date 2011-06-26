@@ -95,7 +95,6 @@ void CEntity::OnRender(SDL_Surface* Surf_Display)
     if(Surf_Entity == NULL || Surf_Display == NULL) return;
 
     CSurface::OnDraw(Surf_Display, Surf_Entity, GetAnimPosX(), GetAnimPosY(), CurrentFrameCol * Width, (CurrentFrameRow + Anim_Control.GetCurrentFrame()) * Height, Width, Height);
-	//CSurface::OnDraw(Surf_Display, CSurface::Surf_Colision, GetAnimPosX(), Y - (static_cast<int>(0.5 * Width)) - CCamera::CameraControl.GetY());
 }
 
 void CEntity::OnCollision(CEntity* Entity) {}

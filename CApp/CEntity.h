@@ -50,7 +50,6 @@ class CEntity
         CAnimation      Anim_Control;
 
         SDL_Surface*    Surf_Entity;
-		//SDL_Surface* Surf_Colision;
 
     public:
         float           X;

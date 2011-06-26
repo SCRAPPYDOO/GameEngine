@@ -15,30 +15,29 @@ bool CApp::OnInit()
     if(CArea::AreaControl.OnLoad("./maps/1.area") == false) 
     	return false;
 
-    if(CInterface::InterfaceControl.OnLoad() == false)
+    if(CInterface::InterfaceControl.OnLoad(eGameState) == false)
         return false;
 
-	CSurface::Surf_Colision = CSurface::OnLoad("colisioncircle.png");
+	/*
+	CSurface::Surf_Colision = CSurface::OnLoad("./test/colisioncircle.png");  //test colision circle
 	if(CSurface::Surf_Colision == NULL)
 		return false;
+		*/
 
-    //SDL_EnableKeyRepeat(1, SDL_DEFAULT_REPEAT_INTERVAL / 3);
-
-    if(Player.OnLoad("1.png", 64, 64, 8) == false) 
+	/*
+    if(Player.OnLoad("./anim/1.png", 64, 64, 8) == false) 
     {
         return false;
     }
 
-    if(Player2.OnLoad("1.png", 64, 64, 8) == false)
+    if(Player2.OnLoad("./anim/1.png", 64, 64, 8) == false)
     {
         return false;
     }
 
     CEntity::EntityList.push_back(&Player);
     CEntity::EntityList.push_back(&Player2);
-
-    //CCamera::CameraControl.TargetMode = TARGET_MODE_CENTER;
-    //CCamera::CameraControl.SetTarget(&Player.X, &Player.Y);
+	*/
 
     return true;
 }

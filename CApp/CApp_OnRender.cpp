@@ -10,7 +10,7 @@ void CApp::OnRender()
 
 	SDL_FillRect(Surf_Display, &Rect, 0);
 
-	CArea::AreaControl.OnRender(Surf_Display, -CCamera::CameraControl.GetX(), -CCamera::CameraControl.GetY());
+	//CArea::AreaControl.OnRender(Surf_Display, -CCamera::CameraControl.GetX(), -CCamera::CameraControl.GetY());
 
     // Objects
     for(int i = 0;i < CObject::ObjectList.size();i++) 
@@ -27,7 +27,7 @@ void CApp::OnRender()
         CEntity::EntityList[i]->OnRender(Surf_Display);
     }
 
-    CInterface::InterfaceControl.OnRender(Surf_Display, -CCamera::CameraControl.GetX(), -CCamera::CameraControl.GetY());
+    CInterface::InterfaceControl.OnRender(Surf_Display);
 
 	SDL_Flip(Surf_Display);
 }

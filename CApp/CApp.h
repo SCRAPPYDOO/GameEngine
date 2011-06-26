@@ -25,6 +25,8 @@ class CApp : public CEvent
 
         SDL_Surface*    Surf_Display;
 
+		GameState		eGameState;
+
         CPlayer Player;
         CPlayer Player2;
 

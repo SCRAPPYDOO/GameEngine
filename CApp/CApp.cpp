@@ -2,12 +2,14 @@
 
 CApp::CApp() 
 {
-    Surf_Display = NULL;
+    Surf_Display = NULL;			//Main Window
+
+	eGameState   = MAIN_MENU;		//Interface Mod
 
     pSelectedUnit = NULL;
     pSelectedTarget = NULL;
 
-    Running = true;
+    Running = true;					//Main Loop
 }
 
 int CApp::OnExecute() 
@@ -26,7 +28,6 @@ int CApp::OnExecute()
             OnEvent(&Event);
         }
 
-        OnKeyState(); //Handle Key States -> camera movement 
         OnLoop();
         OnRender();
     }

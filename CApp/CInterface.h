@@ -4,50 +4,38 @@
 #include <SDL.h>
 #include <vector>
 
+#include "Define.h"
 #include "CSurface.h"
+#include "CButton.h"
 
-class CButton 
-{
-	public:
-		int x;
-        int y;
-        int w;
-        int h;
-
-
-};
+#define MAX_MENU_BUTTONS 2
 
 class CInterface 
 {
 	public:
-		SDL_Surface*			Surf_ButtonSet;
-        SDL_Surface*            Surf_BackGround;
+		GameState							eGameState;
 
-        static CInterface InterfaceControl;
+        SDL_Surface*						Surf_BackGround;
 
-	private:
-		std::vector<CButton*>      ButtonList;
+        static CInterface					InterfaceControl;
 
 	public:
-        CInterface() {}
-        ~CInterface() {}
-    public:
-        int x;
-        int y;
-        int w;
-        int h;
+        CInterface();
+        virtual ~CInterface() {}
 
 	public:
-        bool OnLoad();
-
+        virtual bool OnLoad(GameState eGameState);
+			
         bool OnEvent(int x, int y);
 
-        void OnLoop();
+        virtual void OnRender(SDL_Surface* Surf_Display);
 
-        void OnRender(SDL_Surface* Surf_Display, int MapX, int MapY);
+        virtual void OnCleanup();
 
-        void OnCleanup();
-
+	public:
+		bool LoadInterface(GameState eGameState);
+		bool LoadSurface();
+		bool LoadButtons();
 };
 
 #endif
