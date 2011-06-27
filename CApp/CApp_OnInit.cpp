@@ -12,10 +12,10 @@ bool CApp::OnInit()
         return false;
     }
 
-    if(CArea::AreaControl.OnLoad("./maps/1.area") == false) 
-    	return false;
+ /*   if(CArea::AreaControl.OnLoad("./maps/1.area") == false) 
+    	return false;*/
 
-    if(CInterface::InterfaceControl.OnLoad(eGameState) == false)
+    if(CInterface::InterfaceControl.OnLoad() == false)
         return false;
 
 	/*

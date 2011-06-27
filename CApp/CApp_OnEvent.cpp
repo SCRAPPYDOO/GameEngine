@@ -5,34 +5,13 @@ void CApp::OnEvent(SDL_Event* Event)
     CEvent::OnEvent(Event);
 }
 
-void CApp::OnKeyState()
-{
-    //Get the keystates
-    Uint8 *keystates = SDL_GetKeyState( NULL );
-
-    if( keystates[ SDLK_UP ] )
-    {
-        CCamera::CameraControl.OnMove( 0,  -5);
-    }
-
-    if( keystates[ SDLK_DOWN ] )
-    {
-        CCamera::CameraControl.OnMove( 0, 5);
-    }
-
-    if( keystates[ SDLK_LEFT ] )
-    {
-        CCamera::CameraControl.OnMove( -5,  0);
-    }
-
-    if( keystates[ SDLK_RIGHT ] )
-    {
-        CCamera::CameraControl.OnMove(5,  0);
-    }
-}
-
 void CApp::OnKeyDown(SDLKey sym, SDLMod mod, Uint16 unicode) 
 {
+    switch(sym)
+    {
+        case SDLK_ESCAPE: CInterface::InterfaceControl.ShowGameMenu = true;
+
+    }
 }
 
 void CApp::OnKeyUp(SDLKey sym, SDLMod mod, Uint16 unicode) 
@@ -41,6 +20,9 @@ void CApp::OnKeyUp(SDLKey sym, SDLMod mod, Uint16 unicode)
 
 void CApp::OnRButtonDown(int x,int y)
 {
+    if(CApp::eGameState == MAIN_MENU) //We Dont Use RButton In Menu                                       
+        return;
+
     if(pSelectedUnit != NULL) 
     {
         CEntity* pEntity = GetEntity(x,y);
@@ -80,26 +62,41 @@ void CApp::OnRButtonDown(int x,int y)
 
 void CApp::OnLButtonDown(int x,int y)
 {
-    if(CInterface::InterfaceControl.OnEvent(x,y))
-        return;
-
-    CEntity* pEntity = GetEntity(x,y);
-
-    if(pEntity && pEntity->Type == ENTITY_TYPE_PLAYER)
+    switch(CApp::eGameState)
     {
-        if(pSelectedUnit == pEntity)
-            return;
+        case MAIN_MENU:
+        {
+            CInterface::InterfaceControl.OnEvent(x,y);
+            break;
+        }
+
+        case TEST:
+        {
+            if(CInterface::InterfaceControl.OnEvent(x,y))
+                break;
+
+            CEntity* pEntity = GetEntity(x,y);
+
+            if(pEntity && pEntity->Type == ENTITY_TYPE_PLAYER)
+            {
+                if(pSelectedUnit == pEntity)
+                    return;
                 
-        pSelectedUnit = pEntity;
-            return;
-    }
-    else
-    {
-        if(pSelectedTarget == pEntity)
-            return;
+                pSelectedUnit = pEntity;
+                    return;
+            }
+            else
+            {
+                if(pSelectedTarget == pEntity)
+                    return;
 
-        pSelectedTarget = pEntity;
+                pSelectedTarget = pEntity;
+            }
+
+            break;
+        }
     }
+    return;
 }
 
 void CApp::OnExit() 

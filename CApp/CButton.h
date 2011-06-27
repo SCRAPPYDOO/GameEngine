@@ -8,9 +8,9 @@
 
 enum ButtonType
 {
-	BUTTON_DEFAULT	= 0,
-	BUTTON_PLAY		= 1,
-	BUTTON_QUIT		= 2,
+	BUTTON_DEFAULT	= 99,
+	BUTTON_PLAY		= 0,
+	BUTTON_QUIT		= 1,
 };
 
 class CButton
@@ -27,6 +27,7 @@ class CButton
         int y;
         int w;
         int h;
+        int nAnimationState;
 
 	public:
 		bool OnLoad(ButtonType eType);
@@ -34,6 +35,14 @@ class CButton
 		void OnRender(SDL_Surface* Surf_Display);
 
         void OnCleanup();
+
+        int GetPosX() { return x; }
+        int GetPosY() { return y; }
+        int GetPosW() { return w; }
+        int GetPosH() { return h; }
+        ButtonType GetButtonType() { return eType; }
+
+        void Activate();
 };
 
 #endif

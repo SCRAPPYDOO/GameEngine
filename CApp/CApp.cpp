@@ -1,5 +1,7 @@
 #include "CApp.h"
 
+GameState CApp::eGameState;
+
 CApp::CApp() 
 {
     Surf_Display = NULL;			//Main Window

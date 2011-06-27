@@ -21,12 +21,15 @@ class CEntity;
 
 class CApp : public CEvent 
 {
+    public:
+        static GameState eGameState;
+
     private:
         bool            Running;
 
         SDL_Surface*    Surf_Display;
 
-		GameState		eGameState;
+		
 
         CPlayer Player;
         CPlayer Player2;

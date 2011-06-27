@@ -10,21 +10,27 @@ void CApp::OnRender()
 
 	SDL_FillRect(Surf_Display, &Rect, 0);
 
-	//CArea::AreaControl.OnRender(Surf_Display, -CCamera::CameraControl.GetX(), -CCamera::CameraControl.GetY());
-
-    // Objects
-    for(int i = 0;i < CObject::ObjectList.size();i++) 
+    switch(eGameState)
     {
-        if(!CObject::ObjectList[i]) continue;
+        case TEST:
+        {
+	        CArea::AreaControl.OnRender(Surf_Display, -CCamera::CameraControl.GetX(), -CCamera::CameraControl.GetY());
 
-        CObject::ObjectList[i]->OnRender(Surf_Display);
-    }
+            // Objects
+            for(int i = 0;i < CObject::ObjectList.size();i++) 
+            {
+                if(!CObject::ObjectList[i]) continue;
 
-    for(int i = 0;i < CEntity::EntityList.size();i++) 
-	{
-        if(!CEntity::EntityList[i]) continue;
+                CObject::ObjectList[i]->OnRender(Surf_Display);
+            }
 
-        CEntity::EntityList[i]->OnRender(Surf_Display);
+            for(int i = 0;i < CEntity::EntityList.size();i++) 
+	        {
+                if(!CEntity::EntityList[i]) continue;
+
+                CEntity::EntityList[i]->OnRender(Surf_Display);
+            }                       
+        }
     }
 
     CInterface::InterfaceControl.OnRender(Surf_Display);
