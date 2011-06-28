@@ -2,6 +2,8 @@
 
 GameState CApp::eGameState;
 
+CEntity* CApp::pSelectedUnit;
+
 CApp::CApp() 
 {
     Surf_Display = NULL;			//Main Window

@@ -24,18 +24,13 @@ class CApp : public CEvent
     public:
         static GameState eGameState;
 
+        static CEntity* pSelectedUnit;
+        CEntity* pSelectedTarget;
+
     private:
         bool            Running;
 
         SDL_Surface*    Surf_Display;
-
-		
-
-        CPlayer Player;
-        CPlayer Player2;
-
-        CEntity* pSelectedUnit;
-        CEntity* pSelectedTarget;
     public:
         CApp();
 

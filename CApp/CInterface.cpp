@@ -1,9 +1,8 @@
 #include "CInterface.h"
+#include "CUnitInfoPanel.h"
 
 CInterface CInterface::InterfaceControl;
-
-//Interface Surface
-SDL_Surface* CInterface::Surf_MenuButton = NULL;
+std::vector<CInterface*> CInterface::InterfaceObjectList;
 
 CInterface::CInterface() 
 {
@@ -50,12 +49,22 @@ void CInterface::OnRender(SDL_Surface* Surf_Display)
         case MAIN_MENU:
         {
 	        CSurface::OnDraw(Surf_Display, Surf_BackGround, 0, 0); //render BackGround
+            break;
         }
 
         case TEST:
         {
+            for(int i = 0;i < InterfaceObjectList.size();i++) 
+            {   
+                if(!InterfaceObjectList[i]) continue;
+                
+                InterfaceObjectList[i]->OnRender(Surf_Display);
+            }
+
             if(ShowGameMenu)
 	            CSurface::OnDraw(Surf_Display, Surf_GameMenuBackGround, 500, 100); //render BackGround
+
+            break;
         }
 
         default: break;
@@ -100,11 +109,33 @@ bool CInterface::LoadInterface()
 	if(LoadButtons() == false)
 		return false;
 
+    CUnitInfoPanel* pUnitInfoPanel = new CUnitInfoPanel();
+    if(pUnitInfoPanel->OnLoad() == false)
+        return false;
+
+    InterfaceObjectList.push_back(pUnitInfoPanel);
+
 	return true;
 }
 
 bool CInterface::LoadSurface()
 {
+    //Zaladuj Surfacy dla
+    /*
+    Okno Playera Pasek HP Imie, Mana
+    Okno Targetu -||-
+
+    Pasek Skili  10 miejsc na  kazdym przypisany guzik
+    Mapa
+    
+    
+
+    
+    */
+
+
+
+
     if((Surf_BackGround = CSurface::OnLoad("./menu/menu_background.png")) == NULL) 
 	{
 	    return false;
@@ -119,7 +150,7 @@ bool CInterface::LoadSurface()
 	{
 	    return false;
 	}  
-
+     
 	return true;
 }
 

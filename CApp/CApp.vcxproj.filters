@@ -78,6 +78,9 @@
     <ClCompile Include="CInterface.cpp">
       <Filter>Interface</Filter>
     </ClCompile>
+    <ClCompile Include="CUnitInfoPanel.cpp">
+      <Filter>Interface</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CAnimation.h">
@@ -126,6 +129,9 @@
       <Filter>Interface</Filter>
     </ClInclude>
     <ClInclude Include="CInterface.h">
+      <Filter>Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="CUnitInfoPanel.h">
       <Filter>Interface</Filter>
     </ClInclude>
   </ItemGroup>

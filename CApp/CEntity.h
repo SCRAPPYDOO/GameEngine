@@ -39,13 +39,9 @@ struct Surface
 
 class CEntity 
 {
-	private:
-	//Surface EntitySurface;
-
     public:
         static std::vector<CEntity*>    EntityList;
 
-        
     protected:
         CAnimation      Anim_Control;
 

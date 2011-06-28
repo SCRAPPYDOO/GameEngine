@@ -85,6 +85,7 @@
     <ClCompile Include="CPlayer.cpp" />
     <ClCompile Include="CSurface.cpp" />
     <ClCompile Include="CTile.cpp" />
+    <ClCompile Include="CUnitInfoPanel.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CAnimation.h" />
@@ -102,6 +103,7 @@
     <ClInclude Include="CPlayer.h" />
     <ClInclude Include="CSurface.h" />
     <ClInclude Include="CTile.h" />
+    <ClInclude Include="CUnitInfoPanel.h" />
     <ClInclude Include="Define.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

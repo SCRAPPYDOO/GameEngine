@@ -14,13 +14,14 @@
 class CInterface 
 {
 	public:
+        static CInterface					InterfaceControl;
+        static std::vector<CInterface*>     InterfaceObjectList;
+
         SDL_Surface*						Surf_BackGround;
 
-        static SDL_Surface*                 Surf_MenuButton;
+        SDL_Surface*                        Surf_MenuButton;
         static SDL_Surface*                 Surf_GameMenuButton;
         SDL_Surface*                        Surf_GameMenuBackGround;
-
-        static CInterface					InterfaceControl;
 
         bool ShowGameMenu;
 
@@ -41,6 +42,37 @@ class CInterface
 		bool LoadInterface();
 		bool LoadSurface();
 		bool LoadButtons();
+};
+
+class CButtonPanel : public CInterface
+{
+    public:
+        CButtonPanel()
+        {
+            nPosX = 100;
+            nPoxY = 100;
+            nWeight = 600;
+            nHight = 30;
+
+            Surf_ButtonPanel = NULL;
+        }
+
+        ~CButtonPanel() {}
+
+        SDL_Surface* Surf_ButtonPanel;
+
+    public:
+        int nPosX;
+        int nPoxY;
+        int nWeight;
+        int nHight;
+
+    public:
+        bool OnLoad()
+        {
+
+
+        }
 };
 
 #endif

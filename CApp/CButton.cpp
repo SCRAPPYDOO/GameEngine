@@ -47,7 +47,7 @@ bool CButton::OnLoad(ButtonType eType)
 
 void CButton::OnRender(SDL_Surface* Surf_Display)
 {
-	CSurface::OnDraw(Surf_Display, CInterface::Surf_MenuButton, x, y, w*nAnimationState, h*static_cast<int>(eType), w, h);
+	CSurface::OnDraw(Surf_Display, CInterface::InterfaceControl.Surf_MenuButton, x, y, w*nAnimationState, h*static_cast<int>(eType), w, h);
 }
 
 void CButton::Activate()
