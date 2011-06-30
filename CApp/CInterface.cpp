@@ -1,5 +1,7 @@
 #include "CInterface.h"
 #include "CUnitInfoPanel.h"
+#include "CButtonPanel.h"
+#include "CGameMenu.h"
 
 CInterface CInterface::InterfaceControl;
 std::vector<CInterface*> CInterface::InterfaceObjectList;
@@ -14,30 +16,10 @@ bool CInterface::OnLoad()
     if(LoadSurface() == false)
 		return false;
 
-	if(LoadInterface() == false)
+	if(LoadButtons() == false)
 		return false;
 
     return true;
-}
-
-    //sprawdz czy jestemy na  polu interfacu
-    // jezlei nie return true;
-    //sprawdz wszytkie buttony  interfacu czy sa  na  x y i wstaw  button do on loop
-
-bool CInterface::OnEvent(int x, int y)
-{
-    for(int i = 0;i < CButton::ButtonList.size();i++) 
-	{
-        if(!CButton::ButtonList[i]) continue;
-
-		if( ( x > CButton::ButtonList[i]->GetPosX() ) && ( x < CButton::ButtonList[i]->GetPosX() + CButton::ButtonList[i]->GetPosW()) && ( y > CButton::ButtonList[i]->GetPosY() ) && ( y < CButton::ButtonList[i]->GetPosY() + CButton::ButtonList[i]->GetPosH() ) )
-        {
-            CButton::ButtonList[i]->Activate();
-            return true;
-        }
-    }
-
-    return false;
 }
 
 void CInterface::OnRender(SDL_Surface* Surf_Display)
@@ -61,9 +43,6 @@ void CInterface::OnRender(SDL_Surface* Surf_Display)
                 InterfaceObjectList[i]->OnRender(Surf_Display);
             }
 
-            if(ShowGameMenu)
-	            CSurface::OnDraw(Surf_Display, Surf_GameMenuBackGround, 500, 100); //render BackGround
-
             break;
         }
 
@@ -81,76 +60,95 @@ void CInterface::OnRender(SDL_Surface* Surf_Display)
 void CInterface::OnCleanup()
 {
 	if(Surf_BackGround) 
-	{
 		SDL_FreeSurface(Surf_BackGround);
-	}
 
     if(Surf_MenuButton) 
-	{
 		SDL_FreeSurface(Surf_MenuButton);
-	}
 
     Surf_MenuButton = NULL;
 	Surf_BackGround = NULL;
 
-    //Not Used 4 Now
-    //for(int i = 0;i < CButton::ButtonList.size();i++) 
-    //{
-    //    if(!CButton::ButtonList[i]) continue;
+    for(int i = 0;i < InterfaceObjectList.size();i++) 
+    {
+        if(!InterfaceObjectList[i]) continue;
 
-    //    CButton::ButtonList[i]->OnCleanup();
-    //}
+        InterfaceObjectList[i]->OnCleanup();
+    }
 
+    InterfaceObjectList.clear();
 	CButton::ButtonList.clear();
+}
+
+bool CInterface::OnLButtonUp(int x, int y)
+{
+    for(int i = 0;i < CButton::ButtonList.size();i++) 
+	{
+        if(!CButton::ButtonList[i]) continue;
+
+		if( ( x > CButton::ButtonList[i]->GetPosX() ) && ( x < CButton::ButtonList[i]->GetPosX() + CButton::ButtonList[i]->GetPosW()) && ( y > CButton::ButtonList[i]->GetPosY() ) && ( y < CButton::ButtonList[i]->GetPosY() + CButton::ButtonList[i]->GetPosH() ) )
+        {
+            CButton::ButtonList[i]->Activate();
+            return true;
+        }
+    }
+
+    return false;
+}
+
+CInterface* CInterface::GetInterface(int nPosX, int nPosY)
+{
+    CInterface* pInterface = NULL;
+
+    for(int i = 0;i < InterfaceObjectList.size();i++) 
+    {   
+        if(!InterfaceObjectList[i]) continue;
+                
+        if( ( nPosX > InterfaceObjectList[i]->GetPosX() ) && ( nPosX < InterfaceObjectList[i]->GetPosX() + InterfaceObjectList[i]->GetWidht()) && ( nPosY > InterfaceObjectList[i]->GetPosY() ) && ( nPosY < InterfaceObjectList[i]->GetPosY() + InterfaceObjectList[i]->GetHeight() ) )
+        {
+            pInterface = InterfaceObjectList[i];
+            break;
+        }
+    }
+
+    return pInterface;
 }
 
 bool CInterface::LoadInterface()
 {
+    InterfaceObjectList.clear();
+
 	if(LoadButtons() == false)
 		return false;
 
     CUnitInfoPanel* pUnitInfoPanel = new CUnitInfoPanel();
-    if(pUnitInfoPanel->OnLoad() == false)
+    if(pUnitInfoPanel && pUnitInfoPanel->OnLoad() == false)
         return false;
 
     InterfaceObjectList.push_back(pUnitInfoPanel);
+
+    CButtonPanel* pButtonPanel = new CButtonPanel();
+    if(pButtonPanel && pButtonPanel->OnLoad() == false)
+        return false;
+
+    InterfaceObjectList.push_back(pButtonPanel);
+
+    CGameMenu* pGameMenu = new CGameMenu();
+    if(pGameMenu && pGameMenu->OnLoad() == false)
+        return false;
+
+    InterfaceObjectList.push_back(pGameMenu);
 
 	return true;
 }
 
 bool CInterface::LoadSurface()
 {
-    //Zaladuj Surfacy dla
-    /*
-    Okno Playera Pasek HP Imie, Mana
-    Okno Targetu -||-
-
-    Pasek Skili  10 miejsc na  kazdym przypisany guzik
-    Mapa
-    
-    
-
-    
-    */
-
-
-
-
     if((Surf_BackGround = CSurface::OnLoad("./menu/menu_background.png")) == NULL) 
-	{
 	    return false;
-	}
 
 	if((Surf_MenuButton = CSurface::OnLoad("./menu/menu_buttons.png")) == NULL) 
-	{
 	    return false;
-	}  
 
-    if((Surf_GameMenuBackGround = CSurface::OnLoad("./menu/menu_gamebackground.png")) == NULL) 
-	{
-	    return false;
-	}  
-     
 	return true;
 }
 
@@ -186,13 +184,6 @@ bool CInterface::LoadButtons()
         case TEST:
         {
 
-
-
-
-
-
-
-
             break;
         }
 
@@ -208,4 +199,16 @@ bool CInterface::LoadButtons()
 	return true;
 }
 
+void CInterface::CleanUpInterface()
+{
+    for(int i = 0;i < InterfaceObjectList.size();i++) 
+    {
+        if(!InterfaceObjectList[i]) continue;
+
+        InterfaceObjectList[i]->OnCleanup();
+    }
+
+    InterfaceObjectList.clear();
+	CButton::ButtonList.clear();
+}
 

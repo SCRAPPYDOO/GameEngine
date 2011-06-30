@@ -4,8 +4,8 @@ CUnitInfoPanel::CUnitInfoPanel()
 {
     nPosX = 5;
     nPosY = 5;
-    nWeight = 600;
-    nHight = 30;
+    nWidht = 600;
+    nHeight = 30;
 
     Surf_UnitInfoPanel = NULL;
     Surf_UnitStatus = NULL;
@@ -22,7 +22,7 @@ bool CUnitInfoPanel::OnLoad()
     return true;
 }
 
- void CUnitInfoPanel::OnRender(SDL_Surface* Surf_Display)
+void CUnitInfoPanel::OnRender(SDL_Surface* Surf_Display)
 {
     if(Surf_UnitInfoPanel == NULL || Surf_UnitStatus == NULL || Surf_Display == NULL) return;
     
@@ -40,4 +40,16 @@ bool CUnitInfoPanel::OnLoad()
 
         //Show Name Lvl Etc.
     }
+}
+
+void CUnitInfoPanel::OnCleanup()
+{
+	if(Surf_UnitInfoPanel) 
+		SDL_FreeSurface(Surf_UnitInfoPanel);
+
+    if(Surf_UnitStatus) 
+		SDL_FreeSurface(Surf_UnitStatus);
+
+    Surf_UnitInfoPanel = NULL;
+	Surf_UnitStatus = NULL;
 }

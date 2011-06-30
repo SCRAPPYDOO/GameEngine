@@ -2,13 +2,18 @@
 
 GameState CApp::eGameState;
 
-CEntity* CApp::pSelectedUnit;
+CInterface*     CApp::pSelectedInterface;
+CButton*        CApp::pSelectedButton;
+CEntity*        CApp::pSelectedUnit;
 
 CApp::CApp() 
 {
     Surf_Display = NULL;			//Main Window
 
 	eGameState   = MAIN_MENU;		//Interface Mod
+
+    pSelectedInterface = NULL;
+    pSelectedButton = NULL;
 
     pSelectedUnit = NULL;
     pSelectedTarget = NULL;

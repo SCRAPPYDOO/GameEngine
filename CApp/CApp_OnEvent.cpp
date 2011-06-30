@@ -9,13 +9,28 @@ void CApp::OnKeyDown(SDLKey sym, SDLMod mod, Uint16 unicode)
 {
     switch(sym)
     {
-        case SDLK_ESCAPE: CInterface::InterfaceControl.ShowGameMenu = true;
+        case SDLK_ESCAPE: 
+        {
+            if(!CInterface::InterfaceControl.ShowGameMenu)
+                CInterface::InterfaceControl.ShowGameMenu = true;
+            else
+                CInterface::InterfaceControl.ShowGameMenu = false;
 
+            break;
+        }
     }
 }
 
 void CApp::OnKeyUp(SDLKey sym, SDLMod mod, Uint16 unicode) 
 {
+}
+
+void CApp::OnMouseMove(int mX, int mY, int relX, int relY, bool Left,bool Right,bool Middle)
+{ 
+    if(Left && pSelectedInterface != NULL)
+    {
+        pSelectedInterface->OnMove(mX + CCamera::CameraControl.GetX(), mY + CCamera::CameraControl.GetY());
+    }
 }
 
 void CApp::OnRButtonDown(int x,int y)
@@ -66,14 +81,22 @@ void CApp::OnLButtonDown(int x,int y)
     {
         case MAIN_MENU:
         {
-            CInterface::InterfaceControl.OnEvent(x,y);
             break;
         }
 
         case TEST:
         {
-            if(CInterface::InterfaceControl.OnEvent(x,y))
+            /*
+            if(pSelectedButton = CInterface::InterfaceControl.GetInterface(x,y));
                 break;
+                */
+
+            if(pSelectedInterface = CInterface::InterfaceControl.GetInterface(x,y));
+                if(pSelectedInterface != NULL)
+                {
+                    pSelectedInterface->SetDistance(x,y);
+                    break;
+                }
 
             CEntity* pEntity = GetEntity(x,y);
 
@@ -95,8 +118,18 @@ void CApp::OnLButtonDown(int x,int y)
 
             break;
         }
+
+        default: break;
     }
     return;
+}
+
+void CApp::OnLButtonUp(int x,int y)
+{
+    pSelectedInterface = NULL;
+
+    if(CInterface::InterfaceControl.OnLButtonUp(x,y))
+        return;
 }
 
 void CApp::OnExit() 

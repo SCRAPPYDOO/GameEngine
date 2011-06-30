@@ -19,15 +19,9 @@ class CUnitInfoPanel : public CInterface
         SDL_Surface* Surf_UnitStatus;
 
     public:
-        int nPosX;
-        int nPosY;
-        int nWeight;
-        int nHight;
-
-    public:
         bool OnLoad();
-
         void OnRender(SDL_Surface* Surf_Display);
+        void OnCleanup();
 };
 
 #endif

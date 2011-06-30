@@ -85,17 +85,24 @@ void CEvent::OnEvent(SDL_Event* Event)
 			break;
 		}
 
-		case SDL_MOUSEBUTTONUP:	{
-			switch(Event->button.button) {
-				case SDL_BUTTON_LEFT: {
+		case SDL_MOUSEBUTTONUP:	
+        {
+			switch(Event->button.button) 
+            {
+				case SDL_BUTTON_LEFT: 
+                {
 					OnLButtonUp(Event->button.x,Event->button.y);
 					break;
 				}
-				case SDL_BUTTON_RIGHT: {
+
+				case SDL_BUTTON_RIGHT: 
+                {
 					OnRButtonUp(Event->button.x,Event->button.y);
 					break;
 				}
-				case SDL_BUTTON_MIDDLE: {
+
+				case SDL_BUTTON_MIDDLE: 
+                {
 					OnMButtonUp(Event->button.x,Event->button.y);
 					break;
 				}
@@ -158,31 +165,16 @@ void CEvent::OnInputFocus() { }
 
 void CEvent::OnInputBlur() { }
 
-void CEvent::OnKeyDown(SDLKey sym, SDLMod mod, Uint16 unicode) {
-	//Pure virtual, do nothing
-}
+void CEvent::OnKeyDown(SDLKey sym, SDLMod mod, Uint16 unicode) { }
 
-//------------------------------------------------------------------------------
-void CEvent::OnKeyUp(SDLKey sym, SDLMod mod, Uint16 unicode) {
-	//Pure virtual, do nothing
-}
+void CEvent::OnKeyUp(SDLKey sym, SDLMod mod, Uint16 unicode) { }
 
-//------------------------------------------------------------------------------
-void CEvent::OnMouseFocus() {
-	//Pure virtual, do nothing
-}
+void CEvent::OnMouseFocus() { }
 
-//------------------------------------------------------------------------------
-void CEvent::OnMouseBlur() {
-	//Pure virtual, do nothing
-}
+void CEvent::OnMouseBlur() { }
 
-//------------------------------------------------------------------------------
-void CEvent::OnMouseMove(int mX, int mY, int relX, int relY, bool Left,bool Right,bool Middle) {
-	//Pure virtual, do nothing
-}
+void CEvent::OnMouseMove(int mX, int mY, int relX, int relY, bool Left,bool Right,bool Middle) { }
 
-//------------------------------------------------------------------------------
 void CEvent::OnMouseWheel(bool Up, bool Down) {
 	//Pure virtual, do nothing
 }

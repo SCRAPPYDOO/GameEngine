@@ -1,4 +1,4 @@
-﻿Build started 2011-06-28 23:24:47.
+﻿Build started 2011-06-30 18:32:09.
      1>Project "D:\CApp\CApp\CApp.vcxproj" on node 2 (build target(s)).
      1>InitializeBuildStatus:
          Creating "Release\CApp.unsuccessfulbuild" because "AlwaysCreate" was specified.
@@ -14,4 +14,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:00.11
+Time Elapsed 00:00:00.05

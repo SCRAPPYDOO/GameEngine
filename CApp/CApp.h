@@ -18,11 +18,16 @@
 #include "CButton.h"
 
 class CEntity;
+class CInterface;
+class CButton;
 
 class CApp : public CEvent 
 {
     public:
         static GameState eGameState;
+
+        static CInterface* pSelectedInterface;
+        static CButton* pSelectedButton;
 
         static CEntity* pSelectedUnit;
         CEntity* pSelectedTarget;
@@ -46,8 +51,11 @@ class CApp : public CEvent
         	void OnKeyDown(SDLKey sym, SDLMod mod, Uint16 unicode);
             void OnKeyUp(SDLKey sym, SDLMod mod, Uint16 unicode);
 
+            void OnMouseMove(int mX, int mY, int relX, int relY, bool Left,bool Right,bool Middle);
+
 			void OnRButtonDown(int x,int y);
 			void OnLButtonDown(int x,int y);
+            void OnLButtonUp(int x,int y);
 
             void OnExit();
 

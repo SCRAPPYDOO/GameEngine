@@ -10,6 +10,21 @@
 #include "CApp.h"
 
 #define MAX_MENU_BUTTONS 2
+#define MAX_PANEL_BUTTONS 10
+
+enum SurfaceType
+{
+    Surf_MenuBackGround = 0,
+    Surf_MenuButton     = 1,
+    Surf_GameMenu       = 2,
+    Surf_GameMenuButton = 3,
+};
+
+enum InterfaceType
+{
+    InterfaceType_PlayerIcon  = 10,
+    InterfaceType_ButtonPanel = 11,
+};
 
 class CInterface 
 {
@@ -21,9 +36,11 @@ class CInterface
 
         SDL_Surface*                        Surf_MenuButton;
         static SDL_Surface*                 Surf_GameMenuButton;
-        SDL_Surface*                        Surf_GameMenuBackGround;
 
         bool ShowGameMenu;
+
+    protected:
+        int nPosX, nPosY, nWidht, nHeight, nDistX, nDistY;
 
 	public:
         CInterface();
@@ -32,47 +49,37 @@ class CInterface
 	public:
         virtual bool OnLoad();
 			
-        bool OnEvent(int x, int y);
-
         virtual void OnRender(SDL_Surface* Surf_Display);
 
         virtual void OnCleanup();
 
+    public:
+        bool OnLButtonUp(int x, int y);
+
 	public:
+        CInterface* GetInterface(int nPosX, int nPosY);
+
+        virtual int GetPosX() { return nPosX;}
+        virtual int GetPosY() { return nPosY;}
+        virtual int GetWidht() { return nWidht;}
+        virtual int GetHeight() { return nHeight;}
+
+        virtual void OnMove(int nNextX, int nNextY) 
+        { 
+            nPosX = nNextX - nDistX;
+            nPosY = nNextY - nDistY;
+        }
+
+        virtual void SetDistance(int nX, int nY) //Used for proper update movement for interface panels
+        {
+            nDistX = nX - nPosX; 
+            nDistY = nY - nPosY;
+        }
+
 		bool LoadInterface();
 		bool LoadSurface();
 		bool LoadButtons();
-};
-
-class CButtonPanel : public CInterface
-{
-    public:
-        CButtonPanel()
-        {
-            nPosX = 100;
-            nPoxY = 100;
-            nWeight = 600;
-            nHight = 30;
-
-            Surf_ButtonPanel = NULL;
-        }
-
-        ~CButtonPanel() {}
-
-        SDL_Surface* Surf_ButtonPanel;
-
-    public:
-        int nPosX;
-        int nPoxY;
-        int nWeight;
-        int nHight;
-
-    public:
-        bool OnLoad()
-        {
-
-
-        }
+        void CleanUpInterface();
 };
 
 #endif

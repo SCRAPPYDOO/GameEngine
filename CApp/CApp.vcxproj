@@ -74,10 +74,12 @@
     <ClCompile Include="CApp_OnRender.cpp" />
     <ClCompile Include="CArea.cpp" />
     <ClCompile Include="CButton.cpp" />
+    <ClCompile Include="CButtonPanel.cpp" />
     <ClCompile Include="CCamera.cpp" />
     <ClCompile Include="CEntity.cpp" />
     <ClCompile Include="CEvent.cpp" />
     <ClCompile Include="CFrameControler.cpp" />
+    <ClCompile Include="CGameMenu.cpp" />
     <ClCompile Include="CInterface.cpp" />
     <ClCompile Include="CMap.cpp" />
     <ClCompile Include="CMovementGenerator.cpp" />
@@ -92,10 +94,12 @@
     <ClInclude Include="CApp.h" />
     <ClInclude Include="CArea.h" />
     <ClInclude Include="CButton.h" />
+    <ClInclude Include="CButtonPanel.h" />
     <ClInclude Include="CCamera.h" />
     <ClInclude Include="CEntity.h" />
     <ClInclude Include="CEvent.h" />
     <ClInclude Include="CFrameControler.h" />
+    <ClInclude Include="CGameMenu.h" />
     <ClInclude Include="CInterface.h" />
     <ClInclude Include="CMap.h" />
     <ClInclude Include="CMovementGenerator.h" />
