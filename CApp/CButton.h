@@ -16,6 +16,13 @@ enum ButtonType
     BUTTON_GAMEMENU_RESUME = 11,
 };
 
+enum ButtonState
+{
+    BUTTONSTATE_UNSELECTED = 0,
+    BUTTONSTATE_SELECTED   = 1,
+    BUTTONSTATE_MOVED      = 2, 
+};
+
 class CButton
 {
 	public:
@@ -24,9 +31,14 @@ class CButton
 
         ~CButton() {}
 
+        static CButton ButtonControl;
+
 		static std::vector<CButton*>    ButtonList;
-	
-	private:
+
+    public:
+        ButtonState eButtonState;
+
+    protected:
         SDL_Surface* pButtonSurface;
 
 		ButtonType eType;
@@ -36,6 +48,7 @@ class CButton
         int w;
         int h;
         int nAnimationState;
+        int nDistX, nDistY;
 
 	public:
 		bool OnLoad(ButtonType eType);
@@ -44,17 +57,33 @@ class CButton
 
         void OnCleanup();
 
+    public:
+        void Activate();
+        CButton* GetButton(int nX, int nY);
+
+        virtual void OnMove(int nNextX, int nNextY) 
+        { 
+            x = nNextX - nDistX;
+            y = nNextY - nDistY;
+        }
+
+        virtual void SetDistance(int nX, int nY) //Used for proper update movement for interface panels
+        {
+            nDistX = nX - x; 
+            nDistY = nY - y;
+        }
+
         int GetPosX() { return x; }
         int GetPosY() { return y; }
-        int GetPosW() { return w; }
-        int GetPosH() { return h; }
+        int GetWidht() { return w; }
+        int GetHeight() { return h; }
 
         void SetPositionX(int nValue) { x = nValue;}
         void SetPositionY(int nValue) { y = nValue;}
 
         ButtonType GetButtonType() { return eType; }
 
-        void Activate();
+       
 };
 
 #endif

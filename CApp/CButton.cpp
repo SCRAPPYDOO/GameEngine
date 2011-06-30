@@ -1,5 +1,6 @@
 #include "CButton.h"
 
+CButton CButton::ButtonControl;
 std::vector<CButton*> CButton::ButtonList;
 
 CButton::CButton()
@@ -10,6 +11,8 @@ CButton::CButton()
 	h = 0;
 
     pButtonSurface = NULL;
+
+    eButtonState = BUTTONSTATE_UNSELECTED;
 
 	eType = BUTTON_DEFAULT;
     nAnimationState = 0;
@@ -95,3 +98,22 @@ void CButton::Activate()
 		default: break;
 	}
 }
+
+CButton* CButton::GetButton(int nX, int nY)
+{
+    CButton* pButton = NULL;
+
+    for(int i = 0;i < ButtonList.size();i++) 
+    {   
+        if(!ButtonList[i]) continue;
+                
+        if( ( nX > ButtonList[i]->GetPosX() ) && ( nX < ButtonList[i]->GetPosX() + ButtonList[i]->GetWidht()) && ( nY > ButtonList[i]->GetPosY() ) && ( nY < ButtonList[i]->GetPosY() + ButtonList[i]->GetHeight() ) )
+        {
+            pButton = ButtonList[i];
+            break;
+        }
+    }
+
+    return pButton;
+}
+

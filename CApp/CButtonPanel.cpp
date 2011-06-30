@@ -69,3 +69,5 @@ void CButtonPanel::AddButton()
         CButton::ButtonList.push_back(pButton);
     }
 }
+
+//On LButtonUp(int nX, int nY

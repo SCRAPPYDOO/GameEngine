@@ -27,9 +27,31 @@ void CApp::OnKeyUp(SDLKey sym, SDLMod mod, Uint16 unicode)
 
 void CApp::OnMouseMove(int mX, int mY, int relX, int relY, bool Left,bool Right,bool Middle)
 { 
-    if(Left && pSelectedInterface != NULL)
+    switch(CApp::eGameState)
     {
-        pSelectedInterface->OnMove(mX + CCamera::CameraControl.GetX(), mY + CCamera::CameraControl.GetY());
+        case MAIN_MENU:
+        {
+            break;
+        }
+
+        case TEST:
+        {
+            if(Left)
+            {
+                if(pSelectedButton != NULL && (pSelectedButton->eButtonState == BUTTONSTATE_SELECTED || pSelectedButton->eButtonState == BUTTONSTATE_MOVED) )
+                {
+                    pSelectedButton->OnMove(mX, mY);
+                    pSelectedButton->eButtonState = BUTTONSTATE_MOVED;
+                    return;                
+                }
+            }
+
+            if(Left && pSelectedInterface != NULL)
+            {
+                pSelectedInterface->OnMove(mX, mY);
+                return;
+            }
+        }
     }
 }
 
@@ -81,17 +103,28 @@ void CApp::OnLButtonDown(int x,int y)
     {
         case MAIN_MENU:
         {
+            if(pSelectedButton = CButton::ButtonControl.GetButton(x, y))
+            {
+                if(pSelectedButton != NULL)
+                {
+                    pSelectedButton->eButtonState = BUTTONSTATE_SELECTED;
+                }
+            }
+
             break;
         }
 
         case TEST:
         {
-            /*
-            if(pSelectedButton = CInterface::InterfaceControl.GetInterface(x,y));
-                break;
-                */
-
-            if(pSelectedInterface = CInterface::InterfaceControl.GetInterface(x,y));
+            if(pSelectedButton = CButton::ButtonControl.GetButton(x, y))
+                if(pSelectedButton != NULL)
+                {
+                    pSelectedButton->eButtonState = BUTTONSTATE_SELECTED;
+                    pSelectedButton->SetDistance(x,y);
+                    break;
+                }
+                    
+            if(pSelectedInterface = CInterface::InterfaceControl.GetInterface(x,y))
                 if(pSelectedInterface != NULL)
                 {
                     pSelectedInterface->SetDistance(x,y);
@@ -126,10 +159,44 @@ void CApp::OnLButtonDown(int x,int y)
 
 void CApp::OnLButtonUp(int x,int y)
 {
-    pSelectedInterface = NULL;
+    switch(CApp::eGameState)
+    {
+        case MAIN_MENU:
+        {
+            if(pSelectedButton != NULL)
+            {
+                if(pSelectedButton->eButtonState == BUTTONSTATE_SELECTED)
+                {
+                    pSelectedButton->Activate();
+                }
+            }
 
-    if(CInterface::InterfaceControl.OnLButtonUp(x,y))
-        return;
+            break;
+        }
+
+        case TEST:
+        {
+            if(pSelectedButton != NULL)
+            {
+                if(pSelectedButton->eButtonState == BUTTONSTATE_SELECTED)
+                {
+                    pSelectedButton->Activate();
+                }
+
+                if(pSelectedButton->eButtonState == BUTTONSTATE_MOVED)
+                {
+                }
+
+                pSelectedButton->eButtonState = BUTTONSTATE_UNSELECTED;
+                pSelectedButton = NULL;
+            }
+
+            pSelectedInterface = NULL;
+
+            if(CInterface::InterfaceControl.OnLButtonUp(x,y))
+                return;
+        }
+    }
 }
 
 void CApp::OnExit() 
