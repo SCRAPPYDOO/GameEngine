@@ -27,6 +27,11 @@ void CApp::OnKeyUp(SDLKey sym, SDLMod mod, Uint16 unicode)
 
 void CApp::OnMouseMove(int mX, int mY, int relX, int relY, bool Left,bool Right,bool Middle)
 { 
+    CButton::ButtonControl.OnMouseMove(mX, mY, relX, relY, Left, Right, Middle); //Check Any Random Events on Mouse Motion Occured
+    //Interface
+    //Entitys
+    //StaticObjects
+
     switch(CApp::eGameState)
     {
         case MAIN_MENU:
@@ -38,10 +43,13 @@ void CApp::OnMouseMove(int mX, int mY, int relX, int relY, bool Left,bool Right,
         {
             if(Left)
             {
-                if(pSelectedButton != NULL && (pSelectedButton->eButtonState == BUTTONSTATE_SELECTED || pSelectedButton->eButtonState == BUTTONSTATE_MOVED) )
+                if(pSelectedButton != NULL && (pSelectedButton->GetButtonState() == BUTTONSTATE_SELECTED || pSelectedButton->GetButtonState() == BUTTONSTATE_MOVED) )
                 {
                     pSelectedButton->OnMove(mX, mY);
-                    pSelectedButton->eButtonState = BUTTONSTATE_MOVED;
+
+                    if(pSelectedButton->GetButtonState() != BUTTONSTATE_MOVED)
+                        pSelectedButton->SetButtonState(BUTTONSTATE_MOVED);
+
                     return;                
                 }
             }
@@ -107,7 +115,7 @@ void CApp::OnLButtonDown(int x,int y)
             {
                 if(pSelectedButton != NULL)
                 {
-                    pSelectedButton->eButtonState = BUTTONSTATE_SELECTED;
+                    pSelectedButton->SetButtonState(BUTTONSTATE_SELECTED);
                 }
             }
 
@@ -119,7 +127,7 @@ void CApp::OnLButtonDown(int x,int y)
             if(pSelectedButton = CButton::ButtonControl.GetButton(x, y))
                 if(pSelectedButton != NULL)
                 {
-                    pSelectedButton->eButtonState = BUTTONSTATE_SELECTED;
+                    pSelectedButton->SetButtonState(BUTTONSTATE_SELECTED);
                     pSelectedButton->SetDistance(x,y);
                     break;
                 }
@@ -165,7 +173,7 @@ void CApp::OnLButtonUp(int x,int y)
         {
             if(pSelectedButton != NULL)
             {
-                if(pSelectedButton->eButtonState == BUTTONSTATE_SELECTED)
+                if(pSelectedButton->GetButtonState() == BUTTONSTATE_SELECTED)
                 {
                     pSelectedButton->Activate();
                 }
@@ -178,16 +186,16 @@ void CApp::OnLButtonUp(int x,int y)
         {
             if(pSelectedButton != NULL)
             {
-                if(pSelectedButton->eButtonState == BUTTONSTATE_SELECTED)
+                if(pSelectedButton->GetButtonState() == BUTTONSTATE_SELECTED)
                 {
                     pSelectedButton->Activate();
                 }
 
-                if(pSelectedButton->eButtonState == BUTTONSTATE_MOVED)
+                if(pSelectedButton->GetButtonState() == BUTTONSTATE_MOVED)
                 {
                 }
 
-                pSelectedButton->eButtonState = BUTTONSTATE_UNSELECTED;
+                pSelectedButton->SetButtonState(BUTTONSTATE_UNSELECTED);
                 pSelectedButton = NULL;
             }
 

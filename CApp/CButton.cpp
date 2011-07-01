@@ -12,13 +12,12 @@ CButton::CButton()
 
     pButtonSurface = NULL;
 
-    eButtonState = BUTTONSTATE_UNSELECTED;
-
 	eType = BUTTON_DEFAULT;
-    nAnimationState = 0;
+    eButtonState = BUTTONSTATE_UNSELECTED;
+    eAnimationState = BUTTON_ANIME_NORMAL;
 }
 
-CButton::CButton(int nValueX, int nValueY, ButtonType Type, SDL_Surface* pButtonSurface)    //Used by button panel on create
+CButton::CButton(int nValueX, int nValueY, ButtonType Type, SDL_Surface* pSurface)    //Used by button panel on create
 {
 	x = nValueX;
 	y = nValueY;
@@ -26,10 +25,12 @@ CButton::CButton(int nValueX, int nValueY, ButtonType Type, SDL_Surface* pButton
 	w = 30;
 	h = 30;
 
-    this->pButtonSurface = pButtonSurface;
+    this->pButtonSurface = NULL;
+    this->pButtonSurface = pSurface;
 
 	eType = Type;
-    nAnimationState = 0;
+    eButtonState = BUTTONSTATE_UNSELECTED;
+    eAnimationState = BUTTON_ANIME_NORMAL;
 }
 
 bool CButton::OnLoad(ButtonType eType)
@@ -66,12 +67,17 @@ bool CButton::OnLoad(ButtonType eType)
 
 void CButton::OnRender(SDL_Surface* Surf_Display)
 {
-	CSurface::OnDraw(Surf_Display, pButtonSurface, x, y, w*nAnimationState, h*static_cast<int>(eType), w, h);
+	CSurface::OnDraw(Surf_Display, pButtonSurface, x, y, w*eAnimationState, h*static_cast<int>(eType), w, h);
+}
+
+void CButton::OnCleanup()
+{
+
 }
 
 void CButton::Activate()
 {
-    nAnimationState = 2;
+    eAnimationState = BUTTON_ANIME_ONCLICK;
 
     switch(eType)
 	{
@@ -117,3 +123,20 @@ CButton* CButton::GetButton(int nX, int nY)
     return pButton;
 }
 
+void CButton::OnMouseMove(int mX, int mY, int relX, int relY, bool Left,bool Right,bool Middle)
+{
+    for(int i = 0;i < ButtonList.size();i++) 
+    {   
+        if(!ButtonList[i]) continue;
+                
+        if( ( mX > ButtonList[i]->GetPosX() ) && ( mX < ButtonList[i]->GetPosX() + ButtonList[i]->GetWidht()) && ( mY > ButtonList[i]->GetPosY() ) && ( mY < ButtonList[i]->GetPosY() + ButtonList[i]->GetHeight() ) )
+        {
+            ButtonList[i]->eAnimationState = BUTTON_ANIME_ONMOTION;
+        }
+        else
+        {
+            ButtonList[i]->eAnimationState = BUTTON_ANIME_NORMAL;
+        }
+           
+    }
+}
