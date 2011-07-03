@@ -88,18 +88,6 @@ void CInterface::OnCleanup()
 
 bool CInterface::OnLButtonUp(int x, int y)
 {
-
- //   for(int i = 0;i < CButton::ButtonList.size();i++) 
-	//{
- //       if(!CButton::ButtonList[i]) continue;
-
-	//	if( ( x > CButton::ButtonList[i]->GetPosX() ) && ( x < CButton::ButtonList[i]->GetPosX() + CButton::ButtonList[i]->GetWidht()) && ( y > CButton::ButtonList[i]->GetPosY() ) && ( y < CButton::ButtonList[i]->GetPosY() + CButton::ButtonList[i]->GetHeight() ) )
- //       {
- //           CButton::ButtonList[i]->Activate();
- //           return true;
- //       }
- //   }
-
     return false;
 }
 

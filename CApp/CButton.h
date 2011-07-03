@@ -6,6 +6,12 @@
 #include "CSurface.h"
 #include "CInterface.h"
 
+#define GAME_BUTTON_SIZE_W 30
+#define GAME_BUTTON_SIZE_H 30
+
+#define GAME_OPTION_BUTTON_SIEZ_W 140
+#define GAME_OPTION_BUTTON_SIZE_H 30
+
 enum ButtonType
 {
 	BUTTON_DEFAULT	= 99,
@@ -56,9 +62,7 @@ class CButton
 
 	public:
 		virtual bool OnLoad(ButtonType eType);
-
 		virtual void OnRender(SDL_Surface* Surf_Display);
-
         virtual void OnCleanup();
 
     public: //Methods for variables
@@ -80,7 +84,7 @@ class CButton
         virtual void Activate();
         virtual void OnMove(int nNextX, int nNextY)     { x = nNextX - nDistX; y = nNextY - nDistY; eButtonState = BUTTONSTATE_MOVED; }
         virtual void SetDistance(int nX, int nY)        { nDistX = nX - x; nDistY = nY - y; }                      //Used for proper update movement for interface panels
-        virtual bool IfButtonOnPos(int mX, int mY);
+        virtual bool IsButtonOnPos(int mX, int mY);
         virtual void OnDrop(int mX, int mY);  //if left button up with button pointed
         
     public: //Button Control Methods

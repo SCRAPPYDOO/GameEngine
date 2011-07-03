@@ -21,12 +21,10 @@ CButton::CButton(int nPosX, int nPosY, ButtonType Type, SDL_Surface* pSurface)  
 {
 	x = nPosX;
 	y = nPosY;
-
 	w = 30;
 	h = 30;
 
-    this->pButtonSurface = NULL;
-    this->pButtonSurface = pSurface;
+    pButtonSurface = pSurface;
 
 	eType = Type;
     eButtonState = BUTTONSTATE_UNSELECTED;
@@ -81,12 +79,20 @@ bool CButton::OnLoad(ButtonType eType)
 
 void CButton::OnRender(SDL_Surface* Surf_Display)
 {
-	CSurface::OnDraw(Surf_Display, pButtonSurface, x, y, w*eAnimationState, 0/*h*static_cast<int>(eType)*/, w, h);
+    if(Surf_Display == NULL || pButtonSurface == NULL)
+        return;
+	
+    CSurface::OnDraw(Surf_Display, pButtonSurface, x, y, w*eAnimationState, 0, w, h);
 }
 
 void CButton::OnCleanup()
 {
+    /*
+    if(pButtonSurface != NULL)
+		SDL_FreeSurface(pButtonSurface);
 
+    pButtonSurface = NULL;
+    */
 }
 
 void CButton::Activate()
@@ -122,11 +128,6 @@ void CButton::Activate()
                 CInterface::InterfaceControl.LoadInterface(INTERFACE_GAMEMENU);
                 CInterface::IsGameMenu = true;
             }
-            //else
-            //{
-            //    CInterface::InterfaceControl.UnloadInterface(INTERFACE_GAMEMENU);
-            //    CInterface::IsGameMenu = false;
-            //}
 
             break;
         }
@@ -151,7 +152,7 @@ CButton* CButton::GetButton(int nX, int nY)
     {   
         if(!ButtonList[i]) continue;
                 
-        if(ButtonList[i]->IfButtonOnPos(nX,nY))
+        if(ButtonList[i]->IsButtonOnPos(nX,nY))
         {
             pButton = ButtonList[i];
             break;
@@ -161,7 +162,7 @@ CButton* CButton::GetButton(int nX, int nY)
     return pButton;
 }
 
-bool CButton::IfButtonOnPos(int mX, int mY)
+bool CButton::IsButtonOnPos(int mX, int mY)
 {
     if( ( mX > x ) && ( mX < x + w) && ( mY > y ) && ( mY < y + h ) )
         return true;
@@ -177,7 +178,7 @@ void CButton::OnDrop(int mX, int mY)
         if(!CInterface::InterfaceObjectList[i]) continue;
                 
         if(CInterface::InterfaceObjectList[i]->IfInterfaceOnPos(mX,mY))
-            if(CInterface::InterfaceObjectList[i]->GetInterfaceType() == INTERFACE_BUTTON_PANEL)
+           if(CInterface::InterfaceObjectList[i]->GetInterfaceType() == INTERFACE_BUTTON_PANEL)
                 if(CInterface::InterfaceObjectList[i]->AddButtonToInterface(this, mX, mY))
                     return;
     }
@@ -210,7 +211,7 @@ void CButton::OnMouseMove(int mX, int mY, int relX, int relY, bool Left,bool Rig
     {   
         if(!ButtonList[i]) continue;
                 
-        if(ButtonList[i]->IfButtonOnPos(mX,mY))
+        if(ButtonList[i]->IsButtonOnPos(mX,mY))
         {
             ButtonList[i]->eAnimationState = BUTTON_ANIME_ONMOTION;
         }

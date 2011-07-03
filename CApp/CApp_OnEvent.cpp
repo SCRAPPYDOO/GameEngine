@@ -198,7 +198,7 @@ void CApp::OnLButtonUp(int x,int y)
                 {
                     pSelectedButton->Activate();
                 }
-
+                else
                 if(pSelectedButton->GetButtonState() == BUTTONSTATE_MOVED)
                 {
                     pSelectedButton->OnDrop(x,y);
