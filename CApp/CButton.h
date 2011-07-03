@@ -11,9 +11,11 @@ enum ButtonType
 	BUTTON_DEFAULT	= 99,
 	BUTTON_PLAY		= 0,
 	BUTTON_QUIT		= 1,
+    BUTTON_MENU     = 2,
 
+    //Game Menu Button
     BUTTON_GAMEMENU_QUIT = 10,
-    BUTTON_GAMEMENU_RESUME = 11,
+    BUTTON_GAMEMENU_RETURN = 11,
 };
 
 enum ButtonState
@@ -43,17 +45,13 @@ class CButton
 		static std::vector<CButton*>    ButtonList;
 
     protected:
-        SDL_Surface* pButtonSurface;
+        SDL_Surface*     pButtonSurface;
 
 		ButtonType       eType;
         ButtonState      eButtonState;
         ButtonAnimeState eAnimationState;
 
-		int x;
-        int y;
-        int w;
-        int h;
-        
+		int x, y, w, h; 
         int nDistX, nDistY;
 
 	public:
@@ -80,22 +78,14 @@ class CButton
 
     public:
         virtual void Activate();
-        virtual void OnMove(int nNextX, int nNextY) 
-        { 
-            x = nNextX - nDistX;
-            y = nNextY - nDistY;
-        }
-        virtual void OnMouseMove(int mX, int mY, int relX, int relY, bool Left,bool Right,bool Middle);
-
-        virtual void SetDistance(int nX, int nY) //Used for proper update movement for interface panels
-        {
-            nDistX = nX - x; 
-            nDistY = nY - y;
-        }
-
-
-
+        virtual void OnMove(int nNextX, int nNextY)     { x = nNextX - nDistX; y = nNextY - nDistY; eButtonState = BUTTONSTATE_MOVED; }
+        virtual void SetDistance(int nX, int nY)        { nDistX = nX - x; nDistY = nY - y; }                      //Used for proper update movement for interface panels
+        virtual bool IfButtonOnPos(int mX, int mY);
+        virtual void OnDrop(int mX, int mY);  //if left button up with button pointed
         
+    public: //Button Control Methods
+        void OnMouseMove(int mX, int mY, int relX, int relY, bool Left,bool Right,bool Middle);
+        void DeleteButton(CButton* pButton);
 
        
 };

@@ -6,8 +6,8 @@
 
 #define TILE_SIZE	16
 
-#define WWIDTH		1200    
-#define	WHEIGHT		700
+#define WWIDTH		1280    
+#define	WHEIGHT		720
 
 enum GameState
 {

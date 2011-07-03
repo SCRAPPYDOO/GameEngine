@@ -11,10 +11,10 @@ void CApp::OnKeyDown(SDLKey sym, SDLMod mod, Uint16 unicode)
     {
         case SDLK_ESCAPE: 
         {
-            if(!CInterface::InterfaceControl.ShowGameMenu)
-                CInterface::InterfaceControl.ShowGameMenu = true;
-            else
-                CInterface::InterfaceControl.ShowGameMenu = false;
+            //if(!CInterface::InterfaceControl.ShowGameMenu)
+            //    CInterface::InterfaceControl.ShowGameMenu = true;
+            //else
+            //    CInterface::InterfaceControl.ShowGameMenu = false;
 
             break;
         }
@@ -32,6 +32,26 @@ void CApp::OnMouseMove(int mX, int mY, int relX, int relY, bool Left,bool Right,
     //Entitys
     //StaticObjects
 
+    if(Left)
+    {
+        if(pSelectedButton != NULL && (pSelectedButton->GetButtonState() == BUTTONSTATE_SELECTED || pSelectedButton->GetButtonState() == BUTTONSTATE_MOVED) )
+        {
+            if(CApp::eGameState == TEST)
+                pSelectedButton->OnMove(mX, mY);
+
+            if(pSelectedButton->GetButtonState() != BUTTONSTATE_MOVED)
+                pSelectedButton->SetButtonState(BUTTONSTATE_MOVED);
+
+            return;                
+        }
+
+        if(pSelectedInterface != NULL)
+        {
+            pSelectedInterface->OnMove(mX, mY);
+            return;
+        }
+    }
+
     switch(CApp::eGameState)
     {
         case MAIN_MENU:
@@ -41,24 +61,7 @@ void CApp::OnMouseMove(int mX, int mY, int relX, int relY, bool Left,bool Right,
 
         case TEST:
         {
-            if(Left)
-            {
-                if(pSelectedButton != NULL && (pSelectedButton->GetButtonState() == BUTTONSTATE_SELECTED || pSelectedButton->GetButtonState() == BUTTONSTATE_MOVED) )
-                {
-                    pSelectedButton->OnMove(mX, mY);
-
-                    if(pSelectedButton->GetButtonState() != BUTTONSTATE_MOVED)
-                        pSelectedButton->SetButtonState(BUTTONSTATE_MOVED);
-
-                    return;                
-                }
-            }
-
-            if(Left && pSelectedInterface != NULL)
-            {
-                pSelectedInterface->OnMove(mX, mY);
-                return;
-            }
+            break;
         }
     }
 }
@@ -107,6 +110,8 @@ void CApp::OnRButtonDown(int x,int y)
 
 void CApp::OnLButtonDown(int x,int y)
 {
+    //CButton::ButtonControl.OnLButtonDown(int x,int y);
+
     switch(CApp::eGameState)
     {
         case MAIN_MENU:
@@ -116,6 +121,7 @@ void CApp::OnLButtonDown(int x,int y)
                 if(pSelectedButton != NULL)
                 {
                     pSelectedButton->SetButtonState(BUTTONSTATE_SELECTED);
+                    pSelectedButton->SetAnimationState(BUTTON_ANIME_ONCLICK);
                 }
             }
 
@@ -128,6 +134,7 @@ void CApp::OnLButtonDown(int x,int y)
                 if(pSelectedButton != NULL)
                 {
                     pSelectedButton->SetButtonState(BUTTONSTATE_SELECTED);
+                    pSelectedButton->SetAnimationState(BUTTON_ANIME_ONCLICK);
                     pSelectedButton->SetDistance(x,y);
                     break;
                 }
@@ -176,6 +183,7 @@ void CApp::OnLButtonUp(int x,int y)
                 if(pSelectedButton->GetButtonState() == BUTTONSTATE_SELECTED)
                 {
                     pSelectedButton->Activate();
+                    pSelectedButton->SetAnimationState(BUTTON_ANIME_ONCLICK);
                 }
             }
 
@@ -193,9 +201,11 @@ void CApp::OnLButtonUp(int x,int y)
 
                 if(pSelectedButton->GetButtonState() == BUTTONSTATE_MOVED)
                 {
+                    pSelectedButton->OnDrop(x,y);
                 }
 
                 pSelectedButton->SetButtonState(BUTTONSTATE_UNSELECTED);
+                pSelectedButton->SetAnimationState(BUTTON_ANIME_NORMAL);
                 pSelectedButton = NULL;
             }
 

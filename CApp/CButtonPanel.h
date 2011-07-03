@@ -8,6 +8,8 @@
 #include "CApp.h"
 #include "CInterface.h"
 
+#define MAX_BUTTON_SLOTS 10
+
 class CButtonPanel : public CInterface
 {
     public:
@@ -15,19 +17,22 @@ class CButtonPanel : public CInterface
 
         ~CButtonPanel() {}
 
-        SDL_Surface* Surf_ButtonPanel;     
+    private:
+        SDL_Surface*              Surf_ButtonPanel;
+        CButton*                  ButtonSlot[MAX_BUTTON_SLOTS];
 
-    public:
-        std::vector<CButton*>     PanelButtonsPlace;
-
+        
     public:
         bool OnLoad();
+        void OnLoop();
         void OnRender(SDL_Surface* Surf_Display);
         void OnCleanup();
 
         void OnMove(int nNextX, int nNextY);
         void AddButton();
+        bool AddButtonToInterface(CButton* pButton, int mX, int mY);
         void UpdateButtonsPosition();
+        void DeleteMovedButtons();
 };
 
 #endif

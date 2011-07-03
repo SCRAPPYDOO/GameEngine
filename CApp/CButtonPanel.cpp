@@ -2,12 +2,18 @@
 
 CButtonPanel::CButtonPanel()
 {
-    nPosX = 300;
-    nPosY = 600;
-    nWidht = 600;
-    nHeight = 30;
+    nPosX               = 300;
+    nPosY               = 600;
+    nWidht              = 600;
+    nHeight             = 60;
 
-    Surf_ButtonPanel = NULL;
+    Surf_ButtonPanel    = NULL;
+    eInterfaceType      = INTERFACE_BUTTON_PANEL;
+
+    for(int i=0; i<MAX_BUTTON_SLOTS; ++i)
+    {
+        ButtonSlot[i] = NULL;
+    }
 }
 
 bool CButtonPanel::OnLoad()
@@ -20,6 +26,12 @@ bool CButtonPanel::OnLoad()
     //Load cfg
 
     return true;
+}
+
+void CButtonPanel::OnLoop()
+{
+    DeleteMovedButtons();
+    UpdateButtonsPosition();
 }
 
 void CButtonPanel::OnRender(SDL_Surface* Surf_Display)
@@ -36,38 +48,70 @@ void CButtonPanel::OnCleanup()
 
     Surf_ButtonPanel = NULL;
 
-    PanelButtonsPlace.clear();
+    for(int i=0;i < MAX_BUTTON_SLOTS; ++i)
+    {
+        ButtonSlot[i] = NULL;
+    }
 }
 
 void CButtonPanel::OnMove(int nNextX, int nNextY)
 {
     CInterface::OnMove(nNextX, nNextY);
-    UpdateButtonsPosition();
 }
 
 void CButtonPanel::UpdateButtonsPosition()
 {
-    for(int i = 0;i < PanelButtonsPlace.size();i++) 
+    for(int i = 0;i < MAX_BUTTON_SLOTS;i++) 
     {   
-        if(!PanelButtonsPlace[i]) continue;
+        if(!ButtonSlot[i]) continue;
                 
-        PanelButtonsPlace[i]->SetPositionX(nPosX + 30*i);
-        PanelButtonsPlace[i]->SetPositionY(nPosY);
+        ButtonSlot[i]->SetPositionX(nPosX + 33*i +3);
+        ButtonSlot[i]->SetPositionY(nPosY + 3);
     }
 }
-
-
 
 //TEST
 void CButtonPanel::AddButton()
 {
-    CButton* pButton = new CButton(nPosX, nPosY, BUTTON_QUIT, CInterface::InterfaceControl.Surf_MenuButton);
+    CButton* pButton = new CButton(nPosX+3, nPosY+3, BUTTON_QUIT, CInterface::InterfaceControl.Surf_MenuButton);
 
     if(pButton != NULL)
     {
-        PanelButtonsPlace.push_back(pButton);
+        ButtonSlot[0] = pButton;
         CButton::ButtonList.push_back(pButton);
+    }
+
+    CButton* pButton1 = new CButton(130+3, 120+3, BUTTON_QUIT, CInterface::InterfaceControl.Surf_MenuButton);
+
+    if(pButton1 != NULL)
+    {
+        CButton::ButtonList.push_back(pButton1);
     }
 }
 
-//On LButtonUp(int nX, int nY
+bool CButtonPanel::AddButtonToInterface(CButton* pButton, int mX, int mY)
+{
+    for(int i=0; i<MAX_BUTTON_SLOTS; ++i)
+    {
+        if(ButtonSlot[i] == pButton) //fisrt we need to clear old positions of our moved button IF  HE WAS  ON PANEL BUTTTON
+            ButtonSlot[i] = NULL;
+
+        if( ( mX > nPosX + 33*i +3 ) && ( mX < nPosX + 33*i +3 + 30) && ( mY > nPosY + 3 ) && ( mY < nPosY + 3 + 30 ) )
+        {
+            ButtonSlot[i] = pButton;
+            return true;
+        }
+    }
+    return false;
+}
+
+void CButtonPanel::DeleteMovedButtons()
+{
+    for(int i=0; i<MAX_BUTTON_SLOTS; ++i)
+    {
+        if(!ButtonSlot[i]) continue;
+
+        if(ButtonSlot[i]->GetButtonState() == BUTTONSTATE_MOVED)
+            ButtonSlot[i] = NULL;
+    }
+}

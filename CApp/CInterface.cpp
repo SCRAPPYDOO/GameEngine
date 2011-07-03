@@ -6,9 +6,11 @@
 CInterface CInterface::InterfaceControl;
 std::vector<CInterface*> CInterface::InterfaceObjectList;
 
+bool CInterface::IsGameMenu = false;
+
 CInterface::CInterface() 
 {
-    ShowGameMenu = false;
+   
 }
 
 bool CInterface::OnLoad()
@@ -20,6 +22,11 @@ bool CInterface::OnLoad()
 		return false;
 
     return true;
+}
+
+void CInterface::OnLoop()
+{
+
 }
 
 void CInterface::OnRender(SDL_Surface* Surf_Display)
@@ -36,7 +43,7 @@ void CInterface::OnRender(SDL_Surface* Surf_Display)
 
         case TEST:
         {
-            for(int i = 0;i < InterfaceObjectList.size();i++) 
+            for(int i = 0; i < InterfaceObjectList.size(); i++) 
             {   
                 if(!InterfaceObjectList[i]) continue;
                 
@@ -133,12 +140,6 @@ bool CInterface::LoadInterface()
 
     InterfaceObjectList.push_back(pButtonPanel);
 
-    CGameMenu* pGameMenu = new CGameMenu();
-    if(pGameMenu && pGameMenu->OnLoad() == false)
-        return false;
-
-    InterfaceObjectList.push_back(pGameMenu);
-
 	return true;
 }
 
@@ -165,7 +166,7 @@ bool CInterface::LoadButtons()
 		{
 			for(int i=0; i<MAX_MENU_BUTTONS; ++i)
 			{
-				CButton *Button = new CButton();
+				CButton *pButton = new CButton();
 
 				switch(i)
 				{
@@ -173,10 +174,10 @@ bool CInterface::LoadButtons()
 					case 1: Type = BUTTON_QUIT; break;
 				}
 					
-				if(Button->OnLoad(Type) == false)
+				if(pButton->OnLoad(Type) == false)
                     return false;
 
-				CButton::ButtonList.push_back(Button);
+				CButton::ButtonList.push_back(pButton);
 			}
 
 			break;
@@ -184,6 +185,9 @@ bool CInterface::LoadButtons()
 
         case TEST:
         {
+            CButton *pButton = new CButton();
+            pButton->OnLoad(BUTTON_MENU);
+            CButton::ButtonList.push_back(pButton);
 
             break;
         }
@@ -200,6 +204,40 @@ bool CInterface::LoadButtons()
 	return true;
 }
 
+void CInterface::LoadInterface(InterfaceType eType)
+{
+    CInterface* pInterface = NULL;
+
+    switch(eType)
+    {
+        case INTERFACE_GAMEMENU:
+        {
+            pInterface = new CGameMenu();
+            if(pInterface && pInterface->OnLoad() == false)
+                return;
+        }
+
+        default: break;
+    }
+
+    InterfaceObjectList.push_back(pInterface);
+}
+
+void CInterface::UnloadInterface(InterfaceType eType)
+{
+    for(int n = 0;n < InterfaceObjectList.size();n++) 
+    {   
+        if(!InterfaceObjectList[n]) continue;
+
+        if(InterfaceObjectList[n]->GetInterfaceType() == eType)
+        {
+            InterfaceObjectList[n]->OnCleanup();
+            InterfaceObjectList[n] = NULL; 
+            return;
+        }
+    }
+}
+
 void CInterface::CleanUpInterface()
 {
     for(int i = 0;i < InterfaceObjectList.size();i++) 
@@ -213,3 +251,10 @@ void CInterface::CleanUpInterface()
 	CButton::ButtonList.clear();
 }
 
+bool CInterface::IfInterfaceOnPos(int nX, int nY)
+{
+    if( ( nX > nPosX ) && ( nX < nPosX + nWidht) && ( nY > nPosY ) && ( nY < nPosY + nHeight ) )
+        return true;
+
+    return false;
+}
