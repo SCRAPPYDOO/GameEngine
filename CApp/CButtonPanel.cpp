@@ -46,11 +46,6 @@ void CButtonPanel::OnCleanup()
     }
 }
 
-void CButtonPanel::OnMove(int nNextX, int nNextY)
-{
-    CInterface::OnMove(nNextX, nNextY);
-}
-
 void CButtonPanel::UpdateButtonsPosition()
 {
     for(int i = 0;i < MAX_BUTTON_SLOTS;i++) 

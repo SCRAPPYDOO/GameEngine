@@ -161,15 +161,14 @@ void CButton::Activate()
 
         case BUTTON_GAMEMENU_QUIT: 
         {
-            CInterface::InterfaceControl.CleanUpInterface();
             CApp::eGameState = MAIN_MENU;
-            CInterface::InterfaceControl.LoadButtons();
+            CInterface::InterfaceControl.LoadInterface();
             break;  
         }
 
         case BUTTON_GAMEMENU_RETURN: // ingame game menu button return
         {
-            CInterface::InterfaceControl.UnloadInterface(INTERFACE_GAMEMENU);
+            CInterface::InterfaceControl.CleanUpInterface(INTERFACE_GAMEMENU);
             CInterface::IsGameMenu = false;
 
             break;

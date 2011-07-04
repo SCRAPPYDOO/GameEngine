@@ -75,15 +75,10 @@ class CInterface
         int GetHeight() const { return nHeight;}
 
     public:
-        bool OnLButtonUp(int x, int y);
-
 		bool LoadInterface();
         bool LoadInterface(InterfaceType eType);
-        void UnloadInterface(InterfaceType eType);
-
-		bool LoadSurface();
-		bool LoadButtons();
         void CleanUpInterface();
+        void CleanUpInterface(InterfaceType eType);
 
         bool IsInterfaceOnPos(int nX, int nY);
 };

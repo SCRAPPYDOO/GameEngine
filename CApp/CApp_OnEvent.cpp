@@ -211,8 +211,6 @@ void CApp::OnLButtonUp(int x,int y)
 
             pSelectedInterface = NULL;
 
-            if(CInterface::InterfaceControl.OnLButtonUp(x,y))
-                return;
         }
     }
 }

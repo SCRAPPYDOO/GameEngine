@@ -63,16 +63,9 @@ void CInterface::OnCleanup()
 	Surf_Interface = NULL;
 }
 
-bool CInterface::OnLButtonUp(int x, int y)
-{
-    return false;
-}
-
-
-
 bool CInterface::LoadInterface()
 {
-    InterfaceObjectList.clear();
+    CleanUpInterface();
 
     switch(CApp::eGameState)
     {
@@ -97,10 +90,10 @@ bool CInterface::LoadInterface()
                     case 2: eType = INTERFACE_CHARACTERPANEL; break;
                     default: break;
                 }
-            }
 
-            if(LoadInterface(eType) == false)
-                return false;
+                if(LoadInterface(eType) == false)
+                    return false;
+            }
 
             break;
         }
@@ -153,14 +146,7 @@ CInterface* CInterface::GetInterface(int nPosX, int nPosY)
     return pInterface;
 }
 
-bool CInterface::LoadSurface()
-{
-    if((Surf_Interface = CSurface::OnLoad("./menu/menu_background.png")) == NULL) 
-	    return false;
-
-	return true;
-}
-
+/*
 bool CInterface::LoadButtons()
 {
     CButton::ButtonList.clear();
@@ -211,9 +197,21 @@ bool CInterface::LoadButtons()
 	return true;
 }
 
+*/
 
+void CInterface::CleanUpInterface()
+{
+    for(int i = 0;i < InterfaceObjectList.size();i++) 
+    {
+        if(!InterfaceObjectList[i]) continue;
 
-void CInterface::UnloadInterface(InterfaceType eType)
+        InterfaceObjectList[i]->OnCleanup();
+    }
+
+    InterfaceObjectList.clear();
+}
+
+void CInterface::CleanUpInterface(InterfaceType eType)
 {
     for(int n = 0;n < InterfaceObjectList.size();n++) 
     {   
@@ -228,18 +226,7 @@ void CInterface::UnloadInterface(InterfaceType eType)
     }
 }
 
-void CInterface::CleanUpInterface()
-{
-    for(int i = 0;i < InterfaceObjectList.size();i++) 
-    {
-        if(!InterfaceObjectList[i]) continue;
 
-        InterfaceObjectList[i]->OnCleanup();
-    }
-
-    InterfaceObjectList.clear();
-	CButton::ButtonList.clear();
-}
 
 bool CInterface::IsInterfaceOnPos(int nX, int nY)
 {
