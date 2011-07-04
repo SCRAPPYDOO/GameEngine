@@ -76,6 +76,7 @@
     <ClCompile Include="CButton.cpp" />
     <ClCompile Include="CButtonPanel.cpp" />
     <ClCompile Include="CCamera.cpp" />
+    <ClCompile Include="CCharacterPanel.cpp" />
     <ClCompile Include="CEntity.cpp" />
     <ClCompile Include="CEvent.cpp" />
     <ClCompile Include="CFrameControler.cpp" />
@@ -96,6 +97,7 @@
     <ClInclude Include="CButton.h" />
     <ClInclude Include="CButtonPanel.h" />
     <ClInclude Include="CCamera.h" />
+    <ClInclude Include="CCharacterPanel.h" />
     <ClInclude Include="CEntity.h" />
     <ClInclude Include="CEvent.h" />
     <ClInclude Include="CFrameControler.h" />

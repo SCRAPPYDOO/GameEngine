@@ -22,6 +22,11 @@ enum ButtonType
     //Game Menu Button
     BUTTON_GAMEMENU_QUIT = 10,
     BUTTON_GAMEMENU_RETURN = 11,
+
+    BUTTON_CHARPANEL_CHARSHEET = 20,
+    BUTTON_CHARPANEL_EQUPMENT = 21,
+    BUTTON_CHARPANEL_SPELLBOOK = 22,
+    BUTTON_CHARPANEL_QUESTDIARY = 23,
 };
 
 enum ButtonState
@@ -42,7 +47,8 @@ class CButton
 {
 	public:
 		CButton();
-        CButton(int nValueX, int nValueY, ButtonType Type, SDL_Surface* pButtonSurface);
+        CButton(int nPosX, int nPosY, ButtonType Type);
+        CButton(int nPosX, int nPosY, ButtonType Type, SDL_Surface* pButtonSurface);
 
         ~CButton() {}
 
@@ -60,7 +66,8 @@ class CButton
 		int x, y, w, h; 
         int nDistX, nDistY;
 
-	public:
+    public:
+        virtual bool OnLoad();
 		virtual bool OnLoad(ButtonType eType);
 		virtual void OnRender(SDL_Surface* Surf_Display);
         virtual void OnCleanup();

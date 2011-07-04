@@ -21,10 +21,8 @@ class CButtonPanel : public CInterface
         SDL_Surface*              Surf_ButtonPanel;
         CButton*                  ButtonSlot[MAX_BUTTON_SLOTS];
 
-        
     public:
         bool OnLoad();
-        void OnLoop();
         void OnRender(SDL_Surface* Surf_Display);
         void OnCleanup();
 

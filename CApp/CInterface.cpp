@@ -2,6 +2,7 @@
 #include "CUnitInfoPanel.h"
 #include "CButtonPanel.h"
 #include "CGameMenu.h"
+#include "CCharacterPanel.h"
 
 CInterface CInterface::InterfaceControl;
 std::vector<CInterface*> CInterface::InterfaceObjectList;
@@ -10,80 +11,36 @@ bool CInterface::IsGameMenu = false;
 
 CInterface::CInterface() 
 {
-   
+   CInterface::IsGameMenu = false;
 }
 
 bool CInterface::OnLoad()
 {
-    if(LoadSurface() == false)
-		return false;
-
-	if(LoadButtons() == false)
-		return false;
+    if((Surf_Interface = CSurface::OnLoad("./interface/surf_character_panel.png")) == NULL) 
+        return false;
 
     return true;
 }
 
 void CInterface::OnLoop()
 {
-
+    UpdateButtonsPosition();
+    DeleteMovedButtons();
 }
 
 void CInterface::OnRender(SDL_Surface* Surf_Display)
 {
-	if(Surf_BackGround == NULL || Surf_Display == NULL) return;
+	if(Surf_Interface == NULL || Surf_Display == NULL) return;
 
-    switch(CApp::eGameState)
-    {
-        case MAIN_MENU:
-        {
-	        CSurface::OnDraw(Surf_Display, Surf_BackGround, 0, 0); //render BackGround
-            break;
-        }
-
-        case TEST:
-        {
-            for(int i = 0; i < InterfaceObjectList.size(); i++) 
-            {   
-                if(!InterfaceObjectList[i]) continue;
-                
-                InterfaceObjectList[i]->OnRender(Surf_Display);
-            }
-
-            break;
-        }
-
-        default: break;
-    }
-
-	for(int i = 0;i < CButton::ButtonList.size();i++) 
-	{
-            if(!CButton::ButtonList[i]) continue;
-
-		    CButton::ButtonList[i]->OnRender(Surf_Display);	
-	}
+    CSurface::OnDraw(Surf_Display, Surf_Interface, nPosX, nPosY);
 }
 
 void CInterface::OnCleanup()
 {
-	if(Surf_BackGround) 
-		SDL_FreeSurface(Surf_BackGround);
+	if(Surf_Interface) 
+		SDL_FreeSurface(Surf_Interface);
 
-    if(Surf_MenuButton) 
-		SDL_FreeSurface(Surf_MenuButton);
-
-    Surf_MenuButton = NULL;
-	Surf_BackGround = NULL;
-
-    for(int i = 0;i < InterfaceObjectList.size();i++) 
-    {
-        if(!InterfaceObjectList[i]) continue;
-
-        InterfaceObjectList[i]->OnCleanup();
-    }
-
-    InterfaceObjectList.clear();
-	CButton::ButtonList.clear();
+	Surf_Interface = NULL;
 }
 
 bool CInterface::OnLButtonUp(int x, int y)
@@ -128,15 +85,18 @@ bool CInterface::LoadInterface()
 
     InterfaceObjectList.push_back(pButtonPanel);
 
+    CCharacterPanel* pCharacterPanel = new CCharacterPanel();
+    if(pCharacterPanel && pCharacterPanel->OnLoad() == false)
+        return false;
+
+    InterfaceObjectList.push_back(pCharacterPanel);
+
 	return true;
 }
 
 bool CInterface::LoadSurface()
 {
-    if((Surf_BackGround = CSurface::OnLoad("./menu/menu_background.png")) == NULL) 
-	    return false;
-
-	if((Surf_MenuButton = CSurface::OnLoad("./menu/menu_buttons.png")) == NULL) 
+    if((Surf_Interface = CSurface::OnLoad("./menu/menu_background.png")) == NULL) 
 	    return false;
 
 	return true;
@@ -239,7 +199,7 @@ void CInterface::CleanUpInterface()
 	CButton::ButtonList.clear();
 }
 
-bool CInterface::IfInterfaceOnPos(int nX, int nY)
+bool CInterface::IsInterfaceOnPos(int nX, int nY)
 {
     if( ( nX > nPosX ) && ( nX < nPosX + nWidht) && ( nY > nPosY ) && ( nY < nPosY + nHeight ) )
         return true;

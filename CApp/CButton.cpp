@@ -17,6 +17,20 @@ CButton::CButton()
     eAnimationState = BUTTON_ANIME_NORMAL;
 }
 
+CButton::CButton(int nPosX, int nPosY, ButtonType Type)    //Used by button panel on create
+{
+	x = nPosX;
+	y = nPosY;
+	w = 30;
+	h = 30;
+
+    pButtonSurface = NULL;
+
+	eType = Type;
+    eButtonState = BUTTONSTATE_UNSELECTED;
+    eAnimationState = BUTTON_ANIME_NORMAL;
+}
+
 CButton::CButton(int nPosX, int nPosY, ButtonType Type, SDL_Surface* pSurface)    //Used by button panel on create
 {
 	x = nPosX;
@@ -31,9 +45,17 @@ CButton::CButton(int nPosX, int nPosY, ButtonType Type, SDL_Surface* pSurface)  
     eAnimationState = BUTTON_ANIME_NORMAL;
 }
 
+bool CButton::OnLoad()
+{
+    if(OnLoad(eType))
+        return true;
+
+    return false;
+}
+
 bool CButton::OnLoad(ButtonType eType)
 {
-    pButtonSurface = CInterface::InterfaceControl.Surf_MenuButton;
+    char* Surf_Name = "./error/surf_error.png";
 
 	switch(eType)
 	{
@@ -66,13 +88,20 @@ bool CButton::OnLoad(ButtonType eType)
             break;
         }
 
-        case BUTTON_GAMEMENU_QUIT: x = 400; y = 200; w = 134; h = 30; break;
-        case BUTTON_GAMEMENU_RETURN: x = 400; y = 400; w = 134; h = 30; break;
+        case BUTTON_GAMEMENU_QUIT: x = 500; y = 350; w = 134; h = 30; break;
+        case BUTTON_GAMEMENU_RETURN: x = 500; y = 400; w = 134; h = 30; break;
 
-		default: break;
+        case BUTTON_CHARPANEL_CHARSHEET: x = 1003; y = 603; w = 30; h = 30; break;
+        case BUTTON_CHARPANEL_EQUPMENT: x = 1036; y = 603; w = 30; h = 30; break;
+        case BUTTON_CHARPANEL_SPELLBOOK: x = 1069; y = 603; w = 30; h = 30; break;
+        case BUTTON_CHARPANEL_QUESTDIARY: x = 1105; y = 603; w = 30; h = 30; break;
+
+		default: return false; break;
 	}
 
     this->eType = eType;
+
+    pButtonSurface = CSurface::OnLoad(Surf_Name);
 
     return true;
 }
@@ -115,9 +144,7 @@ void CButton::Activate()
 
         case BUTTON_QUIT:
         {
-            CInterface::InterfaceControl.CleanUpInterface();
-            CApp::eGameState = MAIN_MENU;
-            CInterface::InterfaceControl.LoadButtons();
+            //CApp::GameControl.OnExit();
             break;
 		}
 
@@ -132,6 +159,14 @@ void CButton::Activate()
             break;
         }
 
+        case BUTTON_GAMEMENU_QUIT: 
+        {
+            CInterface::InterfaceControl.CleanUpInterface();
+            CApp::eGameState = MAIN_MENU;
+            CInterface::InterfaceControl.LoadButtons();
+            break;  
+        }
+
         case BUTTON_GAMEMENU_RETURN: // ingame game menu button return
         {
             CInterface::InterfaceControl.UnloadInterface(INTERFACE_GAMEMENU);
@@ -139,6 +174,10 @@ void CButton::Activate()
 
             break;
         }
+
+        //Other Button in Game Menu
+
+
 
 		default: break;
 	}
@@ -177,7 +216,7 @@ void CButton::OnDrop(int mX, int mY)
     {   
         if(!CInterface::InterfaceObjectList[i]) continue;
                 
-        if(CInterface::InterfaceObjectList[i]->IfInterfaceOnPos(mX,mY))
+        if(CInterface::InterfaceObjectList[i]->IsInterfaceOnPos(mX,mY))
            if(CInterface::InterfaceObjectList[i]->GetInterfaceType() == INTERFACE_BUTTON_PANEL)
                 if(CInterface::InterfaceObjectList[i]->AddButtonToInterface(this, mX, mY))
                     return;

@@ -1,6 +1,7 @@
 #include "CApp.h"
 
 GameState CApp::eGameState;
+CApp CApp::GameControl;
 
 CInterface*     CApp::pSelectedInterface;
 CButton*        CApp::pSelectedButton;

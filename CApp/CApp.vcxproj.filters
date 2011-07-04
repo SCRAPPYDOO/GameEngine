@@ -87,6 +87,9 @@
     <ClCompile Include="CGameMenu.cpp">
       <Filter>Interface</Filter>
     </ClCompile>
+    <ClCompile Include="CCharacterPanel.cpp">
+      <Filter>Interface</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CAnimation.h">
@@ -144,6 +147,9 @@
       <Filter>Interface</Filter>
     </ClInclude>
     <ClInclude Include="CGameMenu.h">
+      <Filter>Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="CCharacterPanel.h">
       <Filter>Interface</Filter>
     </ClInclude>
   </ItemGroup>

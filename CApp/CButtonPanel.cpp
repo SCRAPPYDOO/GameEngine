@@ -21,17 +21,9 @@ bool CButtonPanel::OnLoad()
     if((Surf_ButtonPanel = CSurface::OnLoad("./interface/interface_button_surf.png")) == NULL) 
         return false;
 
-    AddButton();
-
     //Load cfg
 
     return true;
-}
-
-void CButtonPanel::OnLoop()
-{
-    DeleteMovedButtons();
-    UpdateButtonsPosition();
 }
 
 void CButtonPanel::OnRender(SDL_Surface* Surf_Display)
@@ -67,25 +59,6 @@ void CButtonPanel::UpdateButtonsPosition()
                 
         ButtonSlot[i]->SetPositionX(nPosX + 33*i +3);
         ButtonSlot[i]->SetPositionY(nPosY + 3);
-    }
-}
-
-//TEST
-void CButtonPanel::AddButton()
-{
-    CButton* pButton = new CButton(nPosX+3, nPosY+3, BUTTON_QUIT, CInterface::InterfaceControl.Surf_MenuButton);
-
-    if(pButton != NULL)
-    {
-        ButtonSlot[0] = pButton;
-        CButton::ButtonList.push_back(pButton);
-    }
-
-    CButton* pButton1 = new CButton(130+3, 120+3, BUTTON_QUIT, CInterface::InterfaceControl.Surf_MenuButton);
-
-    if(pButton1 != NULL)
-    {
-        CButton::ButtonList.push_back(pButton1);
     }
 }
 

@@ -24,6 +24,8 @@ class CButton;
 class CApp : public CEvent 
 {
     public:
+        static CApp GameControl;
+
         static GameState eGameState;
 
         static CInterface* pSelectedInterface;
