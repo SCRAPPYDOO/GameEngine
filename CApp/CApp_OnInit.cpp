@@ -15,7 +15,7 @@ bool CApp::OnInit()
  /*   if(CArea::AreaControl.OnLoad("./maps/1.area") == false) 
     	return false;*/
 
-    if(CInterface::InterfaceControl.OnLoad() == false)
+    if(CInterface::InterfaceControl.LoadInterface() == false)
         return false;
 
 	/*

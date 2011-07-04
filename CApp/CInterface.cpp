@@ -11,12 +11,32 @@ bool CInterface::IsGameMenu = false;
 
 CInterface::CInterface() 
 {
-   CInterface::IsGameMenu = false;
+
+}
+
+CInterface::CInterface(InterfaceType eType)
+{
+    eInterfaceType = eType;
 }
 
 bool CInterface::OnLoad()
 {
-    if((Surf_Interface = CSurface::OnLoad("./interface/surf_character_panel.png")) == NULL) 
+    char* SurfName = "./error/surf_error.png";
+
+    switch(eInterfaceType)
+    {
+        case INTERFACE_MAINMENU: SurfName = "./menu/main_menu_surf.png"; break;
+        case INTERFACE_PLAYERINFO: break;
+        case INTERFACE_BUTTON_PANEL: break;
+
+        case INTERFACE_GAMEMENU: break;
+
+        case INTERFACE_CHARACTERPANEL: break;
+
+        default: break;
+    }
+
+    if((Surf_Interface = CSurface::OnLoad(SurfName)) == NULL) 
         return false;
 
     return true;
@@ -48,6 +68,73 @@ bool CInterface::OnLButtonUp(int x, int y)
     return false;
 }
 
+
+
+bool CInterface::LoadInterface()
+{
+    InterfaceObjectList.clear();
+
+    switch(CApp::eGameState)
+    {
+        case MAIN_MENU:
+        {
+            if(LoadInterface(INTERFACE_MAINMENU) == false)
+                return false;
+
+            break;
+        }
+
+        case TEST:
+        {
+            InterfaceType eType;
+
+            for(int i=0; i<MAX_INTERFACEOBJECTS; ++i)
+            {
+                switch(i)
+                {
+                    case 0: eType = INTERFACE_PLAYERINFO; break;      
+                    case 1: eType = INTERFACE_BUTTON_PANEL; break;           
+                    case 2: eType = INTERFACE_CHARACTERPANEL; break;
+                    default: break;
+                }
+            }
+
+            if(LoadInterface(eType) == false)
+                return false;
+
+            break;
+        }
+
+        default: return false;
+    }
+
+	return true;
+}
+
+bool CInterface::LoadInterface(InterfaceType eType)
+{
+    CInterface* pInterface = NULL;
+
+    switch(eType)
+    {
+        case INTERFACE_MAINMENU: pInterface = new CInterface(); break;
+        case INTERFACE_PLAYERINFO: break;
+        case INTERFACE_BUTTON_PANEL: break;
+
+        case INTERFACE_GAMEMENU: pInterface = new CGameMenu(); break;
+
+        case INTERFACE_CHARACTERPANEL: break;
+
+        default: return false;
+    }
+
+    if(pInterface && pInterface->OnLoad() == false)
+        return false;
+
+    InterfaceObjectList.push_back(pInterface);
+    return true;
+}
+
 CInterface* CInterface::GetInterface(int nPosX, int nPosY)
 {
     CInterface* pInterface = NULL;
@@ -64,34 +151,6 @@ CInterface* CInterface::GetInterface(int nPosX, int nPosY)
     }
 
     return pInterface;
-}
-
-bool CInterface::LoadInterface()
-{
-    InterfaceObjectList.clear();
-
-	if(LoadButtons() == false)
-		return false;
-
-    CUnitInfoPanel* pUnitInfoPanel = new CUnitInfoPanel();
-    if(pUnitInfoPanel && pUnitInfoPanel->OnLoad() == false)
-        return false;
-
-    InterfaceObjectList.push_back(pUnitInfoPanel);
-
-    CButtonPanel* pButtonPanel = new CButtonPanel();
-    if(pButtonPanel && pButtonPanel->OnLoad() == false)
-        return false;
-
-    InterfaceObjectList.push_back(pButtonPanel);
-
-    CCharacterPanel* pCharacterPanel = new CCharacterPanel();
-    if(pCharacterPanel && pCharacterPanel->OnLoad() == false)
-        return false;
-
-    InterfaceObjectList.push_back(pCharacterPanel);
-
-	return true;
 }
 
 bool CInterface::LoadSurface()
@@ -152,24 +211,7 @@ bool CInterface::LoadButtons()
 	return true;
 }
 
-void CInterface::LoadInterface(InterfaceType eType)
-{
-    CInterface* pInterface = NULL;
 
-    switch(eType)
-    {
-        case INTERFACE_GAMEMENU:
-        {
-            pInterface = new CGameMenu();
-            if(pInterface && pInterface->OnLoad() == false)
-                return;
-        }
-
-        default: break;
-    }
-
-    InterfaceObjectList.push_back(pInterface);
-}
 
 void CInterface::UnloadInterface(InterfaceType eType)
 {

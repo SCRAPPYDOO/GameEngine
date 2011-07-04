@@ -13,10 +13,11 @@
 #define MAX_BUTTONPANEL_BUTTONS 10
 #define MAX_CHARPANEL_BUTTONS 5
 #define MAX_GAMEMENU_BUTTONS 2
-#define MAX_INTERFACEOBJECTS 20
+#define MAX_INTERFACEOBJECTS 3
 
 enum InterfaceType
 {
+    INTERFACE_MAINMENU          = 0,
     INTERFACE_PLAYERINFO        = 1,
     INTERFACE_BUTTON_PANEL      = 2,
     INTERFACE_GAMEMENU          = 3,
@@ -46,6 +47,7 @@ class CInterface
 
 	public:
         CInterface();
+        CInterface(InterfaceType eType);
         virtual ~CInterface() {}
 
 	public:
@@ -76,7 +78,7 @@ class CInterface
         bool OnLButtonUp(int x, int y);
 
 		bool LoadInterface();
-        void LoadInterface(InterfaceType eType);
+        bool LoadInterface(InterfaceType eType);
         void UnloadInterface(InterfaceType eType);
 
 		bool LoadSurface();

@@ -1,10 +1,43 @@
-﻿Build started 2011-07-04 20:08:17.
+﻿Build started 2011-07-04 22:16:05.
      1>Project "D:\CApp\CApp\CApp.vcxproj" on node 2 (build target(s)).
      1>InitializeBuildStatus:
          Creating "Release\CApp.unsuccessfulbuild" because "AlwaysCreate" was specified.
        ClCompile:
-         E:\Software\Visual Studio C++\VC\bin\CL.exe /c /Zi /nologo /W3 /WX- /O2 /Oi /Oy- /GL /D _MBCS /Gm- /EHsc /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Release\\" /Fd"Release\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt CApp_OnInit.cpp
+         E:\Software\Visual Studio C++\VC\bin\CL.exe /c /Zi /nologo /W3 /WX- /O2 /Oi /Oy- /GL /D _MBCS /Gm- /EHsc /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Release\\" /Fd"Release\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt CApp.cpp CApp_OnCleanup.cpp CApp_OnEvent.cpp CApp_OnInit.cpp CApp_OnLoop.cpp CApp_OnRender.cpp CButton.cpp CButtonPanel.cpp CCharacterPanel.cpp CGameMenu.cpp CInterface.cpp CUnitInfoPanel.cpp
+         CApp.cpp
+         CApp_OnCleanup.cpp
+     1>CApp_OnCleanup.cpp(8): warning C4018: '<' : signed/unsigned mismatch
+     1>CApp_OnCleanup.cpp(16): warning C4018: '<' : signed/unsigned mismatch
+     1>CApp_OnCleanup.cpp(23): warning C4018: '<' : signed/unsigned mismatch
+     1>CApp_OnCleanup.cpp(30): warning C4018: '<' : signed/unsigned mismatch
+         CApp_OnEvent.cpp
+     1>CApp_OnEvent.cpp(229): warning C4018: '<' : signed/unsigned mismatch
          CApp_OnInit.cpp
+         CApp_OnLoop.cpp
+     1>CApp_OnLoop.cpp(18): warning C4018: '<' : signed/unsigned mismatch
+     1>CApp_OnLoop.cpp(27): warning C4018: '<' : signed/unsigned mismatch
+         CApp_OnRender.cpp
+     1>CApp_OnRender.cpp(20): warning C4018: '<' : signed/unsigned mismatch
+     1>CApp_OnRender.cpp(27): warning C4018: '<' : signed/unsigned mismatch
+     1>CApp_OnRender.cpp(36): warning C4018: '<' : signed/unsigned mismatch
+     1>CApp_OnRender.cpp(43): warning C4018: '<' : signed/unsigned mismatch
+         CButton.cpp
+     1>CButton.cpp(190): warning C4018: '<' : signed/unsigned mismatch
+     1>CButton.cpp(215): warning C4018: '<' : signed/unsigned mismatch
+     1>CButton.cpp(230): warning C4018: '<' : signed/unsigned mismatch
+     1>CButton.cpp(249): warning C4018: '<' : signed/unsigned mismatch
+         CButtonPanel.cpp
+         CCharacterPanel.cpp
+     1>CCharacterPanel.cpp(61): warning C4018: '<' : signed/unsigned mismatch
+         CGameMenu.cpp
+     1>CGameMenu.cpp(53): warning C4018: '<' : signed/unsigned mismatch
+     1>CGameMenu.cpp(57): warning C4018: '<' : signed/unsigned mismatch
+     1>CGameMenu.cpp(83): warning C4018: '<' : signed/unsigned mismatch
+         CInterface.cpp
+     1>CInterface.cpp(142): warning C4018: '<' : signed/unsigned mismatch
+     1>CInterface.cpp(218): warning C4018: '<' : signed/unsigned mismatch
+     1>CInterface.cpp(233): warning C4018: '<' : signed/unsigned mismatch
+         CUnitInfoPanel.cpp
        Link:
          E:\Software\Visual Studio C++\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"D:\CApp\Release\CApp.exe" /NOLOGO SDL.lib SDLmain.lib SDL_image.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /ManifestFile:"Release\CApp.exe.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"D:\CApp\Release\CApp.pdb" /SUBSYSTEM:WINDOWS /OPT:REF /OPT:ICF /LTCG /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"D:\CApp\Release\CApp.lib" /MACHINE:X86 Release\CAnimation.obj
          Release\CApp.obj
@@ -42,4 +75,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:00.86
+Time Elapsed 00:00:02.78
