@@ -118,12 +118,10 @@ void CButton::OnRender(SDL_Surface* Surf_Display)
 
 void CButton::OnCleanup()
 {
-    /*
     if(pButtonSurface != NULL)
 		SDL_FreeSurface(pButtonSurface);
 
     pButtonSurface = NULL;
-    */
 }
 
 void CButton::Activate()
