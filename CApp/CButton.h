@@ -15,9 +15,10 @@
 enum ButtonType
 {
 	BUTTON_DEFAULT	= 99,
-	BUTTON_PLAY		= 0,
-	BUTTON_QUIT		= 1,
+	BUTTON_PLAY		= 0,   //enter to world
+	BUTTON_QUIT		= 1,   //quit from game
     BUTTON_MENU     = 2,
+    BUTTON_CREATECHARACTER = 3,  // create character
 
     //Game Menu Button
     BUTTON_GAMEMENU_QUIT = 10,
@@ -27,6 +28,7 @@ enum ButtonType
     BUTTON_CHARPANEL_EQUPMENT = 21,
     BUTTON_CHARPANEL_SPELLBOOK = 22,
     BUTTON_CHARPANEL_QUESTDIARY = 23,
+    BUTTON_CHARPANEL_GAMEMENU   = 24,
 };
 
 enum ButtonState

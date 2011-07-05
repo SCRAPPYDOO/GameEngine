@@ -1,8 +1,8 @@
 #include "CInterface.h"
 #include "CUnitInfoPanel.h"
 #include "CButtonPanel.h"
-#include "CGameMenu.h"
-#include "CCharacterPanel.h"
+#include "CInterfaceA.h"
+//#include "CCharacterPanel.h"
 
 CInterface CInterface::InterfaceControl;
 std::vector<CInterface*> CInterface::InterfaceObjectList;
@@ -11,13 +11,6 @@ bool CInterface::IsGameMenu = false;
 
 CInterface::CInterface() 
 {
-    eInterfaceType = INTERFACE_MAINMENU;
-    CInterface::IsGameMenu = false;
-}
-
-CInterface::CInterface(InterfaceType eType)
-{
-    //eInterfaceType = eType;
     CInterface::IsGameMenu = false;
 }
 
@@ -25,9 +18,15 @@ bool CInterface::OnLoad()
 {
     char* SurfName = "./error/surf_error.png";
 
+    //ToDo: Load cfg from file
     switch(eInterfaceType)
     {
-        case INTERFACE_MAINMENU: SurfName = "./menu/main_menu_surf.png"; break;
+        case INTERFACE_MAINMENU: 
+        {
+            CInterface::IsGameMenu = false;
+            SurfName = "./menu/main_menu_surf.png"; 
+            break;
+        }
         case INTERFACE_PLAYERINFO: SurfName = "./interface/interface_unitinfo_surf.png"; break;
         case INTERFACE_BUTTON_PANEL: SurfName = "./interface/interface_button_surf.png"; break;
         case INTERFACE_GAMEMENU: SurfName = "./menu/menu_gamebackground.png"; break;
@@ -112,11 +111,11 @@ bool CInterface::LoadInterface(InterfaceType eType)
 
     switch(eType)
     {
-        case INTERFACE_MAINMENU: pInterface = new CInterface(); break;
+        case INTERFACE_MAINMENU: pInterface = new CInterfaceA(eType); break;
         case INTERFACE_PLAYERINFO: pInterface = new CUnitInfoPanel(); break;
         case INTERFACE_BUTTON_PANEL: pInterface = new CButtonPanel(); break;
-        case INTERFACE_GAMEMENU: pInterface = new CGameMenu(); break;
-        case INTERFACE_CHARACTERPANEL: pInterface = new CCharacterPanel(); break;
+        case INTERFACE_GAMEMENU: pInterface = new CInterfaceA(eType); break;
+        case INTERFACE_CHARACTERPANEL: pInterface = new CInterfaceA(eType); break;
 
         default: return false;
     }
@@ -144,108 +143,6 @@ CInterface* CInterface::GetInterface(int nPosX, int nPosY)
     }
 
     return pInterface;
-}
-//
-//bool CInterface::LoadButtons()
-//{
-//    CButton::ButtonList.clear();
-//
-//	ButtonType Type;
-//
-//	switch(CApp::eGameState)
-//	{
-//		case MAIN_MENU:
-//		{
-//			for(int i=0; i<MAX_MENU_BUTTONS; ++i)
-//			{
-//				CButton *pButton = new CButton();
-//
-//				switch(i)
-//				{
-//					case 0: Type = BUTTON_PLAY; break;
-//					case 1: Type = BUTTON_QUIT; break;
-//				}
-//					
-//				if(pButton->OnLoad(Type) == false)
-//                    return false;
-//
-//				CButton::ButtonList.push_back(pButton);
-//			}
-//
-//			break;
-//		}
-//
-//        case TEST:
-//        {
-//            CButton *pButton = new CButton();
-//            pButton->OnLoad(BUTTON_MENU);
-//            CButton::ButtonList.push_back(pButton);
-//
-//            break;
-//        }
-//
-//        case GAME_MENU:
-//        {
-//
-//            break;
-//        }
-//
-//        default: break;
-//	}
-//
-//	return true;
-//}
-
-bool CInterface::LoadButtons()
-{
-    //CButton::ButtonList.clear();
-
-	ButtonType Type;
-
-	switch(eInterfaceType)
-	{
-		case INTERFACE_MAINMENU:
-		{
-			for(int i=0; i<MAX_MENU_BUTTONS; ++i)
-			{
-				CButton *pButton = new CButton();
-
-				switch(i)
-				{
-					case 0: Type = BUTTON_PLAY; break;
-					case 1: Type = BUTTON_QUIT; break;
-				}
-					
-				if(pButton->OnLoad(Type) == false)
-                    return false;
-
-				CButton::ButtonList.push_back(pButton);
-			}
-
-			break;
-		}
-
-        case INTERFACE_PLAYERINFO:
-        {
-            CButton *pButton = new CButton();
-            pButton->OnLoad(BUTTON_MENU);
-            CButton::ButtonList.push_back(pButton);
-
-            break;
-        }
-
-        case INTERFACE_BUTTON_PANEL:
-        {
-
-            break;
-        
-        }
-
-
-        default: break;
-	}
-
-	return true;
 }
 
 void CInterface::CleanUpInterface()

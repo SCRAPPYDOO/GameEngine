@@ -84,10 +84,7 @@
     <ClCompile Include="CButtonPanel.cpp">
       <Filter>Interface</Filter>
     </ClCompile>
-    <ClCompile Include="CGameMenu.cpp">
-      <Filter>Interface</Filter>
-    </ClCompile>
-    <ClCompile Include="CCharacterPanel.cpp">
+    <ClCompile Include="CInterfaceA.cpp">
       <Filter>Interface</Filter>
     </ClCompile>
   </ItemGroup>
@@ -146,10 +143,7 @@
     <ClInclude Include="CButtonPanel.h">
       <Filter>Interface</Filter>
     </ClInclude>
-    <ClInclude Include="CGameMenu.h">
-      <Filter>Interface</Filter>
-    </ClInclude>
-    <ClInclude Include="CCharacterPanel.h">
+    <ClInclude Include="CInterfaceA.h">
       <Filter>Interface</Filter>
     </ClInclude>
   </ItemGroup>

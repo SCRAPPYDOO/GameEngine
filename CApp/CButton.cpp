@@ -57,6 +57,7 @@ bool CButton::OnLoad(ButtonType eType)
 {
     char* Surf_Name = "./error/surf_error.png";
 
+    //ToDo: Load variables from file
 	switch(eType)
 	{
 		case BUTTON_PLAY:
@@ -95,6 +96,7 @@ bool CButton::OnLoad(ButtonType eType)
         case BUTTON_CHARPANEL_EQUPMENT: x = 1036; y = 603; w = 30; h = 30; break;
         case BUTTON_CHARPANEL_SPELLBOOK: x = 1069; y = 603; w = 30; h = 30; break;
         case BUTTON_CHARPANEL_QUESTDIARY: x = 1105; y = 603; w = 30; h = 30; break;
+        case BUTTON_CHARPANEL_GAMEMENU: x = 1149; y = 603; w = 30; h = 30; break;
 
 		default: return false; break;
 	}
@@ -176,7 +178,17 @@ void CButton::Activate()
 
         //Other Button in Game Menu
 
+        //Character Mini Panel
+        case BUTTON_CHARPANEL_GAMEMENU:
+        {
+            if(!CInterface::IsGameMenu)
+            {
+                CInterface::InterfaceControl.LoadInterface(INTERFACE_GAMEMENU);
+                CInterface::IsGameMenu = true;
+            }
 
+            break;
+        }
 
 		default: break;
 	}

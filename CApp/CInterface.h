@@ -46,7 +46,7 @@ class CInterface
 
 	public:
         virtual bool OnLoad();	
-            virtual bool LoadButtons();
+            virtual void LoadButtons() {}
 
       //virtual void OnEvent();
             virtual void OnMove(int nNextX, int nNextY); //when we  move interface object
@@ -62,7 +62,6 @@ class CInterface
 
 	public:
         CInterface();
-        CInterface(InterfaceType eType);
         virtual ~CInterface() {}
 
     protected:
