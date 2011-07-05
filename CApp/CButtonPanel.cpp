@@ -7,7 +7,7 @@ CButtonPanel::CButtonPanel()
     nWidht              = 600;
     nHeight             = 60;
 
-    Surf_ButtonPanel    = NULL;
+    Surf_Interface      = NULL;
     eInterfaceType      = INTERFACE_BUTTON_PANEL;
 
     for(int i=0; i<MAX_BUTTON_SLOTS; ++i)
@@ -18,27 +18,20 @@ CButtonPanel::CButtonPanel()
 
 bool CButtonPanel::OnLoad()
 {
-    if((Surf_ButtonPanel = CSurface::OnLoad("./interface/interface_button_surf.png")) == NULL) 
+    if(CInterface::OnLoad() == false)
         return false;
-
-    //Load cfg
 
     return true;
 }
 
 void CButtonPanel::OnRender(SDL_Surface* Surf_Display)
 {
-    if(Surf_ButtonPanel == NULL || Surf_Display == NULL) return;
-    
-    CSurface::OnDraw(Surf_Display, Surf_ButtonPanel, nPosX, nPosY);
+    CInterface::OnRender(Surf_Display);
 }
 
 void CButtonPanel::OnCleanup()
 {
-	if(Surf_ButtonPanel) 
-		SDL_FreeSurface(Surf_ButtonPanel);
-
-    Surf_ButtonPanel = NULL;
+    CInterface::OnCleanup();
 
     for(int i=0;i < MAX_BUTTON_SLOTS; ++i)
     {

@@ -12,10 +12,10 @@ class CUnitInfoPanel : public CInterface
 {
     public:
         CUnitInfoPanel();
-
         ~CUnitInfoPanel() {}
 
-        SDL_Surface* Surf_UnitInfoPanel;
+        SDL_Surface* Surf_Interface;
+
         SDL_Surface* Surf_UnitStatus;
 
     public:

@@ -7,13 +7,15 @@ CUnitInfoPanel::CUnitInfoPanel()
     nWidht = 600;
     nHeight = 30;
 
-    Surf_UnitInfoPanel = NULL;
+    eInterfaceType = INTERFACE_PLAYERINFO;
+
+    Surf_Interface = NULL;
     Surf_UnitStatus = NULL;
 }
 
 bool CUnitInfoPanel::OnLoad()
 {
-    if((Surf_UnitInfoPanel = CSurface::OnLoad("./interface/interface_unitinfo_surf.png")) == NULL) 
+    if(CInterface::OnLoad() == false) 
         return false;
 
     if((Surf_UnitStatus = CSurface::OnLoad("./interface/interface_unitinfo_status.png")) == NULL) 
@@ -24,9 +26,7 @@ bool CUnitInfoPanel::OnLoad()
 
 void CUnitInfoPanel::OnRender(SDL_Surface* Surf_Display)
 {
-    if(Surf_UnitInfoPanel == NULL || Surf_UnitStatus == NULL || Surf_Display == NULL) return;
-    
-    CSurface::OnDraw(Surf_Display, Surf_UnitInfoPanel, nPosX, nPosY);
+    CInterface::OnRender(Surf_Display);
 
     if(CApp::pSelectedUnit != NULL) //If We Have Selected Player We Show Info
     {
@@ -44,12 +44,10 @@ void CUnitInfoPanel::OnRender(SDL_Surface* Surf_Display)
 
 void CUnitInfoPanel::OnCleanup()
 {
-	if(Surf_UnitInfoPanel) 
-		SDL_FreeSurface(Surf_UnitInfoPanel);
+	CInterface::OnCleanup();
 
     if(Surf_UnitStatus) 
 		SDL_FreeSurface(Surf_UnitStatus);
 
-    Surf_UnitInfoPanel = NULL;
 	Surf_UnitStatus = NULL;
 }

@@ -2,10 +2,12 @@
 
 CCharacterPanel::CCharacterPanel()
 {
-    nPosX = 1000;
-    nPosY = 600;
-    nWidht = 414;  
-    nHeight = 477;
+    nPosX = 700;
+    nPosY = 500;
+    nWidht = 200;  
+    nHeight = 200;
+
+    OldX = OldY = 0;
 
     Surf_Interface = NULL;
     eInterfaceType = INTERFACE_CHARACTERPANEL;
@@ -18,7 +20,7 @@ CCharacterPanel::CCharacterPanel()
 
 bool CCharacterPanel::OnLoad()
 {
-    if((Surf_Interface = CSurface::OnLoad("./interface/surf_character_panel.png")) == NULL) 
+    if(CInterface::OnLoad() == false)
         return false;
 
     for(int i=20; i<24; ++i)
@@ -47,12 +49,14 @@ bool CCharacterPanel::OnLoad()
     return true;
 }
 
+void CCharacterPanel::OnRender(SDL_Surface* Surf_Display)
+{
+    CInterface::OnRender(Surf_Display);
+}
+
 void CCharacterPanel::OnCleanup()
 {
-	if(Surf_Interface) 
-		SDL_FreeSurface(Surf_Interface);
-
-    Surf_Interface = NULL;
+    CInterface::OnCleanup();
 
     for(int i = 0;i < MAX_BUTTON_LIST;i++) 
     {   
@@ -76,11 +80,16 @@ void CCharacterPanel::OnCleanup()
 
 void CCharacterPanel::UpdateButtonsPosition()
 {
+    if(OldX == 0 && OldY == 0)
+        return;
+
     for(int i = 0;i < MAX_BUTTON_LIST;i++) 
     {   
         if(!ButtonList[i]) continue;
                 
-        ButtonList[i]->SetPositionX(nPosX + 33*i +3);
-        ButtonList[i]->SetPositionY(nPosY + 3);
+        ButtonList[i]->OnMoveWithInterface(nPosX-OldX,nPosY-OldY);
     }
+
+    OldX = 0;
+    OldY = 0;
 }

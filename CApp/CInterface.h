@@ -36,25 +36,20 @@ class CInterface
         static std::vector<CInterface*>     InterfaceObjectList;
         static bool IsGameMenu;
 
-    protected:
-        SDL_Surface* Surf_Interface;
+    public:
+		bool LoadInterface();
+        bool LoadInterface(InterfaceType eType);
+        void CleanUpInterface();
+        void CleanUpInterface(InterfaceType eType);
 
-        InterfaceType eInterfaceType;
-
-        int nInterfaceflag;
-
-        int nPosX, nPosY, nWidht, nHeight, nDistX, nDistY;
-
-	public:
-        CInterface();
-        CInterface(InterfaceType eType);
-        virtual ~CInterface() {}
+        bool IsInterfaceOnPos(int nX, int nY);
 
 	public:
         virtual bool OnLoad();	
+            virtual bool LoadButtons();
 
       //virtual void OnEvent();
-            virtual void OnMove(int nNextX, int nNextY) { nPosX = nNextX - nDistX; nPosY = nNextY - nDistY; }   //when we  move interface object
+            virtual void OnMove(int nNextX, int nNextY); //when we  move interface object
             virtual void SetDistance(int nX, int nY) { nDistX = nX - nPosX; nDistY = nY - nPosY; }              //Used for proper update movement
             virtual bool AddButtonToInterface(CButton* pButton, int mX, int mY) { return false; }               //Used when we add button to interface
 
@@ -66,6 +61,22 @@ class CInterface
         virtual void OnCleanup();
 
 	public:
+        CInterface();
+        CInterface(InterfaceType eType);
+        virtual ~CInterface() {}
+
+    protected:
+        SDL_Surface* Surf_Interface;
+        
+        InterfaceType eInterfaceType;
+
+        int nInterfaceflag;
+
+        int nPosX, nPosY, nWidht, nHeight, nDistX, nDistY;
+
+        int OldX, OldY;
+
+	public:
         CInterface* GetInterface(int nPosX, int nPosY);
         InterfaceType GetInterfaceType() const { return eInterfaceType; }
 
@@ -73,14 +84,6 @@ class CInterface
         int GetPosY() const { return nPosY;}
         int GetWidht() const { return nWidht;}
         int GetHeight() const { return nHeight;}
-
-    public:
-		bool LoadInterface();
-        bool LoadInterface(InterfaceType eType);
-        void CleanUpInterface();
-        void CleanUpInterface(InterfaceType eType);
-
-        bool IsInterfaceOnPos(int nX, int nY);
 };
 
 #endif

@@ -11,12 +11,14 @@ bool CInterface::IsGameMenu = false;
 
 CInterface::CInterface() 
 {
-
+    eInterfaceType = INTERFACE_MAINMENU;
+    CInterface::IsGameMenu = false;
 }
 
 CInterface::CInterface(InterfaceType eType)
 {
-    eInterfaceType = eType;
+    //eInterfaceType = eType;
+    CInterface::IsGameMenu = false;
 }
 
 bool CInterface::OnLoad()
@@ -26,18 +28,18 @@ bool CInterface::OnLoad()
     switch(eInterfaceType)
     {
         case INTERFACE_MAINMENU: SurfName = "./menu/main_menu_surf.png"; break;
-        case INTERFACE_PLAYERINFO: break;
-        case INTERFACE_BUTTON_PANEL: break;
-
-        case INTERFACE_GAMEMENU: break;
-
-        case INTERFACE_CHARACTERPANEL: break;
+        case INTERFACE_PLAYERINFO: SurfName = "./interface/interface_unitinfo_surf.png"; break;
+        case INTERFACE_BUTTON_PANEL: SurfName = "./interface/interface_button_surf.png"; break;
+        case INTERFACE_GAMEMENU: SurfName = "./menu/menu_gamebackground.png"; break;
+        case INTERFACE_CHARACTERPANEL: SurfName = "./interface/surf_character_panel.png"; break;
 
         default: break;
     }
 
     if((Surf_Interface = CSurface::OnLoad(SurfName)) == NULL) 
         return false;
+
+    LoadButtons();
 
     return true;
 }
@@ -111,12 +113,10 @@ bool CInterface::LoadInterface(InterfaceType eType)
     switch(eType)
     {
         case INTERFACE_MAINMENU: pInterface = new CInterface(); break;
-        case INTERFACE_PLAYERINFO: break;
-        case INTERFACE_BUTTON_PANEL: break;
-
+        case INTERFACE_PLAYERINFO: pInterface = new CUnitInfoPanel(); break;
+        case INTERFACE_BUTTON_PANEL: pInterface = new CButtonPanel(); break;
         case INTERFACE_GAMEMENU: pInterface = new CGameMenu(); break;
-
-        case INTERFACE_CHARACTERPANEL: break;
+        case INTERFACE_CHARACTERPANEL: pInterface = new CCharacterPanel(); break;
 
         default: return false;
     }
@@ -145,17 +145,66 @@ CInterface* CInterface::GetInterface(int nPosX, int nPosY)
 
     return pInterface;
 }
+//
+//bool CInterface::LoadButtons()
+//{
+//    CButton::ButtonList.clear();
+//
+//	ButtonType Type;
+//
+//	switch(CApp::eGameState)
+//	{
+//		case MAIN_MENU:
+//		{
+//			for(int i=0; i<MAX_MENU_BUTTONS; ++i)
+//			{
+//				CButton *pButton = new CButton();
+//
+//				switch(i)
+//				{
+//					case 0: Type = BUTTON_PLAY; break;
+//					case 1: Type = BUTTON_QUIT; break;
+//				}
+//					
+//				if(pButton->OnLoad(Type) == false)
+//                    return false;
+//
+//				CButton::ButtonList.push_back(pButton);
+//			}
+//
+//			break;
+//		}
+//
+//        case TEST:
+//        {
+//            CButton *pButton = new CButton();
+//            pButton->OnLoad(BUTTON_MENU);
+//            CButton::ButtonList.push_back(pButton);
+//
+//            break;
+//        }
+//
+//        case GAME_MENU:
+//        {
+//
+//            break;
+//        }
+//
+//        default: break;
+//	}
+//
+//	return true;
+//}
 
-/*
 bool CInterface::LoadButtons()
 {
-    CButton::ButtonList.clear();
+    //CButton::ButtonList.clear();
 
 	ButtonType Type;
 
-	switch(CApp::eGameState)
+	switch(eInterfaceType)
 	{
-		case MAIN_MENU:
+		case INTERFACE_MAINMENU:
 		{
 			for(int i=0; i<MAX_MENU_BUTTONS; ++i)
 			{
@@ -176,7 +225,7 @@ bool CInterface::LoadButtons()
 			break;
 		}
 
-        case TEST:
+        case INTERFACE_PLAYERINFO:
         {
             CButton *pButton = new CButton();
             pButton->OnLoad(BUTTON_MENU);
@@ -185,19 +234,19 @@ bool CInterface::LoadButtons()
             break;
         }
 
-        case GAME_MENU:
+        case INTERFACE_BUTTON_PANEL:
         {
 
             break;
+        
         }
+
 
         default: break;
 	}
 
 	return true;
 }
-
-*/
 
 void CInterface::CleanUpInterface()
 {
@@ -226,8 +275,6 @@ void CInterface::CleanUpInterface(InterfaceType eType)
     }
 }
 
-
-
 bool CInterface::IsInterfaceOnPos(int nX, int nY)
 {
     if( ( nX > nPosX ) && ( nX < nPosX + nWidht) && ( nY > nPosY ) && ( nY < nPosY + nHeight ) )
@@ -235,3 +282,12 @@ bool CInterface::IsInterfaceOnPos(int nX, int nY)
 
     return false;
 }
+
+void CInterface::OnMove(int nNextX, int nNextY) 
+{ 
+    OldX = nPosX;
+    OldY = nPosY;
+
+    nPosX = nNextX - nDistX; 
+    nPosY = nNextY - nDistY;   
+}   

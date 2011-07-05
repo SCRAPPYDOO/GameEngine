@@ -33,8 +33,7 @@ class CCharacterPanel : public CInterface
     public:
         bool OnLoad();
         void OnCleanup();
-
-        //void OnMove(int nNextX, int nNextY);
+        void OnRender(SDL_Surface* Surf_Display);
         void UpdateButtonsPosition();
 };
 

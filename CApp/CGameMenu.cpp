@@ -6,12 +6,17 @@ CGameMenu::CGameMenu()
     nPosY = 200;
     nWidht = 414;  
     nHeight = 477;
+
+    OldX = 0;
+    OldY = 0;
+
+    Surf_Interface = NULL;
     eInterfaceType = INTERFACE_GAMEMENU;
 }
 
 bool CGameMenu::OnLoad()
 {
-    if((Surf_GameMenu = CSurface::OnLoad("./menu/menu_gamebackground.png")) == NULL) 
+    if(CInterface::OnLoad() == false)
         return false;
 
     for(int i=10; i<12; ++i)
@@ -38,17 +43,12 @@ bool CGameMenu::OnLoad()
 
 void CGameMenu::OnRender(SDL_Surface* Surf_Display)
 {
-    if(Surf_GameMenu == NULL || Surf_Display == NULL) return;
-    
-    CSurface::OnDraw(Surf_Display, Surf_GameMenu, nPosX, nPosY);
+    CInterface::OnRender(Surf_Display);
 }
 
 void CGameMenu::OnCleanup()
 {
-	if(Surf_GameMenu) 
-		SDL_FreeSurface(Surf_GameMenu);
-
-    Surf_GameMenu = NULL;
+    CInterface::OnCleanup();
 
     for(int i = 0;i < GameMenuButtonsList.size();i++) 
     {   
@@ -72,19 +72,18 @@ void CGameMenu::OnCleanup()
     GameMenuButtonsList.clear();
 }
 
-void CGameMenu::OnMove(int nNextX, int nNextY)
-{
-    CInterface::OnMove(nNextX, nNextY);
-    UpdateButtonsPosition();
-}
-
 void CGameMenu::UpdateButtonsPosition()
 {
+    if(OldX == 0 && OldY == 0)
+        return;
+
     for(int i = 0;i < GameMenuButtonsList.size();i++) 
     {   
         if(!GameMenuButtonsList[i]) continue;
                 
-        GameMenuButtonsList[i]->SetPositionX(nPosX + 30*i);
-        GameMenuButtonsList[i]->SetPositionY(nPosY);
+        GameMenuButtonsList[i]->OnMoveWithInterface(nPosX-OldX,nPosY-OldY);
     }
+
+    OldX = 0;
+    OldY = 0;
 }

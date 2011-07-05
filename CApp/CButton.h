@@ -90,15 +90,14 @@ class CButton
     public:
         virtual void Activate();
         virtual void OnMove(int nNextX, int nNextY)     { x = nNextX - nDistX; y = nNextY - nDistY; eButtonState = BUTTONSTATE_MOVED; }
+        virtual void OnMoveWithInterface(int nX, int nY) { x += nX; y += nY; }
         virtual void SetDistance(int nX, int nY)        { nDistX = nX - x; nDistY = nY - y; }                      //Used for proper update movement for interface panels
         virtual bool IsButtonOnPos(int mX, int mY);
         virtual void OnDrop(int mX, int mY);  //if left button up with button pointed
         
     public: //Button Control Methods
         void OnMouseMove(int mX, int mY, int relX, int relY, bool Left,bool Right,bool Middle);
-        void DeleteButton(CButton* pButton);
-
-       
+        void DeleteButton(CButton* pButton);   
 };
 
 #endif

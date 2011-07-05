@@ -14,11 +14,10 @@ class CButtonPanel : public CInterface
 {
     public:
         CButtonPanel();
-
         ~CButtonPanel() {}
 
     private:
-        SDL_Surface*              Surf_ButtonPanel;
+        SDL_Surface*              Surf_Interface;
         CButton*                  ButtonSlot[MAX_BUTTON_SLOTS];
 
     public:
