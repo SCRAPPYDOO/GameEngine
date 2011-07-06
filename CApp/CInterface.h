@@ -22,6 +22,7 @@ enum InterfaceType
     INTERFACE_BUTTON_PANEL      = 2,
     INTERFACE_GAMEMENU          = 3,
     INTERFACE_CHARACTERPANEL    = 4,
+    INTERFACE_BAG               = 5,
 };
 
 enum InterfaceFlag

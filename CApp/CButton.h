@@ -29,6 +29,11 @@ enum ButtonType
     BUTTON_CHARPANEL_SPELLBOOK = 22,
     BUTTON_CHARPANEL_QUESTDIARY = 23,
     BUTTON_CHARPANEL_GAMEMENU   = 24,
+
+
+
+    BUTTON_BAG_SWITCHBAG = 50,
+    BUTTON_BAG_QUIT         = 51,
 };
 
 enum ButtonState

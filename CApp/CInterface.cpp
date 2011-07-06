@@ -2,7 +2,7 @@
 #include "CUnitInfoPanel.h"
 #include "CButtonPanel.h"
 #include "CInterfaceA.h"
-//#include "CCharacterPanel.h"
+#include "CInterfaceB.h"
 
 CInterface CInterface::InterfaceControl;
 std::vector<CInterface*> CInterface::InterfaceObjectList;
@@ -31,6 +31,12 @@ bool CInterface::OnLoad()
         case INTERFACE_BUTTON_PANEL: SurfName = "./interface/interface_button_surf.png"; break;
         case INTERFACE_GAMEMENU: SurfName = "./menu/menu_gamebackground.png"; break;
         case INTERFACE_CHARACTERPANEL: SurfName = "./interface/surf_character_panel.png"; break;
+        case INTERFACE_BAG:
+        {
+            nWidht = INTERFACE_BAG_W;
+            nHeight = INTERFACE_BAG_H;
+            SurfName = "./interface/interface_equpment_surf.png"; break;
+        }
 
         default: break;
     }
@@ -116,6 +122,7 @@ bool CInterface::LoadInterface(InterfaceType eType)
         case INTERFACE_BUTTON_PANEL: pInterface = new CButtonPanel(); break;
         case INTERFACE_GAMEMENU: pInterface = new CInterfaceA(eType); break;
         case INTERFACE_CHARACTERPANEL: pInterface = new CInterfaceA(eType); break;
+        case INTERFACE_BAG: pInterface = new CInterfaceB(eType); break;
 
         default: return false;
     }

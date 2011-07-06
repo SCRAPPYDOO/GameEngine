@@ -7,8 +7,8 @@ CButton::CButton()
 {
 	x = 0;
 	y = 0;
-	w = 0;
-	h = 0;
+	w = 30;
+	h = 30;
 
     pButtonSurface = NULL;
 
@@ -65,7 +65,6 @@ bool CButton::OnLoad(ButtonType eType)
 			this->x = 640;
 			this->y = 300;
 			this->w = 134;
-			this->h = 30;
 
 			break;
 		}
@@ -75,7 +74,6 @@ bool CButton::OnLoad(ButtonType eType)
 			this->x = 640;
 			this->y = 350;
 			this->w = 134;
-			this->h = 30;
 
 			break;
 		}
@@ -85,7 +83,6 @@ bool CButton::OnLoad(ButtonType eType)
             this->x = 1050;
 			this->y = 16;
 			this->w = 134;
-			this->h = 30;
             break;
         }
 
@@ -98,12 +95,16 @@ bool CButton::OnLoad(ButtonType eType)
         case BUTTON_CHARPANEL_QUESTDIARY: x = 1105; y = 603; w = 30; h = 30; break;
         case BUTTON_CHARPANEL_GAMEMENU: x = 1149; y = 603; w = 30; h = 30; break;
 
-		default: return false; break;
+        case BUTTON_BAG_SWITCHBAG: break;
+        case BUTTON_BAG_QUIT: break;
+
+		default: break;
 	}
 
     this->eType = eType;
 
-    pButtonSurface = CSurface::OnLoad(Surf_Name);
+    if((pButtonSurface = CSurface::OnLoad(Surf_Name)) == false)
+        return false;
 
     return true;
 }
@@ -176,6 +177,11 @@ void CButton::Activate()
 
         //Other Button in Game Menu
 
+
+        case BUTTON_CHARPANEL_CHARSHEET: break;
+        case BUTTON_CHARPANEL_EQUPMENT: CInterface::InterfaceControl.LoadInterface(INTERFACE_BAG); break;
+        case BUTTON_CHARPANEL_SPELLBOOK: break;
+        case BUTTON_CHARPANEL_QUESTDIARY: break;
         //Character Mini Panel
         case BUTTON_CHARPANEL_GAMEMENU:
         {
@@ -187,6 +193,9 @@ void CButton::Activate()
 
             break;
         }
+
+        case BUTTON_BAG_SWITCHBAG: break;
+        case BUTTON_BAG_QUIT: CInterface::InterfaceControl.CleanUpInterface(INTERFACE_BAG); break;
 
 		default: break;
 	}

@@ -28,19 +28,6 @@ CInterfaceA::CInterfaceA(InterfaceType eType)
     eInterfaceType = eType;
 }
 
-bool CInterfaceA::OnLoad()
-{
-    if(CInterface::OnLoad() == false)
-        return false;
-
-    return true;
-}
-
-void CInterfaceA::OnRender(SDL_Surface* Surf_Display)
-{
-    CInterface::OnRender(Surf_Display);
-}
-
 void CInterfaceA::OnCleanup()
 {
     CInterface::OnCleanup();

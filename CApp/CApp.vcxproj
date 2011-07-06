@@ -81,6 +81,9 @@
     <ClCompile Include="CFrameControler.cpp" />
     <ClCompile Include="CInterfaceA.cpp" />
     <ClCompile Include="CInterface.cpp" />
+    <ClCompile Include="CInterfaceB.cpp" />
+    <ClCompile Include="CInterfaceInformationBox.cpp" />
+    <ClCompile Include="CItem.cpp" />
     <ClCompile Include="CMap.cpp" />
     <ClCompile Include="CMovementGenerator.cpp" />
     <ClCompile Include="CObject.cpp" />
@@ -101,6 +104,9 @@
     <ClInclude Include="CFrameControler.h" />
     <ClInclude Include="CInterfaceA.h" />
     <ClInclude Include="CInterface.h" />
+    <ClInclude Include="CInterfaceB.h" />
+    <ClInclude Include="CInterfaceInformationBox.h" />
+    <ClInclude Include="CItem.h" />
     <ClInclude Include="CMap.h" />
     <ClInclude Include="CMovementGenerator.h" />
     <ClInclude Include="CObject.h" />

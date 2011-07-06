@@ -24,12 +24,10 @@ class CInterfaceA : public CInterface
         CInterfaceA(InterfaceType eType);
         ~CInterfaceA() {}
 
-    public:
+    protected:
         std::vector<CButton*>     ButtonsList;
 
     public:
-        bool OnLoad();
-        void OnRender(SDL_Surface* Surf_Display);
         void OnCleanup();
 
         void UpdateButtonsPosition();
