@@ -13,7 +13,8 @@
 #define MAX_BUTTONPANEL_BUTTONS 10
 #define MAX_CHARPANEL_BUTTONS 5
 #define MAX_GAMEMENU_BUTTONS 2
-#define MAX_INTERFACEOBJECTS 3
+
+#define MAX_INTERFACEOBJECTS 6
 
 enum InterfaceType
 {
@@ -23,6 +24,9 @@ enum InterfaceType
     INTERFACE_GAMEMENU          = 3,
     INTERFACE_CHARACTERPANEL    = 4,
     INTERFACE_BAG               = 5,
+    INTERFACE_EQUIP             = 6,
+    INTERFACE_CHARACTERSHEET    = 7,
+    INTERFACE_AREAMAP           = 8,
 };
 
 enum InterfaceFlag
@@ -35,6 +39,7 @@ class CInterface
 	public:
         static CInterface					InterfaceControl;
         static std::vector<CInterface*>     InterfaceObjectList;
+        //static CInterface*                  Interface[MAX_INTERFACEOBJECTS];
         static bool IsGameMenu;
 
     public:

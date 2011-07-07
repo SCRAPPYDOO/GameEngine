@@ -12,6 +12,13 @@
 #define GAME_OPTION_BUTTON_SIEZ_W 140
 #define GAME_OPTION_BUTTON_SIZE_H 30
 
+enum ButtonClass
+{
+    BUTTON,
+    ITEM,
+    SPELL,
+};
+
 enum ButtonType
 {
 	BUTTON_DEFAULT	= 99,
@@ -30,10 +37,12 @@ enum ButtonType
     BUTTON_CHARPANEL_QUESTDIARY = 23,
     BUTTON_CHARPANEL_GAMEMENU   = 24,
 
-
-
-    BUTTON_BAG_SWITCHBAG = 50,
+    BUTTON_BAG_SWITCHBAG    = 50,
     BUTTON_BAG_QUIT         = 51,
+    BUTTON_BAG_SLOT_ONE     = 52,  //up to 55  4 bag slots
+    BUTTON_BAG_SLOT_TWO     = 53, 
+    BUTTON_BAG_SLOT_THREE   = 54,
+    BUTTON_BAG_SLOT_FOUR    = 55,
 };
 
 enum ButtonState

@@ -1,4 +1,5 @@
 #include "CButton.h"
+#include "CInterfaceB.h"
 
 CButton CButton::ButtonControl;
 std::vector<CButton*> CButton::ButtonList;
@@ -97,6 +98,7 @@ bool CButton::OnLoad(ButtonType eType)
 
         case BUTTON_BAG_SWITCHBAG: break;
         case BUTTON_BAG_QUIT: break;
+        case BUTTON_BAG_SLOT_ONE: break;
 
 		default: break;
 	}
@@ -179,7 +181,13 @@ void CButton::Activate()
 
 
         case BUTTON_CHARPANEL_CHARSHEET: break;
-        case BUTTON_CHARPANEL_EQUPMENT: CInterface::InterfaceControl.LoadInterface(INTERFACE_BAG); break;
+        case BUTTON_CHARPANEL_EQUPMENT:
+        {
+            if(CInterfaceB::BagControl.OnLoad() == false)
+                return;
+
+            break;
+        }
         case BUTTON_CHARPANEL_SPELLBOOK: break;
         case BUTTON_CHARPANEL_QUESTDIARY: break;
         //Character Mini Panel
@@ -195,7 +203,8 @@ void CButton::Activate()
         }
 
         case BUTTON_BAG_SWITCHBAG: break;
-        case BUTTON_BAG_QUIT: CInterface::InterfaceControl.CleanUpInterface(INTERFACE_BAG); break;
+        case BUTTON_BAG_QUIT: CInterfaceB::BagControl.OnCleanup(); break;
+        case BUTTON_BAG_SLOT_ONE: CInterfaceB::BagControl.SwitchBag(BAG_ONE); break;
 
 		default: break;
 	}

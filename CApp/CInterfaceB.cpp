@@ -1,17 +1,24 @@
 #include "CInterfaceB.h"
+#include <string> 
+#include <fstream>
+
+CInterfaceB CInterfaceB::BagControl;
 
 CInterfaceB::CInterfaceB()
 {
     nPosX = 400;
     nPosY = 200;
-    nWidht = 414;  
-    nHeight = 477;
+    nWidht = INTERFACE_BAG_W;
+    nHeight = INTERFACE_BAG_H;
 
     OldX = 0;
     OldY = 0;
 
+    ActualBag = BAG_ONE;
+
     Surf_Interface = NULL;
-    eInterfaceType = INTERFACE_GAMEMENU;
+
+    eInterfaceType = INTERFACE_BAG;
 }
 
 CInterfaceB::CInterfaceB(InterfaceType eType)
@@ -19,9 +26,10 @@ CInterfaceB::CInterfaceB(InterfaceType eType)
     nPosX = 50;
     nPosY = 50;
 
+    nWidht = INTERFACE_BAG_W;
+    nHeight = INTERFACE_BAG_H;
 
-    nWidht = 50;  
-    nHeight = 50;
+    ActualBag = BAG_ONE;
 
     OldX = 0;
     OldY = 0;
@@ -46,26 +54,17 @@ bool CInterfaceB::OnLoad()
     if(CInterface::OnLoad() == false)
         return false;
 
+    LoadBag(ActualBag);
+
     return true;
 }
 
 void CInterfaceB::OnCleanup()
 {
+    SaveBag(ActualBag);
+    CleanUpBag(ActualBag);
+
     CInterfaceA::OnCleanup();
-
-    for(int BagSlot = 0; BagSlot < BAG_MAX_SLOTS; ++BagSlot) 
-    {   
-        for(int x = 0; x < BAG_MAX_X; ++x) 
-        {   
-            for(int y = 0; y < BAG_MAX_Y; ++y) 
-            {   
-                if(!ItemList[BagSlot][x][y]) continue;
-
-                ItemList[BagSlot][x][y]->OnCleanup();
-                ItemList[BagSlot][x][y] = NULL;
-            }
-        }
-    }
 }
 
 void CInterfaceB::UpdateButtonsPosition()
@@ -80,16 +79,13 @@ void CInterfaceB::UpdateButtonsPosition()
         ButtonsList[i]->OnMoveWithInterface(nPosX-OldX,nPosY-OldY);
     }
 
-    for(int BagSlot = 0; BagSlot < BAG_MAX_SLOTS; ++BagSlot) 
+    for(int x = 0; x < BAG_MAX_X; ++x) 
     {   
-        for(int x = 0; x < BAG_MAX_X; ++x) 
+        for(int y = 0; y < BAG_MAX_Y; ++y) 
         {   
-            for(int y = 0; y < BAG_MAX_Y; ++y) 
-            {   
-                if(!ItemList[BagSlot][x][y]) continue;
+            if(!ItemList[ActualBag][x][y]) continue;
 
-                ItemList[BagSlot][x][y]->OnMoveWithInterface(nPosX-OldX,nPosY-OldY);
-            }
+            ItemList[ActualBag][x][y]->OnMoveWithInterface(nPosX-OldX,nPosY-OldY);
         }
     }
 
@@ -111,18 +107,15 @@ void CInterfaceB::LoadButtons()
 			{
 				switch(i)
 				{
-                    /*
-                    load X
-                    bagh swicher
-                    */
 					case 0: eType = BUTTON_BAG_QUIT; x = nPosX + nWidht - 30; y = nPosY; break;
+                    case 1: eType = BUTTON_BAG_SLOT_ONE; x = nPosX; y = nPosY; break;
 
                     default: break;
 				}
 					
                 CButton *pButton = new CButton(x, y, eType);
 
-				if(pButton->OnLoad(eType) == false)
+				if(pButton->OnLoad() == false)
                     break;
 
                 ButtonsList.push_back(pButton);
@@ -135,3 +128,83 @@ void CInterfaceB::LoadButtons()
         default: break;
     }
 }
+
+void CInterfaceB::SwitchBag(BAGSLOT NewBag)
+{
+    //if(ActualBag == NewBag)
+        //return;
+
+    SaveBag(ActualBag);
+    CleanUpBag(ActualBag);
+    LoadBag(NewBag);
+}
+
+void CInterfaceB::SaveBag(BAGSLOT BagSlot)
+{
+    //Open a file for writing 
+    switch(BagSlot)
+    {
+        case 0:
+        case 1:
+        case 2:
+        case 3:
+        default: break;
+    }
+
+    std::ofstream save( "./save/bag1_save" ); 
+    //Write offsets to the file 
+
+
+    save << "51"; 
+    save << " "; 
+
+    //Close the file 
+    save.close();
+
+}
+
+void CInterfaceB::CleanUpBag(BAGSLOT BagSlot)
+{
+    for(int x = 0; x < BAG_MAX_X; ++x) 
+    {   
+        for(int y = 0; y < BAG_MAX_Y; ++y) 
+        {   
+            if(!ItemList[BagSlot][x][y]) continue;
+
+            ItemList[BagSlot][x][y]->OnCleanup();
+            ItemList[BagSlot][x][y] = NULL;
+        }
+    }
+}
+
+void CInterfaceB::LoadBag(BAGSLOT BagSlot)
+{
+    //Open a file for reading 
+    std::ifstream load( "./save/bag1_save" );
+
+    //If the file loaded 
+    if( load != NULL ) 
+    { 
+        //The offset 
+        int offset; 
+
+        load >> offset; 
+
+        ButtonType eType = static_cast<ButtonType>(offset);
+
+        CButton *pButton = new CButton(nPosX + 50, nPosY + 100, eType);
+
+		if(pButton->OnLoad() == false)
+            return;
+
+        ButtonsList.push_back(pButton);
+		CButton::ButtonList.push_back(pButton);
+
+        //Close the file 
+        load.close(); 
+    }
+
+}
+
+
+

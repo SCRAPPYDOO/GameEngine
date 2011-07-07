@@ -33,8 +33,6 @@ bool CInterface::OnLoad()
         case INTERFACE_CHARACTERPANEL: SurfName = "./interface/surf_character_panel.png"; break;
         case INTERFACE_BAG:
         {
-            nWidht = INTERFACE_BAG_W;
-            nHeight = INTERFACE_BAG_H;
             SurfName = "./interface/interface_equpment_surf.png"; break;
         }
 

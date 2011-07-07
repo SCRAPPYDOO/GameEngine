@@ -17,6 +17,7 @@
 #include "CInterface.h"
 #include "CButton.h"
 
+
 class CEntity;
 class CInterface;
 class CButton;
