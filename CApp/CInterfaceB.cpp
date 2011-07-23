@@ -51,8 +51,12 @@ CInterfaceB::CInterfaceB(InterfaceType eType)
 
 bool CInterfaceB::OnLoad()
 {
+	OnCleanup();
+
     if(CInterface::OnLoad() == false)
         return false;
+
+	InterfaceObjectList.push_back(this);
 
     LoadBag(ActualBag);
 

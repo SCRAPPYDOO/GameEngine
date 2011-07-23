@@ -34,10 +34,9 @@ void CApp::OnMouseMove(int mX, int mY, int relX, int relY, bool Left,bool Right,
 
     if(Left)
     {
-        if(pSelectedButton != NULL && (pSelectedButton->GetButtonState() == BUTTONSTATE_SELECTED || pSelectedButton->GetButtonState() == BUTTONSTATE_MOVED) )
+        if(pSelectedButton != NULL && (pSelectedButton->GetButtonState() == BUTTONSTATE_SELECTED || pSelectedButton->GetButtonState() == BUTTONSTATE_MOVED) && !pSelectedButton->HasFlag(BUTTONFLAG_NOTMOVED) )
         {
-            if(CApp::eGameState == TEST)
-                pSelectedButton->OnMove(mX, mY);
+            pSelectedButton->OnMove(mX, mY);
 
             if(pSelectedButton->GetButtonState() != BUTTONSTATE_MOVED)
                 pSelectedButton->SetButtonState(BUTTONSTATE_MOVED);
@@ -194,15 +193,18 @@ void CApp::OnLButtonUp(int x,int y)
         {
             if(pSelectedButton != NULL)
             {
-                if(pSelectedButton->GetButtonState() == BUTTONSTATE_SELECTED)
-                {
-                    pSelectedButton->Activate();
-                }
-                else
-                if(pSelectedButton->GetButtonState() == BUTTONSTATE_MOVED)
-                {
-                    pSelectedButton->OnDrop(x,y);
-                }
+				if(pSelectedButton->IsButtonOnPos(x, y))
+				{
+					if(pSelectedButton->GetButtonState() == BUTTONSTATE_SELECTED)
+					{
+						pSelectedButton->Activate();
+					}
+					else
+					if(pSelectedButton->GetButtonState() == BUTTONSTATE_MOVED)
+					{
+						pSelectedButton->OnDrop(x,y);
+					}
+				}
 
                 pSelectedButton->SetButtonState(BUTTONSTATE_UNSELECTED);
                 pSelectedButton->SetAnimationState(BUTTON_ANIME_NORMAL);

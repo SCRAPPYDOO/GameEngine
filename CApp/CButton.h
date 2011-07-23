@@ -59,6 +59,11 @@ enum ButtonAnimeState
     BUTTON_ANIME_ONCLICK    = 2,
 };
 
+enum ButtonFlag
+{
+	BUTTONFLAG_NOTMOVED		= 0x01,
+};
+
 class CButton
 {
 	public:
@@ -78,6 +83,7 @@ class CButton
 		ButtonType       eType;
         ButtonState      eButtonState;
         ButtonAnimeState eAnimationState;
+		int				 nButtonFlag;
 
 		int x, y, w, h; 
         int nDistX, nDistY;
@@ -103,9 +109,21 @@ class CButton
         void SetButtonState(ButtonState eState) { eButtonState = eState; }
         void SetAnimationState(ButtonAnimeState eState) { eAnimationState = eState; }
 
+		bool HasFlag(ButtonFlag FlagType)
+		{
+			if(nButtonFlag && FlagType)
+				return true;
+
+			return false;
+		}
+
     public:
         virtual void Activate();
-        virtual void OnMove(int nNextX, int nNextY)     { x = nNextX - nDistX; y = nNextY - nDistY; eButtonState = BUTTONSTATE_MOVED; }
+        virtual void OnMove(int nNextX, int nNextY)     
+		{ 
+			x = nNextX - nDistX; y = nNextY - nDistY; eButtonState = BUTTONSTATE_MOVED; 
+		}
+
         virtual void OnMoveWithInterface(int nX, int nY) { x += nX; y += nY; }
         virtual void SetDistance(int nX, int nY)        { nDistX = nX - x; nDistY = nY - y; }                      //Used for proper update movement for interface panels
         virtual bool IsButtonOnPos(int mX, int mY);

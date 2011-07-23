@@ -39,7 +39,7 @@ class CInterface
 	public:
         static CInterface					InterfaceControl;
         static std::vector<CInterface*>     InterfaceObjectList;
-        //static CInterface*                  Interface[MAX_INTERFACEOBJECTS];
+        CInterface*                         Interface[MAX_INTERFACEOBJECTS];
         static bool IsGameMenu;
 
     public:

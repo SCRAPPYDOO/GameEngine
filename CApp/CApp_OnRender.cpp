@@ -40,6 +40,13 @@ void CApp::OnRender()
         CInterface::InterfaceObjectList[i]->OnRender(Surf_Display);
     }
 
+	for(int i = 0; i < CInterface::InterfaceObjectList.size(); i++) 
+    {   
+        if(!CInterface::InterfaceObjectList[i]) continue;
+                
+        CInterface::InterfaceObjectList[i]->OnRender(Surf_Display);
+    }
+
     for(int i = 0;i < CButton::ButtonList.size();i++) 
 	{
             if(!CButton::ButtonList[i]) continue;

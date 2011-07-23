@@ -58,6 +58,9 @@ bool CButton::OnLoad(ButtonType eType)
 {
     char* Surf_Name = "./error/surf_error.png";
 
+	//ALLL BUTTONS ARE NOW NOT MOVABLE
+	nButtonFlag += BUTTONFLAG_NOTMOVED;
+
     //ToDo: Load variables from file
 	switch(eType)
 	{
@@ -129,7 +132,7 @@ void CButton::OnCleanup()
 
 void CButton::Activate()
 {
-    eAnimationState = BUTTON_ANIME_ONCLICK;
+    //eAnimationState = BUTTON_ANIME_ONCLICK;
 
     switch(eType)
 	{

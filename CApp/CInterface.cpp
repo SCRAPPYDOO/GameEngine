@@ -12,6 +12,11 @@ bool CInterface::IsGameMenu = false;
 CInterface::CInterface() 
 {
     CInterface::IsGameMenu = false;
+
+	for(int i=0; i<MAX_INTERFACEOBJECTS; ++i)
+	{
+		Interface[i] = NULL;
+	}
 }
 
 bool CInterface::OnLoad()
@@ -120,7 +125,10 @@ bool CInterface::LoadInterface(InterfaceType eType)
         case INTERFACE_BUTTON_PANEL: pInterface = new CButtonPanel(); break;
         case INTERFACE_GAMEMENU: pInterface = new CInterfaceA(eType); break;
         case INTERFACE_CHARACTERPANEL: pInterface = new CInterfaceA(eType); break;
-        case INTERFACE_BAG: pInterface = new CInterfaceB(eType); break;
+        case INTERFACE_BAG: 
+		{
+			pInterface = new CInterfaceB(eType); break;
+		}
 
         default: return false;
     }
@@ -128,7 +136,9 @@ bool CInterface::LoadInterface(InterfaceType eType)
     if(pInterface && pInterface->OnLoad() == false)
         return false;
 
-    InterfaceObjectList.push_back(pInterface);
+    //InterfaceObjectList.push_back(pInterface);
+	Interface[eType] = pInterface;
+
     return true;
 }
 
@@ -193,3 +203,4 @@ void CInterface::OnMove(int nNextX, int nNextY)
     nPosX = nNextX - nDistX; 
     nPosY = nNextY - nDistY;   
 }   
+
