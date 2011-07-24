@@ -33,18 +33,18 @@ void CApp::OnRender()
         }
     }
 
-    for(int i = 0; i < CInterface::InterfaceObjectList.size(); i++) 
-    {   
-        if(!CInterface::InterfaceObjectList[i]) continue;
-                
-        CInterface::InterfaceObjectList[i]->OnRender(Surf_Display);
-    }
+    //for(int i = 0; i < CInterface::InterfaceObjectList.size(); i++) 
+    //{   
+    //    if(!CInterface::InterfaceObjectList[i]) continue;
+    //            
+    //    CInterface::InterfaceObjectList[i]->OnRender(Surf_Display);
+    //}
 
-	for(int i = 0; i < CInterface::InterfaceObjectList.size(); i++) 
+	for(int i = 0; i < MAX_INTERFACEOBJECTS; i++) 
     {   
-        if(!CInterface::InterfaceObjectList[i]) continue;
+        if(!CInterface::InterfaceControl.Interface[i]) continue;
                 
-        CInterface::InterfaceObjectList[i]->OnRender(Surf_Display);
+        CInterface::InterfaceControl.Interface[i]->OnRender(Surf_Display);
     }
 
     for(int i = 0;i < CButton::ButtonList.size();i++) 

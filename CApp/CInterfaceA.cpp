@@ -74,6 +74,9 @@ void CInterfaceA::LoadButtons()
 {
     ButtonType eType = BUTTON_DEFAULT;
 
+    int x = 0;
+	int y = 0;
+
     switch(eInterfaceType)
     {
         case INTERFACE_MAINMENU:
@@ -125,18 +128,18 @@ void CInterfaceA::LoadButtons()
 
         case INTERFACE_CHARACTERPANEL:
         {
-            for(int i=20; i<25; ++i)
+            for(int i=0; i<5; ++i)
             {
-                CButton *pButton = new CButton();
-
                 switch(i)
                 {
-                    case 20: eType = BUTTON_CHARPANEL_CHARSHEET; break;
-                    case 21: eType = BUTTON_CHARPANEL_EQUPMENT; break;
-                    case 22: eType = BUTTON_CHARPANEL_SPELLBOOK; break;
-                    case 23: eType = BUTTON_CHARPANEL_QUESTDIARY; break;
-                    case 24: eType = BUTTON_CHARPANEL_GAMEMENU; break;
+                    case 0: eType = BUTTON_CHARPANEL_CHARSHEET; break;
+                    case 1: eType = BUTTON_CHARPANEL_EQUPMENT; break;
+                    case 2: eType = BUTTON_CHARPANEL_SPELLBOOK; break;
+                    case 3: eType = BUTTON_CHARPANEL_QUESTDIARY; break;
+                    case 4: eType = BUTTON_CHARPANEL_GAMEMENU; break;
                 }
+
+				CButton *pButton = new CButton(x, y, eType);
 
                 if(pButton->OnLoad(eType) == false)
                     break;

@@ -156,58 +156,64 @@ void CButton::Activate()
 
         case BUTTON_MENU: //in game button menu
         {
-            if(!CInterface::IsGameMenu)
-            {
-                CInterface::InterfaceControl.LoadInterface(INTERFACE_GAMEMENU);
-                CInterface::IsGameMenu = true;
-            }
-
             break;
         }
 
+		//In Game Menu buttons
         case BUTTON_GAMEMENU_QUIT: 
         {
             CApp::eGameState = MAIN_MENU;
             CInterface::InterfaceControl.LoadInterface();
             break;  
         }
-
         case BUTTON_GAMEMENU_RETURN: // ingame game menu button return
         {
-            CInterface::InterfaceControl.CleanUpInterface(INTERFACE_GAMEMENU);
-            CInterface::IsGameMenu = false;
+			if(CInterface::InterfaceControl.Interface[INTERFACE_GAMEMENU])
+            {
+                CInterface::InterfaceControl.CleanUpInterface(INTERFACE_GAMEMENU);
+            }
 
             break;
         }
-
         //Other Button in Game Menu
-
-
+		//Character Mini Panel
         case BUTTON_CHARPANEL_CHARSHEET: break;
         case BUTTON_CHARPANEL_EQUPMENT:
         {
-            if(CInterfaceB::BagControl.OnLoad() == false)
-                return;
+			if(!CInterface::InterfaceControl.Interface[INTERFACE_BAG])
+			{
+				CInterface::InterfaceControl.LoadInterface(INTERFACE_BAG);
+			}
+			else
+				CInterface::InterfaceControl.CleanUpInterface(INTERFACE_BAG);
 
             break;
         }
         case BUTTON_CHARPANEL_SPELLBOOK: break;
         case BUTTON_CHARPANEL_QUESTDIARY: break;
-        //Character Mini Panel
         case BUTTON_CHARPANEL_GAMEMENU:
         {
-            if(!CInterface::IsGameMenu)
-            {
-                CInterface::InterfaceControl.LoadInterface(INTERFACE_GAMEMENU);
-                CInterface::IsGameMenu = true;
-            }
+			if(!CInterface::InterfaceControl.Interface[INTERFACE_GAMEMENU])
+			{
+				CInterface::InterfaceControl.LoadInterface(INTERFACE_GAMEMENU);
+			}
+			else
+				CInterface::InterfaceControl.CleanUpInterface(INTERFACE_GAMEMENU);
 
             break;
         }
-
+		//Bag Buttons
         case BUTTON_BAG_SWITCHBAG: break;
-        case BUTTON_BAG_QUIT: CInterfaceB::BagControl.OnCleanup(); break;
-        case BUTTON_BAG_SLOT_ONE: CInterfaceB::BagControl.SwitchBag(BAG_ONE); break;
+        case BUTTON_BAG_QUIT: 
+		{
+			if(CInterface::InterfaceControl.Interface[INTERFACE_BAG])
+            {
+                CInterface::InterfaceControl.CleanUpInterface(INTERFACE_BAG);
+            }
+
+			break;
+		}
+        case BUTTON_BAG_SLOT_ONE: /*CInterfaceB::BagControl.SwitchBag(BAG_ONE);*/ break;
 
 		default: break;
 	}
@@ -242,15 +248,15 @@ bool CButton::IsButtonOnPos(int mX, int mY)
 void CButton::OnDrop(int mX, int mY)
 {
     //sprawdz czy zadne button panel nie ejst w pioblizu
-    for(int i = 0; i < CInterface::InterfaceObjectList.size(); i++) 
-    {   
-        if(!CInterface::InterfaceObjectList[i]) continue;
-                
-        if(CInterface::InterfaceObjectList[i]->IsInterfaceOnPos(mX,mY))
-           if(CInterface::InterfaceObjectList[i]->GetInterfaceType() == INTERFACE_BUTTON_PANEL)
-                if(CInterface::InterfaceObjectList[i]->AddButtonToInterface(this, mX, mY))
-                    return;
-    }
+    //for(int i = 0; i < CInterface::InterfaceObjectList.size(); i++) 
+    //{   
+    //    if(!CInterface::InterfaceObjectList[i]) continue;
+    //            
+    //    if(CInterface::InterfaceObjectList[i]->IsInterfaceOnPos(mX,mY))
+    //       if(CInterface::InterfaceObjectList[i]->GetInterfaceType() == INTERFACE_BUTTON_PANEL)
+    //            if(CInterface::InterfaceObjectList[i]->AddButtonToInterface(this, mX, mY))
+    //                return;
+    //}
 
     CButton::ButtonControl.DeleteButton(this);
 }

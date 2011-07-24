@@ -24,11 +24,11 @@ void CApp::OnLoop()
 
 	        CMovementGenerator::MoveGenerator.OnLoop();
 
-            for(int i = 0;i < CInterface::InterfaceObjectList.size();i++) //Update Interface Variables
+            for(int i = 0;i < MAX_INTERFACEOBJECTS ;i++) //Update Interface Variables
 	        {
-                if(!CInterface::InterfaceObjectList[i]) continue;
+                if(!CInterface::InterfaceControl.Interface[i]) continue;
 
-                CInterface::InterfaceObjectList[i]->OnLoop();
+                CInterface::InterfaceControl.Interface[i]->OnLoop();
             }
 
             break;

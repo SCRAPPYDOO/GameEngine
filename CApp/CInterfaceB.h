@@ -32,8 +32,6 @@ enum BAGSLOT
 class CInterfaceB : public CInterfaceA
 {
     public:
-        static CInterfaceB BagControl;
-        
         CInterfaceB();
         CInterfaceB(InterfaceType eType);
         ~CInterfaceB() {}

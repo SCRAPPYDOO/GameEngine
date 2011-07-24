@@ -2,8 +2,6 @@
 #include <string> 
 #include <fstream>
 
-CInterfaceB CInterfaceB::BagControl;
-
 CInterfaceB::CInterfaceB()
 {
     nPosX = 400;
@@ -51,12 +49,12 @@ CInterfaceB::CInterfaceB(InterfaceType eType)
 
 bool CInterfaceB::OnLoad()
 {
-	OnCleanup();
+	//OnCleanup();
 
     if(CInterface::OnLoad() == false)
         return false;
 
-	InterfaceObjectList.push_back(this);
+	//InterfaceObjectList.push_back(this);
 
     LoadBag(ActualBag);
 
@@ -101,7 +99,8 @@ void CInterfaceB::LoadButtons()
 {
     ButtonType eType = BUTTON_DEFAULT;
 
-    int x, y = 0;
+    int x = 0;
+	int y = 0;
 
     switch(eInterfaceType)
     {

@@ -14,7 +14,7 @@
 #define MAX_CHARPANEL_BUTTONS 5
 #define MAX_GAMEMENU_BUTTONS 2
 
-#define MAX_INTERFACEOBJECTS 6
+#define MAX_INTERFACEOBJECTS 9
 
 enum InterfaceType
 {
@@ -38,9 +38,10 @@ class CInterface
 {
 	public:
         static CInterface					InterfaceControl;
-        static std::vector<CInterface*>     InterfaceObjectList;
+        //static std::vector<CInterface*>     InterfaceObjectList;
+
         CInterface*                         Interface[MAX_INTERFACEOBJECTS];
-        static bool IsGameMenu;
+        //static bool IsGameMenu;
 
     public:
 		bool LoadInterface();
