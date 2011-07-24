@@ -65,39 +65,17 @@ bool CButton::OnLoad(ButtonType eType)
 	switch(eType)
 	{
 		case BUTTON_PLAY:
-		{
-			this->x = 640;
-			this->y = 300;
-			this->w = 134;
-
-			break;
-		}
-
         case BUTTON_QUIT:
-        {
-			this->x = 640;
-			this->y = 350;
-			this->w = 134;
+        case BUTTON_CREATECHARACTER:
 
-			break;
-		}
+        case BUTTON_GAMEMENU_QUIT:
+        case BUTTON_GAMEMENU_RETURN: w = 134; break;
 
-        case BUTTON_MENU:
-        {
-            this->x = 1050;
-			this->y = 16;
-			this->w = 134;
-            break;
-        }
-
-        case BUTTON_GAMEMENU_QUIT: x = 500; y = 350; w = 134; h = 30; break;
-        case BUTTON_GAMEMENU_RETURN: x = 500; y = 400; w = 134; h = 30; break;
-
-        case BUTTON_CHARPANEL_CHARSHEET: x = 1003; y = 603; w = 30; h = 30; break;
-        case BUTTON_CHARPANEL_EQUPMENT: x = 1036; y = 603; w = 30; h = 30; break;
-        case BUTTON_CHARPANEL_SPELLBOOK: x = 1069; y = 603; w = 30; h = 30; break;
-        case BUTTON_CHARPANEL_QUESTDIARY: x = 1105; y = 603; w = 30; h = 30; break;
-        case BUTTON_CHARPANEL_GAMEMENU: x = 1149; y = 603; w = 30; h = 30; break;
+        case BUTTON_CHARPANEL_CHARSHEET: break;
+        case BUTTON_CHARPANEL_EQUPMENT: break;
+        case BUTTON_CHARPANEL_SPELLBOOK: break;
+        case BUTTON_CHARPANEL_QUESTDIARY: break;
+        case BUTTON_CHARPANEL_GAMEMENU: break;
 
         case BUTTON_BAG_SWITCHBAG: break;
         case BUTTON_BAG_QUIT: break;
@@ -153,11 +131,6 @@ void CButton::Activate()
             //CApp::GameControl.OnExit();
             break;
 		}
-
-        case BUTTON_MENU: //in game button menu
-        {
-            break;
-        }
 
 		//In Game Menu buttons
         case BUTTON_GAMEMENU_QUIT: 

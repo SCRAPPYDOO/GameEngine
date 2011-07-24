@@ -182,7 +182,6 @@ void CApp::OnLButtonUp(int x,int y)
                 if(pSelectedButton->GetButtonState() == BUTTONSTATE_SELECTED)
                 {
                     pSelectedButton->Activate();
-                    pSelectedButton->SetAnimationState(BUTTON_ANIME_ONCLICK);
                 }
             }
 

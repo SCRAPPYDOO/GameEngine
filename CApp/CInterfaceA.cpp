@@ -81,10 +81,8 @@ void CInterfaceA::LoadButtons()
     {
         case INTERFACE_MAINMENU:
 		{
-			for(int i=0; i<2; ++i)
+			for(int i=0; i<3; ++i)
 			{
-                CButton *pButton = new CButton();
-
 				switch(i)
 				{
 					case 0: eType = BUTTON_PLAY; break;
@@ -93,7 +91,12 @@ void CInterfaceA::LoadButtons()
                     default: break;
 				}
 					
-				if(pButton->OnLoad(eType) == false)
+                x = nPosX + 640;
+                y = nPosY + 300 + i*40;
+
+				CButton *pButton = new CButton(x, y, eType);
+
+                if(pButton->OnLoad() == false)
                     break;
 
                 ButtonsList.push_back(pButton);
@@ -105,18 +108,21 @@ void CInterfaceA::LoadButtons()
 
         case INTERFACE_GAMEMENU:
         {
-            for(int i=10; i<12; ++i)
+            for(int i=0; i<2; ++i)
             {
-                CButton *pButton = new CButton();
-
                 switch(i)
                 {
-                    case 10: eType = BUTTON_GAMEMENU_QUIT; break;
-                    case 11: eType = BUTTON_GAMEMENU_RETURN; break;
+                    case 0: eType = BUTTON_GAMEMENU_QUIT; break;
+                    case 1: eType = BUTTON_GAMEMENU_RETURN; break;
                     default: break;
                 }
 
-                if(pButton->OnLoad(eType) == false)
+                x = nPosX + 100;
+                y = nPosY + 100 + i*40;
+
+				CButton *pButton = new CButton(x, y, eType);
+
+                if(pButton->OnLoad() == false)
                     break;
 
                 ButtonsList.push_back(pButton);
@@ -139,9 +145,12 @@ void CInterfaceA::LoadButtons()
                     case 4: eType = BUTTON_CHARPANEL_GAMEMENU; break;
                 }
 
+                x = nPosX + 5 + i * 33;
+                y = nPosY + 5;
+
 				CButton *pButton = new CButton(x, y, eType);
 
-                if(pButton->OnLoad(eType) == false)
+                if(pButton->OnLoad() == false)
                     break;
  
                 ButtonsList.push_back(pButton);

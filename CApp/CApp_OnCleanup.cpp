@@ -20,18 +20,13 @@ void CApp::OnCleanup()
         CObject::ObjectList[i]->OnCleanup();
     }
 
-    //for(int i = 0;i < CInterface::InterfaceObjectList.size();i++) 
-    //{
-    //    if(!CInterface::InterfaceObjectList[i]) continue;
-
-    //    CInterface::InterfaceObjectList[i]->OnCleanup();
-    //}
-
+    // Interface
 	for(int i = 0;i < MAX_INTERFACEOBJECTS;i++) 
     {
         if(!CInterface::InterfaceControl.Interface[i]) continue;
 
         CInterface::InterfaceControl.Interface[i]->OnCleanup();
+        CInterface::InterfaceControl.Interface[i] = NULL;
     }
 
     for(int i = 0;i < CButton::ButtonList.size();i++) 
@@ -43,14 +38,6 @@ void CApp::OnCleanup()
 
     CObject::ObjectList.clear();
     CEntity::EntityList.clear();
-
-    //CInterface::InterfaceObjectList.clear();
-	for(int i = 0;i < MAX_INTERFACEOBJECTS;i++) 
-    {
-        if(!CInterface::InterfaceControl.Interface[i]) continue;
-
-        CInterface::InterfaceControl.Interface[i] == NULL;
-    }
 
     CButton::ButtonList.clear();
 

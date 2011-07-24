@@ -5,14 +5,9 @@
 #include "CInterfaceB.h"
 
 CInterface CInterface::InterfaceControl;
-//std::vector<CInterface*> CInterface::InterfaceObjectList;
-
-//bool CInterface::IsGameMenu = false;
 
 CInterface::CInterface() 
 {
-    //CInterface::IsGameMenu = false;
-
 	for(int i=0; i<MAX_INTERFACEOBJECTS; ++i)
 	{
 		Interface[i] = NULL;
@@ -26,21 +21,12 @@ bool CInterface::OnLoad()
     //ToDo: Load cfg from file
     switch(eInterfaceType)
     {
-        case INTERFACE_MAINMENU: 
-        {
-            //CInterface::IsGameMenu = false;
-            SurfName = "./menu/main_menu_surf.png"; 
-            break;
-        }
+        case INTERFACE_MAINMENU: SurfName = "./menu/main_menu_surf.png"; break;
         case INTERFACE_PLAYERINFO: SurfName = "./interface/interface_unitinfo_surf.png"; break;
         case INTERFACE_BUTTON_PANEL: SurfName = "./interface/interface_button_surf.png"; break;
         case INTERFACE_GAMEMENU: SurfName = "./menu/menu_gamebackground.png"; break;
         case INTERFACE_CHARACTERPANEL: SurfName = "./interface/surf_character_panel.png"; break;
-        case INTERFACE_BAG:
-        {
-            SurfName = "./interface/interface_equpment_surf.png"; break;
-        }
-
+        case INTERFACE_BAG: SurfName = "./interface/interface_equpment_surf.png"; break;
         default: break;
     }
 
@@ -136,7 +122,6 @@ bool CInterface::LoadInterface(InterfaceType eType)
     if(pInterface && pInterface->OnLoad() == false)
         return false;
 
-    //InterfaceObjectList.push_back(pInterface);
 	Interface[eType] = pInterface;
 
     return true;
@@ -145,17 +130,6 @@ bool CInterface::LoadInterface(InterfaceType eType)
 CInterface* CInterface::GetInterface(int nPosX, int nPosY)
 {
     CInterface* pInterface = NULL;
-
-    //for(int i = 0;i < InterfaceObjectList.size();i++) 
-    //{   
-    //    if(!InterfaceObjectList[i]) continue;
-    //            
-    //    if( ( nPosX > InterfaceObjectList[i]->GetPosX() ) && ( nPosX < InterfaceObjectList[i]->GetPosX() + InterfaceObjectList[i]->GetWidht()) && ( nPosY > InterfaceObjectList[i]->GetPosY() ) && ( nPosY < InterfaceObjectList[i]->GetPosY() + InterfaceObjectList[i]->GetHeight() ) )
-    //    {
-    //        pInterface = InterfaceObjectList[i];
-    //        break;
-    //    }
-    //}
 
 	for(int i = 0; i < MAX_INTERFACEOBJECTS; i++) 
     {   
@@ -173,13 +147,6 @@ CInterface* CInterface::GetInterface(int nPosX, int nPosY)
 
 void CInterface::CleanUpInterface()
 {
-    //for(int i = 0;i < InterfaceObjectList.size();i++) 
-    //{
-    //    if(!InterfaceObjectList[i]) continue;
-
-    //    InterfaceObjectList[i]->OnCleanup();
-    //}
-
 	for(int i = 0;i < MAX_INTERFACEOBJECTS;i++) 
     {
         if(!Interface[i]) continue;
@@ -187,24 +154,10 @@ void CInterface::CleanUpInterface()
         Interface[i]->OnCleanup();
 		Interface[i] = NULL;
     }
-
-    //InterfaceObjectList.clear();
 }
 
 void CInterface::CleanUpInterface(InterfaceType eType)
 {	
-//    for(int n = 0;n < InterfaceObjectList.size();n++) 
-//    {   
-//        if(!InterfaceObjectList[n]) continue;
-//
-//        if(InterfaceObjectList[n]->GetInterfaceType() == eType)
-//        {
-//            InterfaceObjectList[n]->OnCleanup();
-//            InterfaceObjectList[n] = NULL; 
-//            return;
-//        }
-//    }
-
 	if(Interface[eType] == NULL)
 		return;
 

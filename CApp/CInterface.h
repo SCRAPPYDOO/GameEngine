@@ -38,10 +38,7 @@ class CInterface
 {
 	public:
         static CInterface					InterfaceControl;
-        //static std::vector<CInterface*>     InterfaceObjectList;
-
         CInterface*                         Interface[MAX_INTERFACEOBJECTS];
-        //static bool IsGameMenu;
 
     public:
 		bool LoadInterface();
@@ -90,6 +87,8 @@ class CInterface
         int GetPosY() const { return nPosY;}
         int GetWidht() const { return nWidht;}
         int GetHeight() const { return nHeight;}
+
+        bool HasFlag(InterfaceFlag Flag) { if(nInterfaceflag && Flag) return true; return false; }
 };
 
 #endif

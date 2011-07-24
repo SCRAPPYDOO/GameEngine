@@ -24,7 +24,7 @@ enum ButtonType
 	BUTTON_DEFAULT	= 99,
 	BUTTON_PLAY		= 0,   //enter to world
 	BUTTON_QUIT		= 1,   //quit from game
-    BUTTON_MENU     = 2,
+
     BUTTON_CREATECHARACTER = 3,  // create character
 
     //Game Menu Button
