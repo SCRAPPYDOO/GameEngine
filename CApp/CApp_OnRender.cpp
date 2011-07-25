@@ -33,13 +33,6 @@ void CApp::OnRender()
         }
     }
 
-    //for(int i = 0; i < CInterface::InterfaceObjectList.size(); i++) 
-    //{   
-    //    if(!CInterface::InterfaceObjectList[i]) continue;
-    //            
-    //    CInterface::InterfaceObjectList[i]->OnRender(Surf_Display);
-    //}
-
 	for(int i = 0; i < MAX_INTERFACEOBJECTS; i++) 
     {   
         if(!CInterface::InterfaceControl.Interface[i]) continue;
@@ -47,12 +40,12 @@ void CApp::OnRender()
         CInterface::InterfaceControl.Interface[i]->OnRender(Surf_Display);
     }
 
-    for(int i = 0;i < CButton::ButtonList.size();i++) 
-	{
-            if(!CButton::ButtonList[i]) continue;
+ ////   for(int i = 0;i < CButton::ButtonList.size();i++) 
+	////{
+ ////           if(!CButton::ButtonList[i]) continue;
 
-		    CButton::ButtonList[i]->OnRender(Surf_Display);	
-	}
+	////	    CButton::ButtonList[i]->OnRender(Surf_Display);	
+	////}
 
 	SDL_Flip(Surf_Display);
 }

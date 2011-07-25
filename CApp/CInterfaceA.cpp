@@ -28,6 +28,28 @@ CInterfaceA::CInterfaceA(InterfaceType eType)
     eInterfaceType = eType;
 }
 
+void CInterfaceA::OnMouseMove(int mX, int mY, int relX, int relY, bool Left,bool Right,bool Middle)
+{
+    for(int i = 0;i < ButtonsList.size();i++) 
+    {   
+        if(!ButtonsList[i]) continue;
+
+        ButtonsList[i]->OnMouseMove(mX, mY, relX, relY, Left, Right, Middle);
+    }
+}
+
+void CInterfaceA::OnRender(SDL_Surface* Surf_Display)
+{
+    CInterface::OnRender(Surf_Display);
+
+    for(int i = 0;i < ButtonsList.size();i++) 
+    {   
+        if(!ButtonsList[i]) continue;
+
+        ButtonsList[i]->OnRender(Surf_Display);
+    }
+}
+
 void CInterfaceA::OnCleanup()
 {
     CInterface::OnCleanup();
@@ -35,17 +57,6 @@ void CInterfaceA::OnCleanup()
     for(int i = 0;i < ButtonsList.size();i++) 
     {   
         if(!ButtonsList[i]) continue;
-
-        for(int n = 0;n < CButton::ButtonList.size();n++) 
-        {   
-            if(!CButton::ButtonList[n]) continue;
-
-            if(CButton::ButtonList[n] == ButtonsList[i])
-            {
-                CButton::ButtonList[n]->OnCleanup();
-                CButton::ButtonList[n] = NULL;  
-            }
-        }
 
         ButtonsList[i]->OnCleanup();
         ButtonsList[i] = NULL;
@@ -100,7 +111,6 @@ void CInterfaceA::LoadButtons()
                     break;
 
                 ButtonsList.push_back(pButton);
-				CButton::ButtonList.push_back(pButton);
 			}
 
 			break;
@@ -126,7 +136,6 @@ void CInterfaceA::LoadButtons()
                     break;
 
                 ButtonsList.push_back(pButton);
-		        CButton::ButtonList.push_back(pButton);
             }
 
             break;
@@ -154,7 +163,6 @@ void CInterfaceA::LoadButtons()
                     break;
  
                 ButtonsList.push_back(pButton);
-		        CButton::ButtonList.push_back(pButton);
             }
 
             break;
@@ -162,4 +170,17 @@ void CInterfaceA::LoadButtons()
 
         default: break;
     }
+}
+
+CButton* CInterfaceA::GetButton(int nPosX, int nPosY) const
+{
+    for(int i = 0;i < ButtonsList.size();i++) 
+    {   
+        if(!ButtonsList[i]) continue;
+
+        if(ButtonsList[i]->IsButtonOnPos(nPosX, nPosY))
+            return ButtonsList[i];
+    }
+
+    return NULL;
 }

@@ -29,17 +29,8 @@ void CApp::OnCleanup()
         CInterface::InterfaceControl.Interface[i] = NULL;
     }
 
-    for(int i = 0;i < CButton::ButtonList.size();i++) 
-    {
-        if(!CButton::ButtonList[i]) continue;
-
-        CButton::ButtonList[i]->OnCleanup();
-    }
-
     CObject::ObjectList.clear();
     CEntity::EntityList.clear();
-
-    CButton::ButtonList.clear();
 
     SDL_FreeSurface(Surf_Display);
     SDL_Quit();

@@ -2,12 +2,15 @@
 #include "CUnitInfoPanel.h"
 #include "CButtonPanel.h"
 #include "CInterfaceA.h"
-#include "CInterfaceB.h"
+#include "CInterfaceBag.h"
+#include "CInterfaceLoot.h"
 
 CInterface CInterface::InterfaceControl;
 
 CInterface::CInterface() 
 {
+    nInterfaceFlag = 0;
+
 	for(int i=0; i<MAX_INTERFACEOBJECTS; ++i)
 	{
 		Interface[i] = NULL;
@@ -21,12 +24,28 @@ bool CInterface::OnLoad()
     //ToDo: Load cfg from file
     switch(eInterfaceType)
     {
-        case INTERFACE_MAINMENU: SurfName = "./menu/main_menu_surf.png"; break;
+        case INTERFACE_MAINMENU:
+        {
+            nWidht = INTERFACE_MAINMENU_W;
+            nHeight = INTERFACE_MAINMENU_H;
+            SurfName = "./menu/main_menu_surf.png"; break;
+        }
         case INTERFACE_PLAYERINFO: SurfName = "./interface/interface_unitinfo_surf.png"; break;
         case INTERFACE_BUTTON_PANEL: SurfName = "./interface/interface_button_surf.png"; break;
-        case INTERFACE_GAMEMENU: SurfName = "./menu/menu_gamebackground.png"; break;
-        case INTERFACE_CHARACTERPANEL: SurfName = "./interface/surf_character_panel.png"; break;
+        case INTERFACE_GAMEMENU: 
+        {
+            nWidht = INTERFACE_GAMEMENU_W;
+            nHeight = INTERFACE_GAMEMENU_H;
+            SurfName = "./menu/menu_gamebackground.png"; break;
+        }
+        case INTERFACE_CHARACTERPANEL: 
+        {
+            nWidht = INTERFACE_CHARACTERPANEL_W;
+            nHeight = INTERFACE_CHARACTERPANEL_H; 
+            SurfName = "./interface/surf_character_panel.png"; break;
+        }
         case INTERFACE_BAG: SurfName = "./interface/interface_equpment_surf.png"; break;
+        case INTERFACE_LOOT: SurfName = "./interface/interface_loot_surf.png"; break;
         default: break;
     }
 
@@ -77,13 +96,14 @@ bool CInterface::LoadInterface()
         {
             InterfaceType eType;
 
-            for(int i=0; i<3; ++i)
+            for(int i=0; i<4; ++i)
             {
                 switch(i)
                 {
                     case 0: eType = INTERFACE_PLAYERINFO; break;      
                     case 1: eType = INTERFACE_BUTTON_PANEL; break;           
                     case 2: eType = INTERFACE_CHARACTERPANEL; break;
+                    case 3: eType = INTERFACE_LOOT          ; break;
                     default: break;
                 }
 
@@ -111,11 +131,8 @@ bool CInterface::LoadInterface(InterfaceType eType)
         case INTERFACE_BUTTON_PANEL: pInterface = new CButtonPanel(); break;
         case INTERFACE_GAMEMENU: pInterface = new CInterfaceA(eType); break;
         case INTERFACE_CHARACTERPANEL: pInterface = new CInterfaceA(eType); break;
-        case INTERFACE_BAG: 
-		{
-			pInterface = new CInterfaceB(eType); break;
-		}
-
+        case INTERFACE_BAG: pInterface = new CInterfaceBag(); break;
+        case INTERFACE_LOOT: pInterface = new CInterfaceLoot(); break;
         default: return false;
     }
 

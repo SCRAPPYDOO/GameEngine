@@ -11,10 +11,12 @@ void CApp::OnKeyDown(SDLKey sym, SDLMod mod, Uint16 unicode)
     {
         case SDLK_ESCAPE: 
         {
-            //if(!CInterface::InterfaceControl.ShowGameMenu)
-            //    CInterface::InterfaceControl.ShowGameMenu = true;
-            //else
-            //    CInterface::InterfaceControl.ShowGameMenu = false;
+			if(!CInterface::InterfaceControl.Interface[INTERFACE_GAMEMENU])
+			{
+				CInterface::InterfaceControl.LoadInterface(INTERFACE_GAMEMENU);
+			}
+			else
+				CInterface::InterfaceControl.CleanUpInterface(INTERFACE_GAMEMENU);
 
             break;
         }
@@ -27,7 +29,11 @@ void CApp::OnKeyUp(SDLKey sym, SDLMod mod, Uint16 unicode)
 
 void CApp::OnMouseMove(int mX, int mY, int relX, int relY, bool Left,bool Right,bool Middle)
 { 
-    CButton::ButtonControl.OnMouseMove(mX, mY, relX, relY, Left, Right, Middle); //Check Any Random Events on Mouse Motion Occured
+    CInterface* pInterface = NULL;
+    if(pInterface = CInterface::InterfaceControl.GetInterface(mX, mY))
+         if(pInterface)
+             pInterface->OnMouseMove(mX, mY, relX, relY, Left, Right, Middle);
+
     //Interface
     //Entitys
     //StaticObjects
@@ -109,111 +115,76 @@ void CApp::OnRButtonDown(int x,int y)
 
 void CApp::OnLButtonDown(int x,int y)
 {
-    //CButton::ButtonControl.OnLButtonDown(int x,int y);
-
-    switch(CApp::eGameState)
+    CInterface* pInterface = NULL;
+    if(pInterface = CInterface::InterfaceControl.GetInterface(x, y))
     {
-        case MAIN_MENU:
+        if(pInterface)
         {
-            if(pSelectedButton = CButton::ButtonControl.GetButton(x, y))
+            if(pSelectedButton = pInterface->GetButton(x, y))
             {
-                if(pSelectedButton != NULL)
-                {
-                    pSelectedButton->SetButtonState(BUTTONSTATE_SELECTED);
-                    pSelectedButton->SetAnimationState(BUTTON_ANIME_ONCLICK);
-                }
-            }
-
-            break;
-        }
-
-        case TEST:
-        {
-            if(pSelectedButton = CButton::ButtonControl.GetButton(x, y))
                 if(pSelectedButton != NULL)
                 {
                     pSelectedButton->SetButtonState(BUTTONSTATE_SELECTED);
                     pSelectedButton->SetAnimationState(BUTTON_ANIME_ONCLICK);
                     pSelectedButton->SetDistance(x,y);
-                    break;
+                    return;
                 }
-                    
-            if(pSelectedInterface = CInterface::InterfaceControl.GetInterface(x,y))
-                if(pSelectedInterface != NULL)
-                {
-                    pSelectedInterface->SetDistance(x,y);
-                    break;
-                }
-
-            CEntity* pEntity = GetEntity(x,y);
-
-            if(pEntity && pEntity->Type == ENTITY_TYPE_PLAYER)
-            {
-                if(pSelectedUnit == pEntity)
-                    return;
-                
-                pSelectedUnit = pEntity;
-                    return;
             }
-            else
-            {
-                if(pSelectedTarget == pEntity)
-                    return;
-
-                pSelectedTarget = pEntity;
-            }
-
-            break;
         }
-
-        default: break;
     }
-    return;
+                    
+    if(pSelectedInterface = CInterface::InterfaceControl.GetInterface(x,y))
+    {
+        if(pSelectedInterface != NULL)
+        {
+            pSelectedInterface->SetDistance(x,y);
+            return;
+        }
+    }
+
+    CEntity* pEntity = GetEntity(x,y);
+
+    if(pEntity && pEntity->Type == ENTITY_TYPE_PLAYER)
+    {
+        if(pSelectedUnit == pEntity)
+            return;
+                
+        pSelectedUnit = pEntity;
+            return;
+    }
+    else
+    {
+        if(pSelectedTarget == pEntity)
+            return;
+
+        pSelectedTarget = pEntity;
+    }
+
 }
 
 void CApp::OnLButtonUp(int x,int y)
 {
-    switch(CApp::eGameState)
+    if(pSelectedButton != NULL)
     {
-        case MAIN_MENU:
+        if(pSelectedButton->IsButtonOnPos(x, y))
         {
-            if(pSelectedButton != NULL)
+            if(pSelectedButton->GetButtonState() == BUTTONSTATE_SELECTED)
             {
-                if(pSelectedButton->GetButtonState() == BUTTONSTATE_SELECTED)
+                pSelectedButton->Activate();
+            }
+            else
+                if(pSelectedButton->GetButtonState() == BUTTONSTATE_MOVED)
                 {
-                    pSelectedButton->Activate();
+                pSelectedButton->OnDrop(x,y);
                 }
-            }
-
-            break;
         }
 
-        case TEST:
-        {
-            if(pSelectedButton != NULL)
-            {
-				if(pSelectedButton->IsButtonOnPos(x, y))
-				{
-					if(pSelectedButton->GetButtonState() == BUTTONSTATE_SELECTED)
-					{
-						pSelectedButton->Activate();
-					}
-					else
-					if(pSelectedButton->GetButtonState() == BUTTONSTATE_MOVED)
-					{
-						pSelectedButton->OnDrop(x,y);
-					}
-				}
-
-                pSelectedButton->SetButtonState(BUTTONSTATE_UNSELECTED);
-                pSelectedButton->SetAnimationState(BUTTON_ANIME_NORMAL);
-                pSelectedButton = NULL;
-            }
-
-            pSelectedInterface = NULL;
-
-        }
+        pSelectedButton->SetButtonState(BUTTONSTATE_UNSELECTED);
+        pSelectedButton->SetAnimationState(BUTTON_ANIME_NORMAL);
+        pSelectedButton = NULL;
     }
+
+    pSelectedInterface = NULL;
 }
 
 void CApp::OnExit() 

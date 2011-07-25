@@ -10,10 +10,11 @@
 
 /*
     Main Menu
-    Character Creator
-    In GameMenu
     Character Panel
+    In GameMenu
 
+
+    Character Creator
     Main->character creator
 */
 
@@ -28,10 +29,15 @@ class CInterfaceA : public CInterface
         std::vector<CButton*>     ButtonsList;
 
     public:
+        //void OnEvent
+            void OnMouseMove(int mX, int mY, int relX, int relY, bool Left,bool Right,bool Middle);
+        void OnRender(SDL_Surface* Surf_Display);
         void OnCleanup();
 
         void UpdateButtonsPosition();
         void LoadButtons();
+
+        CButton* GetButton(int nPosX, int nPosY) const;
 };
 
 #endif

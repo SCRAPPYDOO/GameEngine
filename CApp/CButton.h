@@ -14,9 +14,10 @@
 
 enum ButtonClass
 {
-    BUTTON,
-    ITEM,
-    SPELL,
+    BUTTONCLASS_BUTTON,
+    BUTTONCLASS_ITEM,
+    BUTTONCLASS_SPELL,
+    BUTTONCLASS_SHORTCURT,
 };
 
 enum ButtonType
@@ -43,6 +44,9 @@ enum ButtonType
     BUTTON_BAG_SLOT_TWO     = 53, 
     BUTTON_BAG_SLOT_THREE   = 54,
     BUTTON_BAG_SLOT_FOUR    = 55,
+
+    BUTTON_LOOT_QUIT        = 56,
+    BUTTON_LOOT_LOOTALL     = 57,
 };
 
 enum ButtonState
@@ -67,25 +71,24 @@ enum ButtonFlag
 class CButton
 {
 	public:
-		CButton();
+        CButton() {}
         CButton(int nPosX, int nPosY, ButtonType Type);
-        CButton(int nPosX, int nPosY, ButtonType Type, SDL_Surface* pButtonSurface);
-
         ~CButton() {}
 
-        static CButton ButtonControl;
-
-		static std::vector<CButton*>    ButtonList;
+        //static CButton ButtonControl;
+		//static std::vector<CButton*>    ButtonList;
 
     protected:
         SDL_Surface*     pButtonSurface;
 
+        ButtonClass      eButtonClass;
 		ButtonType       eType;
         ButtonState      eButtonState;
         ButtonAnimeState eAnimationState;
 		int				 nButtonFlag;
 
-		int x, y, w, h; 
+		int x, y, w, h;
+        int nPreviousX, nPreviousY;
         int nDistX, nDistY;
 
     public:
@@ -95,14 +98,13 @@ class CButton
         virtual void OnCleanup();
 
     public: //Methods for variables
-        CButton* GetButton(int nX, int nY);
-        ButtonType GetButtonType() { return eType; }
-        ButtonState GetButtonState() { return eButtonState; }
+        ButtonType GetButtonType() const { return eType; }
+        ButtonState GetButtonState() const { return eButtonState; }
 
-        int GetPosX() { return x; }
-        int GetPosY() { return y; }
-        int GetWidht() { return w; }
-        int GetHeight() { return h; }
+        int GetPosX() const { return x; }
+        int GetPosY() const { return y; }
+        int GetWidht() const { return w; }
+        int GetHeight() const { return h; }
 
         void SetPositionX(int nValue) { x = nValue;}
         void SetPositionY(int nValue) { y = nValue;}
@@ -121,17 +123,22 @@ class CButton
         virtual void Activate();
         virtual void OnMove(int nNextX, int nNextY)     
 		{ 
-			x = nNextX - nDistX; y = nNextY - nDistY; eButtonState = BUTTONSTATE_MOVED; 
+            if(eButtonState != BUTTONSTATE_MOVED)
+            {
+                nPreviousX = x; 
+                nPreviousY = y;
+            }
+
+			x = nNextX - nDistX; 
+            y = nNextY - nDistY; 
+            eButtonState = BUTTONSTATE_MOVED; 
 		}
 
         virtual void OnMoveWithInterface(int nX, int nY) { x += nX; y += nY; }
         virtual void SetDistance(int nX, int nY)        { nDistX = nX - x; nDistY = nY - y; }                      //Used for proper update movement for interface panels
         virtual bool IsButtonOnPos(int mX, int mY);
         virtual void OnDrop(int mX, int mY);  //if left button up with button pointed
-        
-    public: //Button Control Methods
-        void OnMouseMove(int mX, int mY, int relX, int relY, bool Left,bool Right,bool Middle);
-        void DeleteButton(CButton* pButton);   
+        virtual void OnMouseMove(int mX, int mY, int relX, int relY, bool Left,bool Right,bool Middle); 
 };
 
 #endif

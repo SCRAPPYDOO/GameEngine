@@ -1,22 +1,8 @@
 #include "CButton.h"
-#include "CInterfaceB.h"
+#include "CInterfaceBag.h"
 
-CButton CButton::ButtonControl;
-std::vector<CButton*> CButton::ButtonList;
-
-CButton::CButton()
-{
-	x = 0;
-	y = 0;
-	w = 30;
-	h = 30;
-
-    pButtonSurface = NULL;
-
-	eType = BUTTON_DEFAULT;
-    eButtonState = BUTTONSTATE_UNSELECTED;
-    eAnimationState = BUTTON_ANIME_NORMAL;
-}
+//CButton CButton::ButtonControl;
+//std::vector<CButton*> CButton::ButtonList;
 
 CButton::CButton(int nPosX, int nPosY, ButtonType Type)    //Used by button panel on create
 {
@@ -25,22 +11,12 @@ CButton::CButton(int nPosX, int nPosY, ButtonType Type)    //Used by button pane
 	w = 30;
 	h = 30;
 
+    nPreviousX = x;
+    nPreviousY = y;
+
     pButtonSurface = NULL;
 
-	eType = Type;
-    eButtonState = BUTTONSTATE_UNSELECTED;
-    eAnimationState = BUTTON_ANIME_NORMAL;
-}
-
-CButton::CButton(int nPosX, int nPosY, ButtonType Type, SDL_Surface* pSurface)    //Used by button panel on create
-{
-	x = nPosX;
-	y = nPosY;
-	w = 30;
-	h = 30;
-
-    pButtonSurface = pSurface;
-
+    eButtonClass = BUTTONCLASS_BUTTON;
 	eType = Type;
     eButtonState = BUTTONSTATE_UNSELECTED;
     eAnimationState = BUTTON_ANIME_NORMAL;
@@ -59,7 +35,7 @@ bool CButton::OnLoad(ButtonType eType)
     char* Surf_Name = "./error/surf_error.png";
 
 	//ALLL BUTTONS ARE NOW NOT MOVABLE
-	nButtonFlag += BUTTONFLAG_NOTMOVED;
+	//nButtonFlag += BUTTONFLAG_NOTMOVED;
 
     //ToDo: Load variables from file
 	switch(eType)
@@ -187,27 +163,19 @@ void CButton::Activate()
 			break;
 		}
         case BUTTON_BAG_SLOT_ONE: /*CInterfaceB::BagControl.SwitchBag(BAG_ONE);*/ break;
+        //Interface Loot buttons
+        case BUTTON_LOOT_QUIT: 
+        {
+			if(CInterface::InterfaceControl.Interface[INTERFACE_LOOT])
+            {
+                CInterface::InterfaceControl.CleanUpInterface(INTERFACE_LOOT);
+            }
+            break;
+        }
+        case BUTTON_LOOT_LOOTALL: break;
 
 		default: break;
 	}
-}
-
-CButton* CButton::GetButton(int nX, int nY)
-{
-    CButton* pButton = NULL;
-
-    for(int i = 0;i < ButtonList.size();i++) 
-    {   
-        if(!ButtonList[i]) continue;
-                
-        if(ButtonList[i]->IsButtonOnPos(nX,nY))
-        {
-            pButton = ButtonList[i];
-            break;
-        }
-    }
-
-    return pButton;
 }
 
 bool CButton::IsButtonOnPos(int mX, int mY)
@@ -218,35 +186,54 @@ bool CButton::IsButtonOnPos(int mX, int mY)
     return false;
 }
 
+//ToDo: Need to add delete methods for dropen buttons
 void CButton::OnDrop(int mX, int mY)
 {
     //sprawdz czy zadne button panel nie ejst w pioblizu
-    //for(int i = 0; i < CInterface::InterfaceObjectList.size(); i++) 
-    //{   
-    //    if(!CInterface::InterfaceObjectList[i]) continue;
-    //            
-    //    if(CInterface::InterfaceObjectList[i]->IsInterfaceOnPos(mX,mY))
-    //       if(CInterface::InterfaceObjectList[i]->GetInterfaceType() == INTERFACE_BUTTON_PANEL)
-    //            if(CInterface::InterfaceObjectList[i]->AddButtonToInterface(this, mX, mY))
-    //                return;
-    //}
-
-    CButton::ButtonControl.DeleteButton(this);
-}
-
-void CButton::DeleteButton(CButton* pButton)
-{
-    for(int i = 0;i < ButtonList.size();i++) 
+    for(int i = 0; i < MAX_INTERFACEOBJECTS; i++) 
     {   
-        if(!ButtonList[i]) continue;
+        if(!CInterface::InterfaceControl.Interface[i]) continue;
                 
-        if(ButtonList[i] == pButton)
+        if(CInterface::InterfaceControl.Interface[i]->IsInterfaceOnPos(mX,mY))
         {
-            ButtonList[i]->OnCleanup();
-            ButtonList[i] = NULL;
-            break;
-        }
+            switch(CInterface::InterfaceControl.Interface[i]->GetInterfaceType()) 
+            {
+                case INTERFACE_BUTTON_PANEL:
+                {
+                    CButton Shortcurt;
+                    Shortcurt.eType = this->GetButtonType();
+                    if(Shortcurt.OnLoad())
+                        break;
+
+                    Shortcurt.eButtonClass = BUTTONCLASS_SHORTCURT;
+                    //if(CInterface::InterfaceObjectList[i]->AddButtonToInterface(this, mX, mY))
+                    //    return;
+                    //copy button and add type shortcut
+                    return;
+                }
+
+                case INTERFACE_BAG: 
+                {
+                    if(eType != BUTTONCLASS_ITEM)
+                        break;
+
+                    if(CInterface::InterfaceControl.Interface[i]->AddButtonToInterface(this, mX, mY))
+                        return;
+
+                    
+                    
+                    return;
+                }
+                case INTERFACE_EQUIP: return;
+                case INTERFACE_LOOT: return;
+
+                default: OnCleanup();
+            }
+            return;
+        }   
     }
+    
+    OnCleanup();
 }
 
 void CButton::OnMouseMove(int mX, int mY, int relX, int relY, bool Left,bool Right,bool Middle)
@@ -254,19 +241,9 @@ void CButton::OnMouseMove(int mX, int mY, int relX, int relY, bool Left,bool Rig
     if(Left)  //if we move something dont set animation
         return;
 
-    //Set Proper Animation
-    for(int i = 0;i < ButtonList.size();i++) 
-    {   
-        if(!ButtonList[i]) continue;
-                
-        if(ButtonList[i]->IsButtonOnPos(mX,mY))
-        {
-            ButtonList[i]->eAnimationState = BUTTON_ANIME_ONMOTION;
-        }
-        else
-        {
-            ButtonList[i]->eAnimationState = BUTTON_ANIME_NORMAL;
-        }  
-    }
+    if(IsButtonOnPos(mX, mY))
+        eAnimationState = BUTTON_ANIME_ONMOTION;
+    else
+        eAnimationState = BUTTON_ANIME_NORMAL; 
 }
 

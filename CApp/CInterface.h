@@ -14,7 +14,28 @@
 #define MAX_CHARPANEL_BUTTONS 5
 #define MAX_GAMEMENU_BUTTONS 2
 
-#define MAX_INTERFACEOBJECTS 9
+#define MAX_INTERFACEOBJECTS 10
+
+#define INTERFACE_MAINMENU_W 1280
+#define INTERFACE_MAINMENU_H 720
+#define    INTERFACE_PLAYERINFO_W
+#define    INTERFACE_PLAYERINFO_H
+#define    INTERFACE_BUTTON_PANEL_W
+#define    INTERFACE_BUTTON_PANEL_H
+#define    INTERFACE_GAMEMENU_W 414
+#define    INTERFACE_GAMEMENU_H 477
+#define    INTERFACE_CHARACTERPANEL_W 224
+#define    INTERFACE_CHARACTERPANEL_H 52
+#define INTERFACE_BAG_W 577
+#define INTERFACE_BAG_H 598
+#define    INTERFACE_EQUIP_W
+#define    INTERFACE_EQUIP_H
+#define    INTERFACE_CHARACTERSHEET_W
+#define    INTERFACE_CHARACTERSHEET_H
+#define    INTERFACE_AREAMAP_W
+#define    INTERFACE_AREAMAP_H
+#define    INTERFACE_LOOT_W
+#define    INTERFACE_LOOT_H
 
 enum InterfaceType
 {
@@ -27,11 +48,16 @@ enum InterfaceType
     INTERFACE_EQUIP             = 6,
     INTERFACE_CHARACTERSHEET    = 7,
     INTERFACE_AREAMAP           = 8,
+    INTERFACE_LOOT              = 9,
+
 };
 
 enum InterfaceFlag
 {
-    FLAG_NOTMOVED               = 0x01,
+    INTERFACE_FLAG_NOTMOVEABLE              = 0x01,
+    INTERFACE_FLAG_ITEMSLOTS                = 0x02,
+    INTERFACE_FLAG_BUTTONSLOTS              = 0x04,
+    INTERFACE_FLAG_SPELLSLOTS               = 0x08,
 };
 
 class CInterface 
@@ -57,6 +83,8 @@ class CInterface
             virtual void SetDistance(int nX, int nY) { nDistX = nX - nPosX; nDistY = nY - nPosY; }              //Used for proper update movement
             virtual bool AddButtonToInterface(CButton* pButton, int mX, int mY) { return false; }               //Used when we add button to interface
 
+            virtual void OnMouseMove(int mX, int mY, int relX, int relY, bool Left,bool Right,bool Middle) {}
+
         virtual void OnLoop();
             virtual void UpdateButtonsPosition() {}                                                             //When we move we update our buttons positions as well
             virtual void DeleteMovedButtons() {}                                                                //If we move  our button we need delete his old position
@@ -73,7 +101,7 @@ class CInterface
         
         InterfaceType eInterfaceType;
 
-        int nInterfaceflag;
+        int nInterfaceFlag;
 
         int nPosX, nPosY, nWidht, nHeight, nDistX, nDistY;
 
@@ -88,7 +116,9 @@ class CInterface
         int GetWidht() const { return nWidht;}
         int GetHeight() const { return nHeight;}
 
-        bool HasFlag(InterfaceFlag Flag) { if(nInterfaceflag && Flag) return true; return false; }
+        bool HasFlag(InterfaceFlag Flag) { if(nInterfaceFlag && Flag) return true; return false; }
+
+        virtual CButton* GetButton(int nPosX, int nPosY) const { return NULL; }
 };
 
 #endif
