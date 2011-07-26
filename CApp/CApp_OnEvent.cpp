@@ -42,10 +42,17 @@ void CApp::OnMouseMove(int mX, int mY, int relX, int relY, bool Left,bool Right,
     {
         if(pSelectedButton != NULL && (pSelectedButton->GetButtonState() == BUTTONSTATE_SELECTED || pSelectedButton->GetButtonState() == BUTTONSTATE_MOVED) && !pSelectedButton->HasFlag(BUTTONFLAG_NOTMOVED) )
         {
-            pSelectedButton->OnMove(mX, mY);
-
             if(pSelectedButton->GetButtonState() != BUTTONSTATE_MOVED)
-                pSelectedButton->SetButtonState(BUTTONSTATE_MOVED);
+            {
+                //Save our current positions -> used in Button->OnDrop()
+                pSelectedButton->nPreviousX = pSelectedButton->GetPosX();
+                pSelectedButton->nPreviousY = pSelectedButton->GetPosY();
+
+                if(pInterface = CInterface::InterfaceControl.GetInterface(mX, mY))
+                    pInterface->DeleteButtonFromSlot(pSelectedButton);
+            }
+
+            pSelectedButton->OnMove(mX, mY);
 
             return;                
         }
@@ -54,19 +61,6 @@ void CApp::OnMouseMove(int mX, int mY, int relX, int relY, bool Left,bool Right,
         {
             pSelectedInterface->OnMove(mX, mY);
             return;
-        }
-    }
-
-    switch(CApp::eGameState)
-    {
-        case MAIN_MENU:
-        {
-            break;
-        }
-
-        case TEST:
-        {
-            break;
         }
     }
 }
@@ -175,7 +169,7 @@ void CApp::OnLButtonUp(int x,int y)
             else
                 if(pSelectedButton->GetButtonState() == BUTTONSTATE_MOVED)
                 {
-                pSelectedButton->OnDrop(x,y);
+                    pSelectedButton->OnDrop(x,y);
                 }
         }
 

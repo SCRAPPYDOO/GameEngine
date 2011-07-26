@@ -12,7 +12,7 @@
 #define GAME_OPTION_BUTTON_SIEZ_W 140
 #define GAME_OPTION_BUTTON_SIZE_H 30
 
-enum ButtonClass
+enum ButtonClass 
 {
     BUTTONCLASS_BUTTON,
     BUTTONCLASS_ITEM,
@@ -68,15 +68,14 @@ enum ButtonFlag
 	BUTTONFLAG_NOTMOVED		= 0x01,
 };
 
+class CInterface;
+
 class CButton
 {
 	public:
         CButton() {}
         CButton(int nPosX, int nPosY, ButtonType Type);
         ~CButton() {}
-
-        //static CButton ButtonControl;
-		//static std::vector<CButton*>    ButtonList;
 
     protected:
         SDL_Surface*     pButtonSurface;
@@ -88,7 +87,7 @@ class CButton
 		int				 nButtonFlag;
 
 		int x, y, w, h;
-        int nPreviousX, nPreviousY;
+        
         int nDistX, nDistY;
 
     public:
@@ -96,6 +95,8 @@ class CButton
 		virtual bool OnLoad(ButtonType eType);
 		virtual void OnRender(SDL_Surface* Surf_Display);
         virtual void OnCleanup();
+
+        int nPreviousX, nPreviousY;
 
     public: //Methods for variables
         ButtonType GetButtonType() const { return eType; }
@@ -111,6 +112,8 @@ class CButton
         void SetButtonState(ButtonState eState) { eButtonState = eState; }
         void SetAnimationState(ButtonAnimeState eState) { eAnimationState = eState; }
 
+        void SetButtonClass(ButtonClass eClass) { eButtonClass = eClass; }
+
 		bool HasFlag(ButtonFlag FlagType)
 		{
 			if(nButtonFlag && FlagType)
@@ -123,12 +126,6 @@ class CButton
         virtual void Activate();
         virtual void OnMove(int nNextX, int nNextY)     
 		{ 
-            if(eButtonState != BUTTONSTATE_MOVED)
-            {
-                nPreviousX = x; 
-                nPreviousY = y;
-            }
-
 			x = nNextX - nDistX; 
             y = nNextY - nDistY; 
             eButtonState = BUTTONSTATE_MOVED; 

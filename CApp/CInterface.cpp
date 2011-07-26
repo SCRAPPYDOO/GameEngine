@@ -60,7 +60,6 @@ bool CInterface::OnLoad()
 void CInterface::OnLoop()
 {
     UpdateButtonsPosition();
-    DeleteMovedButtons();
 }
 
 void CInterface::OnRender(SDL_Surface* Surf_Display)
@@ -146,20 +145,17 @@ bool CInterface::LoadInterface(InterfaceType eType)
 
 CInterface* CInterface::GetInterface(int nPosX, int nPosY)
 {
-    CInterface* pInterface = NULL;
-
 	for(int i = 0; i < MAX_INTERFACEOBJECTS; i++) 
     {   
         if(!Interface[i]) continue;
                 
         if( ( nPosX > Interface[i]->GetPosX() ) && ( nPosX < Interface[i]->GetPosX() + Interface[i]->GetWidht()) && ( nPosY > Interface[i]->GetPosY() ) && ( nPosY < Interface[i]->GetPosY() + Interface[i]->GetHeight() ) )
         {
-            pInterface = Interface[i];
-            break;
+            return Interface[i];
         }
     }
 
-    return pInterface;
+    return NULL;
 }
 
 void CInterface::CleanUpInterface()
@@ -198,4 +194,3 @@ void CInterface::OnMove(int nNextX, int nNextY)
     nPosX = nNextX - nDistX; 
     nPosY = nNextY - nDistY;   
 }   
-

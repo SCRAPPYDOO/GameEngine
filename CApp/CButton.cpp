@@ -1,9 +1,6 @@
 #include "CButton.h"
 #include "CInterfaceBag.h"
 
-//CButton CButton::ButtonControl;
-//std::vector<CButton*> CButton::ButtonList;
-
 CButton::CButton(int nPosX, int nPosY, ButtonType Type)    //Used by button panel on create
 {
 	x = nPosX;
@@ -189,56 +186,36 @@ bool CButton::IsButtonOnPos(int mX, int mY)
 //ToDo: Need to add delete methods for dropen buttons
 void CButton::OnDrop(int mX, int mY)
 {
-    //sprawdz czy zadne button panel nie ejst w pioblizu
-    for(int i = 0; i < MAX_INTERFACEOBJECTS; i++) 
-    {   
-        if(!CInterface::InterfaceControl.Interface[i]) continue;
-                
-        if(CInterface::InterfaceControl.Interface[i]->IsInterfaceOnPos(mX,mY))
+    //ToDo: Shortcut can only be moved from slot around ButtonInterface
+    //Now Only deelted
+    if(eButtonClass != BUTTONCLASS_SHORTCURT)
+    {
+        //Check if we are on interface and try to add to him
+        if(CInterface* pInterface = CInterface::InterfaceControl.GetInterface(mX, mY))
         {
-            switch(CInterface::InterfaceControl.Interface[i]->GetInterfaceType()) 
+             if(pInterface && pInterface->AddButtonToSlot(this, mX, mY))
+                 return;
+
+        }
+
+        //If we can go to new interface we return
+        if(CInterface *pOldInterfaceSlot = CInterface::InterfaceControl.GetInterface(nPreviousX, nPreviousY))
+            if(pOldInterfaceSlot && pOldInterfaceSlot->AddButtonToSlot(this, nPreviousX, nPreviousY))
             {
-                case INTERFACE_BUTTON_PANEL:
-                {
-                    CButton Shortcurt;
-                    Shortcurt.eType = this->GetButtonType();
-                    if(Shortcurt.OnLoad())
-                        break;
-
-                    Shortcurt.eButtonClass = BUTTONCLASS_SHORTCURT;
-                    //if(CInterface::InterfaceObjectList[i]->AddButtonToInterface(this, mX, mY))
-                    //    return;
-                    //copy button and add type shortcut
-                    return;
-                }
-
-                case INTERFACE_BAG: 
-                {
-                    if(eType != BUTTONCLASS_ITEM)
-                        break;
-
-                    if(CInterface::InterfaceControl.Interface[i]->AddButtonToInterface(this, mX, mY))
-                        return;
-
-                    
-                    
-                    return;
-                }
-                case INTERFACE_EQUIP: return;
-                case INTERFACE_LOOT: return;
-
-                default: OnCleanup();
+                x = nPreviousX;
+                y = nPreviousY;
+                return;  
             }
-            return;
-        }   
     }
-    
+
+    //If all patch are broken we delete our self
     OnCleanup();
 }
 
 void CButton::OnMouseMove(int mX, int mY, int relX, int relY, bool Left,bool Right,bool Middle)
 {
-    if(Left)  //if we move something dont set animation
+    //If We hold Left button dont set animations
+    if(Left)                                            
         return;
 
     if(IsButtonOnPos(mX, mY))

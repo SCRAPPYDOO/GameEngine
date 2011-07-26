@@ -25,9 +25,12 @@ class CButtonPanel : public CInterface
         void OnRender(SDL_Surface* Surf_Display);
         void OnCleanup();
 
-        bool AddButtonToInterface(CButton* pButton, int mX, int mY);
+        bool AddButtonToSlot(CButton* pButton, int mX, int mY);
         void UpdateButtonsPosition();
         void DeleteMovedButtons();
+        void OnMouseMove(int mX, int mY, int relX, int relY, bool Left,bool Right,bool Middle);
+        CButton* GetButton(int nPosX, int nPosY) const;
+
 };
 
 #endif

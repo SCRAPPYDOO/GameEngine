@@ -119,6 +119,9 @@ class CInterface
         bool HasFlag(InterfaceFlag Flag) { if(nInterfaceFlag && Flag) return true; return false; }
 
         virtual CButton* GetButton(int nPosX, int nPosY) const { return NULL; }
+
+        virtual bool AddButtonToSlot(CButton* pButton, int mX, int mY) { return false; }
+        virtual void DeleteButtonFromSlot(CButton* pButton) {}
 };
 
 #endif

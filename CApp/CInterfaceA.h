@@ -38,6 +38,8 @@ class CInterfaceA : public CInterface
         void LoadButtons();
 
         CButton* GetButton(int nPosX, int nPosY) const;
+        void DeleteButtonFromSlot(CButton* pButton);
+        bool AddButtonToSlot(CButton* pButton, int mX, int mY);
 };
 
 #endif

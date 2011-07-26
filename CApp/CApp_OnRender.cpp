@@ -40,12 +40,9 @@ void CApp::OnRender()
         CInterface::InterfaceControl.Interface[i]->OnRender(Surf_Display);
     }
 
- ////   for(int i = 0;i < CButton::ButtonList.size();i++) 
-	////{
- ////           if(!CButton::ButtonList[i]) continue;
-
-	////	    CButton::ButtonList[i]->OnRender(Surf_Display);	
-	////}
+    //OurHandledButton
+    if(pSelectedButton)
+        pSelectedButton->OnRender(Surf_Display);
 
 	SDL_Flip(Surf_Display);
 }

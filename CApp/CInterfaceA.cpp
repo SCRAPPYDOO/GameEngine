@@ -67,18 +67,33 @@ void CInterfaceA::OnCleanup()
 
 void CInterfaceA::UpdateButtonsPosition()
 {
-    if(OldX == 0 && OldY == 0)
-        return;
+    switch(eInterfaceType)
+    {
+        default:
+        {
+            //    for(int i = 0;i < ButtonsList.size();i++) 
+            //    {   
+            //        if(!ButtonsList[i]) continue;
+            //        
+            //        ButtonsList[i]->SetPositionX(nPosX + 33*i +3);
+            //        ButtonsList[i]->SetPositionY(nPosY + 3);
+            //    }
+            //    break;
 
-    for(int i = 0;i < ButtonsList.size();i++) 
-    {   
-        if(!ButtonsList[i]) continue;
+            if(OldX == 0 && OldY == 0)
+                return;
+
+            for(int i = 0;i < ButtonsList.size();i++) 
+            {   
+                if(!ButtonsList[i]) continue;
                 
-        ButtonsList[i]->OnMoveWithInterface(nPosX-OldX,nPosY-OldY);
-    }
+                ButtonsList[i]->OnMoveWithInterface(nPosX-OldX,nPosY-OldY);
+            }
 
-    OldX = 0;
-    OldY = 0;
+            OldX = 0;
+            OldY = 0;
+        }
+    }
 }
 
 void CInterfaceA::LoadButtons()
@@ -183,4 +198,29 @@ CButton* CInterfaceA::GetButton(int nPosX, int nPosY) const
     }
 
     return NULL;
+}
+
+void CInterfaceA::DeleteButtonFromSlot(CButton* pButton)
+{
+    for(int i = 0;i < ButtonsList.size();i++) 
+    {   
+        if(!ButtonsList[i]) continue;
+
+        if(ButtonsList[i] == pButton)
+            ButtonsList[i] = NULL;
+    }
+}
+
+bool CInterfaceA::AddButtonToSlot(CButton* pButton, int mX, int mY)
+{
+    //We Need to Check paths for diferened Interfacec
+    //Bag
+    //Equipment
+    //Loot
+    if(CButton *Button = GetButton(mX, mY))
+        if(Button != NULL)
+            return false;
+
+    ButtonsList.push_back(pButton);
+    return true;
 }
