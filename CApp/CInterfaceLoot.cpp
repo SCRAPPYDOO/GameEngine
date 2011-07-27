@@ -1,5 +1,5 @@
 #include "CInterfaceLoot.h"
-#include <string> 
+#include <string>
 #include <fstream>
 
 CInterfaceLoot::CInterfaceLoot()
@@ -16,10 +16,10 @@ CInterfaceLoot::CInterfaceLoot()
 
     eInterfaceType = INTERFACE_LOOT;
 
-    for(int x = 0; x < 4; ++x) 
-    {   
-        for(int y = 0; y < 4; ++y) 
-        {   
+    for(int x = 0; x < 4; ++x)
+    {
+        for(int y = 0; y < 4; ++y)
+        {
             ItemList[x][y] = NULL;
         }
     }
@@ -39,10 +39,10 @@ void CInterfaceLoot::OnCleanup()
 {
     CInterfaceA::OnCleanup();
 
-    for(int x = 0; x <4; ++x) 
-    {   
-        for(int y = 0; y < 4; ++y) 
-        {   
+    for(int x = 0; x <4; ++x)
+    {
+        for(int y = 0; y < 4; ++y)
+        {
             if(!ItemList[x][y]) continue;
 
             ItemList[x][y]->OnCleanup();
@@ -56,17 +56,17 @@ void CInterfaceLoot::UpdateButtonsPosition()
     if(OldX == 0 && OldY == 0)
         return;
 
-    for(int i = 0;i < ButtonsList.size();i++) 
-    {   
+    for(int i = 0;i < ButtonsList.size();i++)
+    {
         if(!ButtonsList[i]) continue;
                 
         ButtonsList[i]->OnMoveWithInterface(nPosX-OldX,nPosY-OldY);
     }
 
-    for(int x = 0; x < 4; ++x) 
-    {   
-        for(int y = 0; y < 4; ++y) 
-        {   
+    for(int x = 0; x < 4; ++x)
+    {
+        for(int y = 0; y < 4; ++y)
+        {
             if(!ItemList[x][y]) continue;
 
             ItemList[x][y]->OnMoveWithInterface(nPosX-OldX,nPosY-OldY);
@@ -82,7 +82,7 @@ void CInterfaceLoot::LoadButtons()
     ButtonType eType = BUTTON_DEFAULT;
 
     int x = 0;
-	int y = 0;
+int y = 0;
 
     for(int i=0; i<2; ++i)
     {
@@ -93,7 +93,7 @@ void CInterfaceLoot::LoadButtons()
 
             default: break;
         }
-					
+
         CButton *pButton = new CButton(x, y, eType);
 
         if(pButton->OnLoad() == false)
@@ -102,10 +102,3 @@ void CInterfaceLoot::LoadButtons()
         ButtonsList.push_back(pButton);
     }
 }
-
-
-
-
-
-
-

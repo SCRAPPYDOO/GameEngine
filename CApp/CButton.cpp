@@ -188,7 +188,7 @@ void CButton::OnDrop(int mX, int mY)
 {
     //ToDo: Shortcut can only be moved from slot around ButtonInterface
     //Now Only deelted
-    if(eButtonClass != BUTTONCLASS_SHORTCURT)
+    //if(eButtonClass != BUTTONCLASS_SHORTCURT)
     {
         //Check if we are on interface and try to add to him
         if(CInterface* pInterface = CInterface::InterfaceControl.GetInterface(mX, mY))
@@ -200,8 +200,9 @@ void CButton::OnDrop(int mX, int mY)
         //If we can go to new interface we return
         if(CInterface *pOldInterfaceSlot = CInterface::InterfaceControl.GetInterface(nPreviousX, nPreviousY))
         {
-            if(pOldInterfaceSlot && pOldInterfaceSlot->AddButtonToSlot(this, nPreviousX, nPreviousY))
+            if(pOldInterfaceSlot)
             {
+                pOldInterfaceSlot->AddButtonToSlot(this);
                 x = nPreviousX;
                 y = nPreviousY;
                 return;  

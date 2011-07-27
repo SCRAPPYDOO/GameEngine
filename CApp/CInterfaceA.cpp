@@ -28,16 +28,6 @@ CInterfaceA::CInterfaceA(InterfaceType eType)
     eInterfaceType = eType;
 }
 
-void CInterfaceA::OnMouseMove(int mX, int mY, int relX, int relY, bool Left,bool Right,bool Middle)
-{
-    for(int i = 0;i < ButtonsList.size();i++) 
-    {   
-        if(!ButtonsList[i]) continue;
-
-        ButtonsList[i]->OnMouseMove(mX, mY, relX, relY, Left, Right, Middle);
-    }
-}
-
 void CInterfaceA::OnRender(SDL_Surface* Surf_Display)
 {
     CInterface::OnRender(Surf_Display);
@@ -63,6 +53,16 @@ void CInterfaceA::OnCleanup()
     }
 
     ButtonsList.clear();
+}
+
+void CInterfaceA::OnMouseMove(int mX, int mY, int relX, int relY, bool Left,bool Right,bool Middle)
+{
+    for(int i = 0;i < ButtonsList.size();i++) 
+    {   
+        if(!ButtonsList[i]) continue;
+
+        ButtonsList[i]->OnMouseMove(mX, mY, relX, relY, Left, Right, Middle);
+    }
 }
 
 void CInterfaceA::UpdateButtonsPosition()
@@ -226,16 +226,22 @@ bool CInterfaceA::AddButtonToSlot(CButton* pButton, int mX, int mY)
 {
     switch(eInterfaceType)
     {
+        case INTERFACE_CHARACTERPANEL: return false;
+
         case INTERFACE_EQUIP: // wybierz switchem type itemu i wloz go tam gdzie jego miesce
         case INTERFACE_LOOT:
         case INTERFACE_BAG:
         {
+            if(pButton->GetButtonClass() == BUTTONCLASS_SHORTCURT)
+                return false;
+
             for(int x = 0; x < INTERFACE_BAG_MAXSLOT_X; ++x) 
             {   
                 for(int y = 0; y < INTERFACE_BAG_MAXSLOT_Y; ++y) 
                 {   
                     if( ( mX > nPosX + 10 + x*33 ) && ( mX < nPosX + 10 + x*33 + 30) && ( mY > nPosY + 100 + y*33 ) && ( mY < nPosY + 100 + y*33 + 30 ) )
                     {
+                        
                         //ToDo: Need to check if on slot  is any aother button then return false
                         if(CButton *Button = GetButton(mX, mY))
                             if(Button)
@@ -254,14 +260,30 @@ bool CInterfaceA::AddButtonToSlot(CButton* pButton, int mX, int mY)
 
         case INTERFACE_BUTTON_PANEL:
         {
+            if(pButton->GetButtonClass() == BUTTONCLASS_SHORTCURT)
+                return false;
+
+            if(CInterface* pInterface = GetInterface(pButton->nPreviousX, pButton->nPreviousY))
+                if(pInterface && pInterface->GetInterfaceType() == INTERFACE_LOOT)
+                    return false;
+
             for(int i=0; i<INTERFACE_BUTTON_PANEL_MAXSLOTS; ++i)
             {
                 if( ( mX > nPosX + 33*i +3 ) && ( mX < nPosX + 33*i +3 + 30) && ( mY > nPosY + 3 ) && ( mY < nPosY + 3 + 30 ) )
                 {
-                    if(CButton* pButton = GetButton(mX, mY))
+                    //If there is button on slot we need to remove him
+                    if(CButton* pOtherButton = GetButton(nPosX + 33*i +3, nPosY + 3))
                     {
-                        pButton->OnCleanup();
-                        DeleteButtonFromSlot(pButton);
+                        pOtherButton->OnCleanup();
+                        DeleteButtonFromSlot(pOtherButton);
+                    }
+
+                    if(pButton->GetButtonClass() == BUTTONCLASS_SHORTCURT)
+                    {
+                        pButton->SetPositionX(nPosX + 33*i +3);
+                        pButton->SetPositionY(nPosY + 3);
+                        ButtonsList.push_back(pButton);
+                        return true;
                     }
 
                     CButton* pShortcut = new CButton(nPosX + 33*i +3,  nPosY + 3, pButton->GetButtonType());
@@ -279,14 +301,6 @@ bool CInterfaceA::AddButtonToSlot(CButton* pButton, int mX, int mY)
             return false;
         }
 
-        default:
-        {
-            if(CButton *Button = GetButton(mX, mY))
-                if(Button != NULL)
-                    return false;
-
-            ButtonsList.push_back(pButton);
-            return true;
-        }
+        default: return false;
     }
 }

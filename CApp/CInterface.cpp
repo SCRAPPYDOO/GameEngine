@@ -1,6 +1,5 @@
 #include "CInterface.h"
 #include "CUnitInfoPanel.h"
-#include "CButtonPanel.h"
 #include "CInterfaceA.h"
 #include "CInterfaceBag.h"
 #include "CInterfaceLoot.h"

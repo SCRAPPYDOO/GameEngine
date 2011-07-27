@@ -86,7 +86,7 @@ class CInterface
       //virtual void OnEvent();
             virtual void OnMove(int nNextX, int nNextY); //when we  move interface object
             virtual void SetDistance(int nX, int nY) { nDistX = nX - nPosX; nDistY = nY - nPosY; }              //Used for proper update movement
-            virtual bool AddButtonToInterface(CButton* pButton, int mX, int mY) { return false; }               //Used when we add button to interface
+             //Used when we add button to interface
 
             virtual void OnMouseMove(int mX, int mY, int relX, int relY, bool Left,bool Right,bool Middle) {}
 
@@ -125,6 +125,7 @@ class CInterface
 
         virtual CButton* GetButton(int nPosX, int nPosY) const { return NULL; }
 
+        virtual void AddButtonToSlot(CButton* pButton) {}
         virtual bool AddButtonToSlot(CButton* pButton, int mX, int mY) { return false; }
         virtual void DeleteButtonFromSlot(CButton* pButton) {}
 };

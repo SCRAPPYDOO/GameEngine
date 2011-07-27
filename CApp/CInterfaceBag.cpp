@@ -24,7 +24,7 @@ bool CInterfaceBag::OnLoad()
     if(CInterface::OnLoad() == false)
         return false;
 
-    LoadBag(ActualBag);
+    //LoadBag(ActualBag);
 
     return true;
 }

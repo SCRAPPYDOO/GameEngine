@@ -41,6 +41,7 @@ class CInterfaceA : public CInterface
 
         CButton* GetButton(int nPosX, int nPosY) const;
         void DeleteButtonFromSlot(CButton* pButton);
+        void AddButtonToSlot(CButton* pButton) { ButtonsList.push_back(pButton); }
         bool AddButtonToSlot(CButton* pButton, int mX, int mY);
 };
 
