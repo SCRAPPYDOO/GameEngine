@@ -102,6 +102,9 @@ class CButton
         ButtonType GetButtonType() const { return eType; }
         ButtonState GetButtonState() const { return eButtonState; }
 
+        void SetButtonClass(ButtonClass eClass) { eButtonClass = eClass; }
+        ButtonClass GetButtonClass() const { return eButtonClass; }
+
         int GetPosX() const { return x; }
         int GetPosY() const { return y; }
         int GetWidht() const { return w; }
@@ -112,7 +115,7 @@ class CButton
         void SetButtonState(ButtonState eState) { eButtonState = eState; }
         void SetAnimationState(ButtonAnimeState eState) { eAnimationState = eState; }
 
-        void SetButtonClass(ButtonClass eClass) { eButtonClass = eClass; }
+        
 
 		bool HasFlag(ButtonFlag FlagType)
 		{

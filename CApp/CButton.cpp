@@ -195,17 +195,18 @@ void CButton::OnDrop(int mX, int mY)
         {
              if(pInterface && pInterface->AddButtonToSlot(this, mX, mY))
                  return;
-
         }
 
         //If we can go to new interface we return
         if(CInterface *pOldInterfaceSlot = CInterface::InterfaceControl.GetInterface(nPreviousX, nPreviousY))
+        {
             if(pOldInterfaceSlot && pOldInterfaceSlot->AddButtonToSlot(this, nPreviousX, nPreviousY))
             {
                 x = nPreviousX;
                 y = nPreviousY;
                 return;  
             }
+        }
     }
 
     //If all patch are broken we delete our self

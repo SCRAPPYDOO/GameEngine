@@ -76,9 +76,6 @@
     <ClCompile Include="CUnitInfoPanel.cpp">
       <Filter>Interface</Filter>
     </ClCompile>
-    <ClCompile Include="CButtonPanel.cpp">
-      <Filter>Interface</Filter>
-    </ClCompile>
     <ClCompile Include="CInterfaceA.cpp">
       <Filter>Interface</Filter>
     </ClCompile>
@@ -145,9 +142,6 @@
       <Filter>Interface</Filter>
     </ClInclude>
     <ClInclude Include="CUnitInfoPanel.h">
-      <Filter>Interface</Filter>
-    </ClInclude>
-    <ClInclude Include="CButtonPanel.h">
       <Filter>Interface</Filter>
     </ClInclude>
     <ClInclude Include="CInterfaceA.h">

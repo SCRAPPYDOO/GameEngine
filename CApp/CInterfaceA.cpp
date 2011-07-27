@@ -67,33 +67,18 @@ void CInterfaceA::OnCleanup()
 
 void CInterfaceA::UpdateButtonsPosition()
 {
-    switch(eInterfaceType)
-    {
-        default:
-        {
-            //    for(int i = 0;i < ButtonsList.size();i++) 
-            //    {   
-            //        if(!ButtonsList[i]) continue;
-            //        
-            //        ButtonsList[i]->SetPositionX(nPosX + 33*i +3);
-            //        ButtonsList[i]->SetPositionY(nPosY + 3);
-            //    }
-            //    break;
+    if(OldX == 0 && OldY == 0)
+        return;
 
-            if(OldX == 0 && OldY == 0)
-                return;
-
-            for(int i = 0;i < ButtonsList.size();i++) 
-            {   
-                if(!ButtonsList[i]) continue;
+    for(int i = 0;i < ButtonsList.size();i++) 
+    {   
+        if(!ButtonsList[i]) continue;
                 
-                ButtonsList[i]->OnMoveWithInterface(nPosX-OldX,nPosY-OldY);
-            }
-
-            OldX = 0;
-            OldY = 0;
-        }
+        ButtonsList[i]->OnMoveWithInterface(nPosX-OldX,nPosY-OldY);
     }
+
+    OldX = 0;
+    OldY = 0;
 }
 
 void CInterfaceA::LoadButtons()
@@ -183,6 +168,32 @@ void CInterfaceA::LoadButtons()
             break;
         }
 
+        case INTERFACE_BAG:
+		{
+			for(int i=0; i<5; ++i)
+			{
+				switch(i)
+				{
+					case 0: eType = BUTTON_BAG_QUIT; x = nPosX + nWidht - 30; y = nPosY; break;
+                    case 1: eType = BUTTON_BAG_SLOT_ONE; x = nPosX + i * 33; y = nPosY; break;
+                    case 2: eType = BUTTON_BAG_SLOT_TWO; x = nPosX + i*33; y = nPosY; break;
+                    case 3: eType = BUTTON_BAG_SLOT_THREE; x = nPosX + i*33; y = nPosY; break;
+                    case 4: eType = BUTTON_BAG_SLOT_FOUR; x = nPosX + i*33; y = nPosY; break;
+
+                    default: break;
+				}
+					
+                CButton *pButton = new CButton(x, y, eType);
+
+				if(pButton->OnLoad() == false)
+                    break;
+
+                ButtonsList.push_back(pButton);
+			}
+
+			break;
+		}
+
         default: break;
     }
 }
@@ -213,14 +224,69 @@ void CInterfaceA::DeleteButtonFromSlot(CButton* pButton)
 
 bool CInterfaceA::AddButtonToSlot(CButton* pButton, int mX, int mY)
 {
-    //We Need to Check paths for diferened Interfacec
-    //Bag
-    //Equipment
-    //Loot
-    if(CButton *Button = GetButton(mX, mY))
-        if(Button != NULL)
-            return false;
+    switch(eInterfaceType)
+    {
+        case INTERFACE_EQUIP: // wybierz switchem type itemu i wloz go tam gdzie jego miesce
+        case INTERFACE_LOOT:
+        case INTERFACE_BAG:
+        {
+            for(int x = 0; x < INTERFACE_BAG_MAXSLOT_X; ++x) 
+            {   
+                for(int y = 0; y < INTERFACE_BAG_MAXSLOT_Y; ++y) 
+                {   
+                    if( ( mX > nPosX + 10 + x*33 ) && ( mX < nPosX + 10 + x*33 + 30) && ( mY > nPosY + 100 + y*33 ) && ( mY < nPosY + 100 + y*33 + 30 ) )
+                    {
+                        //ToDo: Need to check if on slot  is any aother button then return false
+                        if(CButton *Button = GetButton(mX, mY))
+                            if(Button)
+                                return false;
 
-    ButtonsList.push_back(pButton);
-    return true;
+                        pButton->SetPositionX(nPosX + 10 + x*33);
+                        pButton->SetPositionY(nPosY + 100 + y*33);
+                        ButtonsList.push_back(pButton);
+                        return true;
+                    }
+                }
+            }
+
+            return false;
+        }
+
+        case INTERFACE_BUTTON_PANEL:
+        {
+            for(int i=0; i<INTERFACE_BUTTON_PANEL_MAXSLOTS; ++i)
+            {
+                if( ( mX > nPosX + 33*i +3 ) && ( mX < nPosX + 33*i +3 + 30) && ( mY > nPosY + 3 ) && ( mY < nPosY + 3 + 30 ) )
+                {
+                    if(CButton* pButton = GetButton(mX, mY))
+                    {
+                        pButton->OnCleanup();
+                        DeleteButtonFromSlot(pButton);
+                    }
+
+                    CButton* pShortcut = new CButton(nPosX + 33*i +3,  nPosY + 3, pButton->GetButtonType());
+                
+                    if(!pShortcut || !pShortcut->OnLoad())
+                        return false;
+
+                    pShortcut->SetButtonClass(BUTTONCLASS_SHORTCURT);
+
+                    ButtonsList.push_back(pShortcut);
+                    return false;
+                }
+            }
+
+            return false;
+        }
+
+        default:
+        {
+            if(CButton *Button = GetButton(mX, mY))
+                if(Button != NULL)
+                    return false;
+
+            ButtonsList.push_back(pButton);
+            return true;
+        }
+    }
 }

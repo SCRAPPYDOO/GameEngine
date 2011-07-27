@@ -31,7 +31,12 @@ bool CInterface::OnLoad()
             SurfName = "./menu/main_menu_surf.png"; break;
         }
         case INTERFACE_PLAYERINFO: SurfName = "./interface/interface_unitinfo_surf.png"; break;
-        case INTERFACE_BUTTON_PANEL: SurfName = "./interface/interface_button_surf.png"; break;
+        case INTERFACE_BUTTON_PANEL: 
+        {
+            nWidht = INTERFACE_BUTTON_PANEL_W;
+            nHeight = INTERFACE_BUTTON_PANEL_H;
+            SurfName = "./interface/interface_button_surf.png"; break;
+        }
         case INTERFACE_GAMEMENU: 
         {
             nWidht = INTERFACE_GAMEMENU_W;
@@ -127,7 +132,7 @@ bool CInterface::LoadInterface(InterfaceType eType)
     {
         case INTERFACE_MAINMENU: pInterface = new CInterfaceA(eType); break;
         case INTERFACE_PLAYERINFO: pInterface = new CUnitInfoPanel(); break;
-        case INTERFACE_BUTTON_PANEL: pInterface = new CButtonPanel(); break;
+        case INTERFACE_BUTTON_PANEL: pInterface = new CInterfaceA(eType); break;
         case INTERFACE_GAMEMENU: pInterface = new CInterfaceA(eType); break;
         case INTERFACE_CHARACTERPANEL: pInterface = new CInterfaceA(eType); break;
         case INTERFACE_BAG: pInterface = new CInterfaceBag(); break;

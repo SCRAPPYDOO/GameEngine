@@ -41,19 +41,12 @@ class CInterfaceBag : public CInterfaceA
 
     protected:
         BAGSLOT ActualBag;
-        CButton* ItemList[MAX_BAG_SLOTS][8][8];  
-
-    public:
+ 
+    public: //Virtual
         bool OnLoad();
-        //void OnEvent();
-            void OnMouseMove(int mX, int mY, int relX, int relY, bool Left,bool Right,bool Middle);
-        void OnRender(SDL_Surface* Surf_Display);
         void OnCleanup();
 
-        void UpdateButtonsPosition();
-        void LoadButtons();
-
-    public:
+    public: //Own
         BAGSLOT GetActualBagSlot() const { return ActualBag; }
         void SetACtualSlotBag(BAGSLOT Slot) { ActualBag = Slot; }
 
@@ -61,7 +54,6 @@ class CInterfaceBag : public CInterfaceA
         void SaveBag(BAGSLOT);
         void CleanUpBag(BAGSLOT);
         void LoadBag(BAGSLOT);
-        void UpdateBagSlotPosition(BAGSLOT);
 };
 
 #endif

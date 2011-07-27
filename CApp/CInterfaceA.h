@@ -13,6 +13,8 @@
     Character Panel
     In GameMenu
 
+    Button Panel
+
 
     Character Creator
     Main->character creator
