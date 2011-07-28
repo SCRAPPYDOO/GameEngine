@@ -2,7 +2,6 @@
 #include "CUnitInfoPanel.h"
 #include "CInterfaceA.h"
 #include "CInterfaceBag.h"
-#include "CInterfaceLoot.h"
 
 CInterface CInterface::InterfaceControl;
 
@@ -49,7 +48,12 @@ bool CInterface::OnLoad()
             SurfName = "./interface/surf_character_panel.png"; break;
         }
         case INTERFACE_BAG: SurfName = "./interface/interface_equpment_surf.png"; break;
-        case INTERFACE_LOOT: SurfName = "./interface/interface_loot_surf.png"; break;
+        case INTERFACE_LOOT:
+        {
+            nWidht = INTERFACE_LOOT_W_H;
+            nHeight = INTERFACE_LOOT_W_H; 
+            SurfName = "./interface/interface_loot_surf.png"; break;
+        }
         default: break;
     }
 
@@ -135,7 +139,7 @@ bool CInterface::LoadInterface(InterfaceType eType)
         case INTERFACE_GAMEMENU: pInterface = new CInterfaceA(eType); break;
         case INTERFACE_CHARACTERPANEL: pInterface = new CInterfaceA(eType); break;
         case INTERFACE_BAG: pInterface = new CInterfaceBag(); break;
-        case INTERFACE_LOOT: pInterface = new CInterfaceLoot(); break;
+        case INTERFACE_LOOT: pInterface = new CInterfaceA(eType); break;
         default: return false;
     }
 

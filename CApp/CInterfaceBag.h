@@ -22,9 +22,6 @@
 //#define INTERFACE_BAG_W 577
 //#define INTERFACE_BAG_H 598
 
-#define INTERFACE_EQUIPMENT_W 577
-#define INTERFACE_EQUIPMENT_H 598
-
 enum BAGSLOT
 {
     BAG_ONE,
@@ -47,12 +44,12 @@ class CInterfaceBag : public CInterfaceA
         void OnCleanup();
 
     public: //Own
-        BAGSLOT GetActualBagSlot() const { return ActualBag; }
-        void SetACtualSlotBag(BAGSLOT Slot) { ActualBag = Slot; }
+        BAGSLOT GetActualBag() const { return ActualBag; }
+        void SetActualBag(BAGSLOT Slot) { ActualBag = Slot; }
 
         void SwitchBag(BAGSLOT NewBag);
-        void SaveBag(BAGSLOT);
-        void CleanUpBag(BAGSLOT);
+        void SaveBag();
+        void CleanUpBag();
         void LoadBag(BAGSLOT);
 };
 

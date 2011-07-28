@@ -7,12 +7,11 @@ CButton::CButton(int nPosX, int nPosY, ButtonType Type)    //Used by button pane
 	y = nPosY;
 	w = 30;
 	h = 30;
-
+    nButtonFlag = 0;
     nPreviousX = x;
     nPreviousY = y;
 
     pButtonSurface = NULL;
-
     eButtonClass = BUTTONCLASS_BUTTON;
 	eType = Type;
     eButtonState = BUTTONSTATE_UNSELECTED;
@@ -54,6 +53,12 @@ bool CButton::OnLoad(ButtonType eType)
         case BUTTON_BAG_QUIT: break;
         case BUTTON_BAG_SLOT_ONE: break;
 
+        case BUTTON_SWORD:
+        {
+            eButtonClass = BUTTONCLASS_ITEM;
+            //nButtonFlag += BUTTONFLAG_LOOT;
+            break;
+        }
 		default: break;
 	}
 
@@ -171,6 +176,12 @@ void CButton::Activate()
         }
         case BUTTON_LOOT_LOOTALL: break;
 
+        case BUTTON_SWORD:
+        {
+
+            break;
+        }
+
 		default: break;
 	}
 }
@@ -193,8 +204,24 @@ void CButton::OnDrop(int mX, int mY)
         //Check if we are on interface and try to add to him
         if(CInterface* pInterface = CInterface::InterfaceControl.GetInterface(mX, mY))
         {
-             if(pInterface && pInterface->AddButtonToSlot(this, mX, mY))
-                 return;
+            //if(CInterface* bInterface = CInterface::InterfaceControl.GetInterface(nPreviousX, nPreviousY))
+            //{
+            //    if(bInterface && bInterface->GetInterfaceType() != INTERFACE_LOOT && pInterface->GetInterfaceType() = INTERFACE_BUTTON_PANEL)
+  
+                    if(pInterface && pInterface->AddButtonToSlot(this, mX, mY))
+                        return;
+            //}
+        }
+        //If we are not droped on interface 
+        else 
+        {
+            //spell and shortcut delete
+            if(eButtonClass == BUTTONCLASS_SHORTCURT || eButtonClass == BUTTONCLASS_SPELL)
+            {
+                OnCleanup();
+                return;
+            }
+            //item need to ask to destroy or not
         }
 
         //If we can go to new interface we return

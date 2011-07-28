@@ -194,6 +194,28 @@ void CInterfaceA::LoadButtons()
 			break;
 		}
 
+        case INTERFACE_LOOT:
+        {
+            for(int i=0; i<3; ++i)
+            {
+                switch(i)
+                {
+                    case 0: eType = BUTTON_LOOT_QUIT; x = nPosX + INTERFACE_LOOT_W_H - 30; y = nPosY; break;
+                    case 1: eType = BUTTON_LOOT_LOOTALL; x = nPosX; y = nPosY + INTERFACE_LOOT_W_H - 30; break;
+                    case 2: eType = BUTTON_SWORD;  x = nPosX; y = nPosY + INTERFACE_LOOT_W_H - 70; break;
+                    default: break;
+                }
+
+                CButton *pButton = new CButton(x, y, eType);
+
+                if(pButton->OnLoad() == false)
+                    break;
+
+                ButtonsList.push_back(pButton);
+            }
+            break;
+        }
+
         default: break;
     }
 }
@@ -226,13 +248,11 @@ bool CInterfaceA::AddButtonToSlot(CButton* pButton, int mX, int mY)
 {
     switch(eInterfaceType)
     {
-        case INTERFACE_CHARACTERPANEL: return false;
-
         case INTERFACE_EQUIP: // wybierz switchem type itemu i wloz go tam gdzie jego miesce
         case INTERFACE_LOOT:
         case INTERFACE_BAG:
         {
-            if(pButton->GetButtonClass() == BUTTONCLASS_SHORTCURT)
+            if(pButton->GetButtonClass() == BUTTONCLASS_SHORTCURT || pButton->GetButtonClass() == BUTTONCLASS_SPELL)
                 return false;
 
             for(int x = 0; x < INTERFACE_BAG_MAXSLOT_X; ++x) 
@@ -260,19 +280,12 @@ bool CInterfaceA::AddButtonToSlot(CButton* pButton, int mX, int mY)
 
         case INTERFACE_BUTTON_PANEL:
         {
-            if(pButton->GetButtonClass() == BUTTONCLASS_SHORTCURT)
-                return false;
-
-            if(CInterface* pInterface = GetInterface(pButton->nPreviousX, pButton->nPreviousY))
-                if(pInterface && pInterface->GetInterfaceType() == INTERFACE_LOOT)
-                    return false;
-
             for(int i=0; i<INTERFACE_BUTTON_PANEL_MAXSLOTS; ++i)
             {
                 if( ( mX > nPosX + 33*i +3 ) && ( mX < nPosX + 33*i +3 + 30) && ( mY > nPosY + 3 ) && ( mY < nPosY + 3 + 30 ) )
                 {
                     //If there is button on slot we need to remove him
-                    if(CButton* pOtherButton = GetButton(nPosX + 33*i +3, nPosY + 3))
+                    if(CButton* pOtherButton = GetButton(mX, mY))
                     {
                         pOtherButton->OnCleanup();
                         DeleteButtonFromSlot(pOtherButton);

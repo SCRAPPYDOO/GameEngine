@@ -47,6 +47,8 @@ enum ButtonType
 
     BUTTON_LOOT_QUIT        = 56,
     BUTTON_LOOT_LOOTALL     = 57,
+
+    BUTTON_SWORD            = 10001,
 };
 
 enum ButtonState
@@ -65,7 +67,8 @@ enum ButtonAnimeState
 
 enum ButtonFlag
 {
-	BUTTONFLAG_NOTMOVED		= 0x01,
+	BUTTONFLAG_NOTMOVED		= 0x02,
+    BUTTONFLAG_LOOT         = 0x04,
 };
 
 class CInterface;
@@ -84,19 +87,17 @@ class CButton
 		ButtonType       eType;
         ButtonState      eButtonState;
         ButtonAnimeState eAnimationState;
-		int				 nButtonFlag;
 
+		int				 nButtonFlag;
 		int x, y, w, h;
-        
         int nDistX, nDistY;
+        int nPreviousX, nPreviousY;
 
     public:
         virtual bool OnLoad();
 		virtual bool OnLoad(ButtonType eType);
 		virtual void OnRender(SDL_Surface* Surf_Display);
         virtual void OnCleanup();
-
-        int nPreviousX, nPreviousY;
 
     public: //Methods for variables
         ButtonType GetButtonType() const { return eType; }
@@ -109,13 +110,21 @@ class CButton
         int GetPosY() const { return y; }
         int GetWidht() const { return w; }
         int GetHeight() const { return h; }
+        int GetPreviousX() const { return nPreviousX; }
+        int GetPreviousY() const { return nPreviousY; }
 
         void SetPositionX(int nValue) { x = nValue;}
         void SetPositionY(int nValue) { y = nValue;}
+        void SetPreviousX(int nValue) { nPreviousX = nValue;}
+        void SetPreviousY(int nValue) { nPreviousY = nValue;}
         void SetButtonState(ButtonState eState) { eButtonState = eState; }
         void SetAnimationState(ButtonAnimeState eState) { eAnimationState = eState; }
 
-        
+        void SaveCurrentPosition()
+        {
+            nPreviousX = x;
+            nPreviousY = y;
+        }
 
 		bool HasFlag(ButtonFlag FlagType)
 		{

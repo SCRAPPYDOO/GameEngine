@@ -18,24 +18,25 @@
 
 #define INTERFACE_MAINMENU_W 1280
 #define INTERFACE_MAINMENU_H 720
-#define    INTERFACE_PLAYERINFO_W
-#define    INTERFACE_PLAYERINFO_H
+#define INTERFACE_PLAYERINFO_W
+#define INTERFACE_PLAYERINFO_H
 #define INTERFACE_BUTTON_PANEL_W 600
 #define INTERFACE_BUTTON_PANEL_H 63
-#define    INTERFACE_GAMEMENU_W 414
-#define    INTERFACE_GAMEMENU_H 477
-#define    INTERFACE_CHARACTERPANEL_W 224
-#define    INTERFACE_CHARACTERPANEL_H 52
+#define INTERFACE_GAMEMENU_W 414
+#define INTERFACE_GAMEMENU_H 477
+#define INTERFACE_CHARACTERPANEL_W 224
+#define INTERFACE_CHARACTERPANEL_H 52
 #define INTERFACE_BAG_W 577
 #define INTERFACE_BAG_H 598
-#define    INTERFACE_EQUIP_W
-#define    INTERFACE_EQUIP_H
-#define    INTERFACE_CHARACTERSHEET_W
-#define    INTERFACE_CHARACTERSHEET_H
-#define    INTERFACE_AREAMAP_W
-#define    INTERFACE_AREAMAP_H
-#define    INTERFACE_LOOT_W
-#define    INTERFACE_LOOT_H
+#define INTERFACE_EQUIPMENT_W 577
+#define INTERFACE_EQUIPMENT_H 598
+#define INTERFACE_CHARACTERSHEET_W
+#define INTERFACE_CHARACTERSHEET_H
+#define INTERFACE_AREAMAP_W
+#define INTERFACE_AREAMAP_H
+#define INTERFACE_LOOT_W
+#define INTERFACE_LOOT_H
+#define INTERFACE_LOOT_W_H 200
 
 //Number of Slots for items spells buttons
 #define INTERFACE_BUTTON_PANEL_MAXSLOTS 10
@@ -54,7 +55,6 @@ enum InterfaceType
     INTERFACE_CHARACTERSHEET    = 7,
     INTERFACE_AREAMAP           = 8,
     INTERFACE_LOOT              = 9,
-
 };
 
 enum InterfaceFlag
@@ -68,16 +68,19 @@ enum InterfaceFlag
 class CInterface 
 {
 	public:
-        static CInterface					InterfaceControl;
-        CInterface*                         Interface[MAX_INTERFACEOBJECTS];
+        CInterface();
+        virtual ~CInterface() {}
 
-    public:
-		bool LoadInterface();
-        bool LoadInterface(InterfaceType eType);
-        void CleanUpInterface();
-        void CleanUpInterface(InterfaceType eType);
+        static CInterface			 InterfaceControl;
+        CInterface*                  Interface[MAX_INTERFACEOBJECTS];
 
-        bool IsInterfaceOnPos(int nX, int nY);
+    protected:
+        SDL_Surface* Surf_Interface;
+        InterfaceType eInterfaceType;
+
+        int nInterfaceFlag;
+        int nPosX, nPosY, nWidht, nHeight, nDistX, nDistY;
+        int OldX, OldY;
 
 	public:
         virtual bool OnLoad();	
@@ -86,35 +89,17 @@ class CInterface
       //virtual void OnEvent();
             virtual void OnMove(int nNextX, int nNextY); //when we  move interface object
             virtual void SetDistance(int nX, int nY) { nDistX = nX - nPosX; nDistY = nY - nPosY; }              //Used for proper update movement
-             //Used when we add button to interface
-
             virtual void OnMouseMove(int mX, int mY, int relX, int relY, bool Left,bool Right,bool Middle) {}
 
         virtual void OnLoop();
-            virtual void UpdateButtonsPosition() {}                                                             //When we move we update our buttons positions as well
-            virtual void DeleteMovedButtons() {}                                                                //If we move  our button we need delete his old position
+            virtual void UpdateButtonsPosition() {}                                                             //When we move we update our buttons positions as well                                                               //If we move  our button we need delete his old position
 
         virtual void OnRender(SDL_Surface* Surf_Display);
         virtual void OnCleanup();
 
-	public:
-        CInterface();
-        virtual ~CInterface() {}
-
-    protected:
-        SDL_Surface* Surf_Interface;
-        
-        InterfaceType eInterfaceType;
-
-        int nInterfaceFlag;
-
-        int nPosX, nPosY, nWidht, nHeight, nDistX, nDistY;
-
-        int OldX, OldY;
-
-	public:
+    public:
         CInterface* GetInterface(int nPosX, int nPosY);
-        InterfaceType GetInterfaceType() const { return eInterfaceType; }
+        InterfaceType GetInterfaceType() { return eInterfaceType; }
 
         int GetPosX() const { return nPosX;}
         int GetPosY() const { return nPosY;}
@@ -122,9 +107,13 @@ class CInterface
         int GetHeight() const { return nHeight;}
 
         bool HasFlag(InterfaceFlag Flag) { if(nInterfaceFlag && Flag) return true; return false; }
+        void CleanUpInterface();
+        void CleanUpInterface(InterfaceType eType);
+		bool LoadInterface();
+        bool LoadInterface(InterfaceType eType);
+        bool IsInterfaceOnPos(int nX, int nY);
 
         virtual CButton* GetButton(int nPosX, int nPosY) const { return NULL; }
-
         virtual void AddButtonToSlot(CButton* pButton) {}
         virtual bool AddButtonToSlot(CButton* pButton, int mX, int mY) { return false; }
         virtual void DeleteButtonFromSlot(CButton* pButton) {}

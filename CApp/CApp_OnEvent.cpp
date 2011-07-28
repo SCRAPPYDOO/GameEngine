@@ -45,11 +45,12 @@ void CApp::OnMouseMove(int mX, int mY, int relX, int relY, bool Left,bool Right,
             if(pSelectedButton->GetButtonState() != BUTTONSTATE_MOVED)
             {
                 //Save our current positions -> used in Button->OnDrop()
-                pSelectedButton->nPreviousX = pSelectedButton->GetPosX();
-                pSelectedButton->nPreviousY = pSelectedButton->GetPosY();
+                pSelectedButton->SaveCurrentPosition();
 
                 if(pInterface = CInterface::InterfaceControl.GetInterface(mX, mY))
+                {
                     pInterface->DeleteButtonFromSlot(pSelectedButton);
+                }
             }
 
             pSelectedButton->OnMove(mX, mY);

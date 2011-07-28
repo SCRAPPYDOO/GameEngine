@@ -13,9 +13,7 @@ CInterfaceBag::CInterfaceBag()
     OldY = 0;
 
     ActualBag = BAG_ONE;
-
     Surf_Interface = NULL;
-
     eInterfaceType = INTERFACE_BAG;
 }
 
@@ -24,33 +22,33 @@ bool CInterfaceBag::OnLoad()
     if(CInterface::OnLoad() == false)
         return false;
 
-    //LoadBag(ActualBag);
+    LoadBag(ActualBag);
 
     return true;
 }
 
 void CInterfaceBag::OnCleanup()
 {
-    SaveBag(ActualBag);
-    CleanUpBag(ActualBag);
+    SaveBag();
+    CleanUpBag();
 
     CInterfaceA::OnCleanup();
 }
 
 void CInterfaceBag::SwitchBag(BAGSLOT NewBag)
 {
-    //if(ActualBag == NewBag)
-        //return;
+    if(ActualBag == NewBag)
+        return;
 
-    SaveBag(ActualBag);
-    CleanUpBag(ActualBag);
+    SaveBag();
+    CleanUpBag();
     LoadBag(NewBag);
 }
 
-void CInterfaceBag::SaveBag(BAGSLOT BagSlot)
+void CInterfaceBag::SaveBag()
 {
     //Open a file for writing 
-    switch(BagSlot)
+    switch(ActualBag)
     {
         case 0:
         case 1:
@@ -60,18 +58,18 @@ void CInterfaceBag::SaveBag(BAGSLOT BagSlot)
     }
 
     std::ofstream save( "./save/bag1_save" ); 
+
+    //ToDo: Need to save all buttons with class ITEM and their coorinates
+
     //Write offsets to the file 
-
-
     save << "51"; 
     save << " "; 
 
     //Close the file 
     save.close();
-
 }
 
-void CInterfaceBag::CleanUpBag(BAGSLOT BagSlot)
+void CInterfaceBag::CleanUpBag()
 {
     for(int i = 0;i < ButtonsList.size();i++) 
     {   
@@ -84,21 +82,21 @@ void CInterfaceBag::CleanUpBag(BAGSLOT BagSlot)
 
 void CInterfaceBag::LoadBag(BAGSLOT BagSlot)
 {
-    int upleftX = nPosX + 10;
-    int upLeftY = nPosY + 100;
+    //int upleftX = nPosX + 10;
+    //int upLeftY = nPosY + 100;
 
-    for(int x = 0; x < BAG_MAX_X; ++x) 
-    {   
-        for(int y = 0; y < BAG_MAX_Y; ++y) 
-        {   
-            CButton *pButton = new CButton(upleftX + x*33, upLeftY + y*33, BUTTON_CHARPANEL_GAMEMENU);
+    //for(int x = 0; x < BAG_MAX_X; ++x) 
+    //{   
+    //    for(int y = 0; y < BAG_MAX_Y; ++y) 
+    //    {   
+    //        CButton *pButton = new CButton(upleftX + x*33, upLeftY + y*33, BUTTON_CHARPANEL_GAMEMENU);
 
-            if(pButton->OnLoad() == false)
-                break;
+    //        if(pButton->OnLoad() == false)
+    //            break;
 
-            ButtonsList.push_back(pButton);
-        }
-    }
+    //        ButtonsList.push_back(pButton);
+    //    }
+    //}
 
     std::ifstream load( "./save/bag1_save" );
 

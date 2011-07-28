@@ -79,16 +79,10 @@
     <ClCompile Include="CInterfaceA.cpp">
       <Filter>Interface</Filter>
     </ClCompile>
-    <ClCompile Include="CInterfaceInformationBox.cpp">
-      <Filter>Interface</Filter>
-    </ClCompile>
     <ClCompile Include="CItem.cpp">
       <Filter>Character</Filter>
     </ClCompile>
     <ClCompile Include="CInterfaceBag.cpp">
-      <Filter>Interface</Filter>
-    </ClCompile>
-    <ClCompile Include="CInterfaceLoot.cpp">
       <Filter>Interface</Filter>
     </ClCompile>
   </ItemGroup>
@@ -147,16 +141,10 @@
     <ClInclude Include="CInterfaceA.h">
       <Filter>Interface</Filter>
     </ClInclude>
-    <ClInclude Include="CInterfaceInformationBox.h">
-      <Filter>Interface</Filter>
-    </ClInclude>
     <ClInclude Include="CItem.h">
       <Filter>Character</Filter>
     </ClInclude>
     <ClInclude Include="CInterfaceBag.h">
-      <Filter>Interface</Filter>
-    </ClInclude>
-    <ClInclude Include="CInterfaceLoot.h">
       <Filter>Interface</Filter>
     </ClInclude>
   </ItemGroup>
