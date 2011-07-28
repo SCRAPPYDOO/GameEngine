@@ -32,7 +32,7 @@ void CInterfaceBag::OnCleanup()
     SaveBag();
     CleanUpBag();
 
-    CInterfaceA::OnCleanup();
+    CInterface::OnCleanup();
 }
 
 void CInterfaceBag::SwitchBag(BAGSLOT NewBag)

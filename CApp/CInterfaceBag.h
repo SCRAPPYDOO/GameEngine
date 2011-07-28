@@ -3,7 +3,7 @@
 
 #include "CSurface.h"
 #include "CApp.h"
-#include "CInterfaceA.h"
+#include "CInterface.h"
 #include "CItem.h"
 
 /*
@@ -30,7 +30,7 @@ enum BAGSLOT
     BAG_FOUR,
 };
 
-class CInterfaceBag : public CInterfaceA
+class CInterfaceBag : public CInterface
 {
     public:
         CInterfaceBag();

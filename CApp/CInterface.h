@@ -4,7 +4,6 @@
 #include <SDL.h>
 #include <vector>
 
-#include "Define.h"
 #include "CSurface.h"
 #include "CButton.h"
 #include "CApp.h"
@@ -13,8 +12,6 @@
 #define MAX_BUTTONPANEL_BUTTONS 10
 #define MAX_CHARPANEL_BUTTONS 5
 #define MAX_GAMEMENU_BUTTONS 2
-
-#define MAX_INTERFACEOBJECTS 10
 
 #define INTERFACE_MAINMENU_W 1280
 #define INTERFACE_MAINMENU_H 720
@@ -43,6 +40,8 @@
 #define INTERFACE_BAG_MAXSLOT_X 8
 #define INTERFACE_BAG_MAXSLOT_Y 8
 
+#define MAX_INTERFACEOBJECTS 11
+
 enum InterfaceType
 {
     INTERFACE_MAINMENU          = 0,
@@ -55,6 +54,7 @@ enum InterfaceType
     INTERFACE_CHARACTERSHEET    = 7,
     INTERFACE_AREAMAP           = 8,
     INTERFACE_LOOT              = 9,
+    INTERFACE_SPELLBOOK         = 10,
 };
 
 enum InterfaceFlag
@@ -69,12 +69,14 @@ class CInterface
 {
 	public:
         CInterface();
+        CInterface(InterfaceType eType);
         virtual ~CInterface() {}
 
         static CInterface			 InterfaceControl;
         CInterface*                  Interface[MAX_INTERFACEOBJECTS];
 
     protected:
+        std::vector<CButton*>     ButtonsList;
         SDL_Surface* Surf_Interface;
         InterfaceType eInterfaceType;
 
@@ -84,15 +86,15 @@ class CInterface
 
 	public:
         virtual bool OnLoad();	
-            virtual void LoadButtons() {}
+            virtual void LoadButtons();
 
       //virtual void OnEvent();
             virtual void OnMove(int nNextX, int nNextY); //when we  move interface object
             virtual void SetDistance(int nX, int nY) { nDistX = nX - nPosX; nDistY = nY - nPosY; }              //Used for proper update movement
-            virtual void OnMouseMove(int mX, int mY, int relX, int relY, bool Left,bool Right,bool Middle) {}
+            virtual void OnMouseMove(int mX, int mY, int relX, int relY, bool Left,bool Right,bool Middle);
 
         virtual void OnLoop();
-            virtual void UpdateButtonsPosition() {}                                                             //When we move we update our buttons positions as well                                                               //If we move  our button we need delete his old position
+            virtual void UpdateButtonsPosition();                                                             //When we move we update our buttons positions as well                                                               //If we move  our button we need delete his old position
 
         virtual void OnRender(SDL_Surface* Surf_Display);
         virtual void OnCleanup();
@@ -113,10 +115,10 @@ class CInterface
         bool LoadInterface(InterfaceType eType);
         bool IsInterfaceOnPos(int nX, int nY);
 
-        virtual CButton* GetButton(int nPosX, int nPosY) const { return NULL; }
-        virtual void AddButtonToSlot(CButton* pButton) {}
-        virtual bool AddButtonToSlot(CButton* pButton, int mX, int mY) { return false; }
-        virtual void DeleteButtonFromSlot(CButton* pButton) {}
+        virtual CButton* GetButton(int nPosX, int nPosY) const;
+        virtual void AddButtonToSlot(CButton* pButton) { ButtonsList.push_back(pButton); }
+        virtual bool AddButtonToSlot(CButton* pButton, int mX, int mY);
+        virtual void DeleteButtonFromSlot(CButton* pButton);
 };
 
 #endif

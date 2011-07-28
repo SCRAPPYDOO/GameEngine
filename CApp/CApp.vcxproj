@@ -78,7 +78,6 @@
     <ClCompile Include="CEntity.cpp" />
     <ClCompile Include="CEvent.cpp" />
     <ClCompile Include="CFrameControler.cpp" />
-    <ClCompile Include="CInterfaceA.cpp" />
     <ClCompile Include="CInterface.cpp" />
     <ClCompile Include="CInterfaceBag.cpp" />
     <ClCompile Include="CItem.cpp" />
@@ -99,7 +98,6 @@
     <ClInclude Include="CEntity.h" />
     <ClInclude Include="CEvent.h" />
     <ClInclude Include="CFrameControler.h" />
-    <ClInclude Include="CInterfaceA.h" />
     <ClInclude Include="CInterface.h" />
     <ClInclude Include="CInterfaceBag.h" />
     <ClInclude Include="CItem.h" />
