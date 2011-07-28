@@ -48,6 +48,8 @@ enum ButtonType
     BUTTON_LOOT_QUIT        = 56,
     BUTTON_LOOT_LOOTALL     = 57,
 
+    BUTTON_SPELLBOOK_QUIT   = 101,
+
     BUTTON_SWORD            = 10001,
 };
 

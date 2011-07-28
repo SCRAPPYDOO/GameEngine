@@ -65,6 +65,13 @@ bool CInterface::OnLoad()
             nHeight = INTERFACE_LOOT_W_H; 
             SurfName = "./interface/interface_loot_surf.png"; break;
         }
+        case INTERFACE_SPELLBOOK:
+        {
+            nWidht = INTERFACE_SPELLBOOK_W;
+            nHeight = INTERFACE_SPELLBOOK_H; 
+            SurfName = "./interface/interface_loot_surf.png"; break;
+        }
+
         default: break;
     }
 
@@ -167,6 +174,7 @@ bool CInterface::LoadInterface(InterfaceType eType)
         case INTERFACE_CHARACTERPANEL: pInterface = new CInterface(eType); break;
         case INTERFACE_BAG: pInterface = new CInterfaceBag(); break;
         case INTERFACE_LOOT: pInterface = new CInterface(eType); break;
+        case INTERFACE_SPELLBOOK: pInterface = new CInterface(eType); break;
         default: return false;
     }
 
@@ -390,6 +398,29 @@ void CInterface::LoadButtons()
             }
             break;
         }
+
+        case INTERFACE_SPELLBOOK:
+        {
+  //          for(int i=0; i<3; ++i)
+  //          {
+  //              switch(i)
+  //              {
+  //                  case 0: eType = BUTTON_LOOT_QUIT; x = nPosX + INTERFACE_LOOT_W_H - 30; y = nPosY; break;
+  //                  case 1: eType = BUTTON_LOOT_LOOTALL; x = nPosX; y = nPosY + INTERFACE_LOOT_W_H - 30; break;
+  //                  case 2: eType = BUTTON_SWORD;  x = nPosX; y = nPosY + INTERFACE_LOOT_W_H - 70; break;
+  //                  default: break;
+  //              }
+
+  //              CButton *pButton = new CButton(x, y, eType);
+
+  //              if(pButton->OnLoad() == false)
+  //                  break;
+
+  //              ButtonsList.push_back(pButton);
+  //          }
+            break;
+        }
+
 
         default: break;
     }

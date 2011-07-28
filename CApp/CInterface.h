@@ -34,6 +34,8 @@
 #define INTERFACE_LOOT_W
 #define INTERFACE_LOOT_H
 #define INTERFACE_LOOT_W_H 200
+#define INTERFACE_SPELLBOOK_W 300
+#define INTERFACE_SPELLBOOK_H 500
 
 //Number of Slots for items spells buttons
 #define INTERFACE_BUTTON_PANEL_MAXSLOTS 10

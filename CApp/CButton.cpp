@@ -140,7 +140,17 @@ void CButton::Activate()
 
             break;
         }
-        case BUTTON_CHARPANEL_SPELLBOOK: break;
+        case BUTTON_CHARPANEL_SPELLBOOK:
+        {
+			if(!CInterface::InterfaceControl.Interface[INTERFACE_SPELLBOOK])
+			{
+				CInterface::InterfaceControl.LoadInterface(INTERFACE_SPELLBOOK);
+			}
+			else
+				CInterface::InterfaceControl.CleanUpInterface(INTERFACE_SPELLBOOK);
+
+            break;
+        }
         case BUTTON_CHARPANEL_QUESTDIARY: break;
         case BUTTON_CHARPANEL_GAMEMENU:
         {
@@ -175,6 +185,15 @@ void CButton::Activate()
             break;
         }
         case BUTTON_LOOT_LOOTALL: break;
+
+        case BUTTON_SPELLBOOK_QUIT:         
+        {
+			if(CInterface::InterfaceControl.Interface[INTERFACE_SPELLBOOK])
+            {
+                CInterface::InterfaceControl.CleanUpInterface(INTERFACE_SPELLBOOK);
+            }
+            break;
+        }
 
         case BUTTON_SWORD:
         {
