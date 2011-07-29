@@ -86,7 +86,7 @@ class CButton
         SDL_Surface*     pButtonSurface;
 
         ButtonClass      eButtonClass;
-		ButtonType       eType;
+		ButtonType       eButtonType;
         ButtonState      eButtonState;
         ButtonAnimeState eAnimationState;
 
@@ -102,7 +102,7 @@ class CButton
         virtual void OnCleanup();
 
     public: //Methods for variables
-        ButtonType GetButtonType() const { return eType; }
+        ButtonType GetButtonType() const { return eButtonType; }
         ButtonState GetButtonState() const { return eButtonState; }
 
         void SetButtonClass(ButtonClass eClass) { eButtonClass = eClass; }

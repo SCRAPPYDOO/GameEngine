@@ -29,8 +29,7 @@ void CApp::OnKeyUp(SDLKey sym, SDLMod mod, Uint16 unicode)
 
 void CApp::OnMouseMove(int mX, int mY, int relX, int relY, bool Left,bool Right,bool Middle)
 { 
-    CInterface* pInterface = NULL;
-    if(pInterface = CInterface::InterfaceControl.GetInterface(mX, mY))
+    if(CInterface* pInterface = CInterface::InterfaceControl.GetInterface(mX, mY))
          if(pInterface)
              pInterface->OnMouseMove(mX, mY, relX, relY, Left, Right, Middle);
 
@@ -47,7 +46,7 @@ void CApp::OnMouseMove(int mX, int mY, int relX, int relY, bool Left,bool Right,
                 //Save our current positions -> used in Button->OnDrop()
                 pSelectedButton->SaveCurrentPosition();
 
-                if(pInterface = CInterface::InterfaceControl.GetInterface(mX, mY))
+                if(CInterface* pInterface = CInterface::InterfaceControl.GetInterface(mX, mY))
                 {
                     pInterface->DeleteButtonFromSlot(pSelectedButton);
                 }

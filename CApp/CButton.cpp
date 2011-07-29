@@ -62,7 +62,7 @@ bool CButton::OnLoad(ButtonType eType)
 		default: break;
 	}
 
-    this->eType = eType;
+    this->eButtonType = eType;
 
     if((pButtonSurface = CSurface::OnLoad(Surf_Name)) == false)
         return false;
