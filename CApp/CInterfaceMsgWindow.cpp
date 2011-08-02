@@ -8,11 +8,7 @@ CInterfaceMsgWindow::CInterfaceMsgWindow()
     TextColor.g = 255;
     TextColor.r = 255;
 
-    Surf_Interface = NULL;
     Font = NULL;
-
-    OldX = 0;
-    OldY = 0;
 
     for(int i = 0;i < INTERFACE_MSGWINDOW_MAX_TEXT_LINES;i++) 
     {   
@@ -44,7 +40,7 @@ void CInterfaceMsgWindow::OnRender(SDL_Surface* Surf_Display)
 
         if(Msg == NULL) break;
 
-        CSurface::OnDraw(Surf_Display, Msg, nPosX, nPosY + i * 10); 
+        CSurface::OnDraw(Surf_Display, Msg, nPosX, nPosY + i * 10 + 40); 
 
         SDL_FreeSurface( Msg );
     }  
@@ -52,7 +48,8 @@ void CInterfaceMsgWindow::OnRender(SDL_Surface* Surf_Display)
 
 void CInterfaceMsgWindow::OnCleanup()
 {
-    TTF_CloseFont( Font );
+    TTF_CloseFont(Font);
+
     CInterface::OnCleanup();
 }
 
@@ -60,8 +57,12 @@ void CInterfaceMsgWindow::AddMsg(char* msg)
 {
     for(int i = 0;i < INTERFACE_MSGWINDOW_MAX_TEXT_LINES;i++) 
     {  
+        if(i == (INTERFACE_MSGWINDOW_MAX_TEXT_LINES - 1))
+        {
+            Masage[i] = msg;
+            return;
+        }
+
         Masage[i] = Masage[i+1]; 
     } 
-
-    Masage[5] = msg;
 }

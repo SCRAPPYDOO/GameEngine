@@ -73,16 +73,16 @@
     <ClCompile Include="CInterface.cpp">
       <Filter>Interface</Filter>
     </ClCompile>
-    <ClCompile Include="CUnitInfoPanel.cpp">
-      <Filter>Interface</Filter>
-    </ClCompile>
     <ClCompile Include="CItem.cpp">
       <Filter>Character</Filter>
     </ClCompile>
-    <ClCompile Include="CInterfaceBag.cpp">
+    <ClCompile Include="CInterfaceMsgWindow.cpp">
       <Filter>Interface</Filter>
     </ClCompile>
-    <ClCompile Include="CInterfaceMsgWindow.cpp">
+    <ClCompile Include="CInterfaceEquip.cpp">
+      <Filter>Interface</Filter>
+    </ClCompile>
+    <ClCompile Include="CInterfaceUnit.cpp">
       <Filter>Interface</Filter>
     </ClCompile>
   </ItemGroup>
@@ -135,20 +135,20 @@
     <ClInclude Include="CInterface.h">
       <Filter>Interface</Filter>
     </ClInclude>
-    <ClInclude Include="CUnitInfoPanel.h">
-      <Filter>Interface</Filter>
-    </ClInclude>
     <ClInclude Include="CItem.h">
       <Filter>Character</Filter>
-    </ClInclude>
-    <ClInclude Include="CInterfaceBag.h">
-      <Filter>Interface</Filter>
     </ClInclude>
     <ClInclude Include="CInterfaceMsgWindow.h">
       <Filter>Interface</Filter>
     </ClInclude>
     <ClInclude Include="CMasage.h">
       <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CInterfaceEquip.h">
+      <Filter>Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="CInterfaceUnit.h">
+      <Filter>Interface</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

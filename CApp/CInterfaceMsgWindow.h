@@ -4,7 +4,7 @@
 #include "CInterface.h"
 #include <string>
 
-#define INTERFACE_MSGWINDOW_MAX_TEXT_LINES 6
+#define INTERFACE_MSGWINDOW_MAX_TEXT_LINES 15
 
 class CInterfaceMsgWindow : public CInterface
 {

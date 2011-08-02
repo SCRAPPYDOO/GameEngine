@@ -79,7 +79,7 @@
     <ClCompile Include="CEvent.cpp" />
     <ClCompile Include="CFrameControler.cpp" />
     <ClCompile Include="CInterface.cpp" />
-    <ClCompile Include="CInterfaceBag.cpp" />
+    <ClCompile Include="CInterfaceEquip.cpp" />
     <ClCompile Include="CInterfaceMsgWindow.cpp" />
     <ClCompile Include="CItem.cpp" />
     <ClCompile Include="CMap.cpp" />
@@ -88,7 +88,7 @@
     <ClCompile Include="CPlayer.cpp" />
     <ClCompile Include="CSurface.cpp" />
     <ClCompile Include="CTile.cpp" />
-    <ClCompile Include="CUnitInfoPanel.cpp" />
+    <ClCompile Include="CInterfaceUnit.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CAnimation.h" />
@@ -100,7 +100,7 @@
     <ClInclude Include="CEvent.h" />
     <ClInclude Include="CFrameControler.h" />
     <ClInclude Include="CInterface.h" />
-    <ClInclude Include="CInterfaceBag.h" />
+    <ClInclude Include="CInterfaceEquip.h" />
     <ClInclude Include="CInterfaceMsgWindow.h" />
     <ClInclude Include="CItem.h" />
     <ClInclude Include="CMap.h" />
@@ -110,7 +110,7 @@
     <ClInclude Include="CPlayer.h" />
     <ClInclude Include="CSurface.h" />
     <ClInclude Include="CTile.h" />
-    <ClInclude Include="CUnitInfoPanel.h" />
+    <ClInclude Include="CInterfaceUnit.h" />
     <ClInclude Include="Define.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

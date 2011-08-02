@@ -1,5 +1,5 @@
 #include "CButton.h"
-#include "CInterfaceBag.h"
+#include "CInterfaceEquip.h"
 
 CButton::CButton(int nPosX, int nPosY, ButtonType Type)    //Used by button panel on create
 {
@@ -132,12 +132,12 @@ void CButton::Activate()
         case BUTTON_CHARPANEL_EQUPMENT:
         {
             CInterface::InterfaceControl.Interface[INTERFACE_MASAGEWINDOW]->AddMsg("equpment");
-			if(!CInterface::InterfaceControl.Interface[INTERFACE_BAG])
+			if(!CInterface::InterfaceControl.Interface[INTERFACE_EQUIP])
 			{
-				CInterface::InterfaceControl.LoadInterface(INTERFACE_BAG);
+				CInterface::InterfaceControl.LoadInterface(INTERFACE_EQUIP);
 			}
 			else
-				CInterface::InterfaceControl.CleanUpInterface(INTERFACE_BAG);
+				CInterface::InterfaceControl.CleanUpInterface(INTERFACE_EQUIP);
 
             break;
         }
@@ -170,9 +170,9 @@ void CButton::Activate()
         case BUTTON_BAG_SWITCHBAG: break;
         case BUTTON_BAG_QUIT: 
 		{
-			if(CInterface::InterfaceControl.Interface[INTERFACE_BAG])
+			if(CInterface::InterfaceControl.Interface[INTERFACE_EQUIP])
             {
-                CInterface::InterfaceControl.CleanUpInterface(INTERFACE_BAG);
+                CInterface::InterfaceControl.CleanUpInterface(INTERFACE_EQUIP);
             }
 
 			break;
