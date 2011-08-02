@@ -53,6 +53,13 @@ enum ButtonType
     BUTTON_SWORD            = 10001,
 };
 
+enum ItemType
+{
+    ItemType_Weapon,
+    ItemType_Shield,
+
+};
+
 enum ButtonState
 {
     BUTTONSTATE_UNSELECTED = 0,

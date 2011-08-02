@@ -1,8 +1,6 @@
 #ifndef _CINTERFACEB_H_
     #define _CINTERFACEB_H_
 
-#include "CSurface.h"
-#include "CApp.h"
 #include "CInterface.h"
 #include "CItem.h"
 
@@ -28,6 +26,24 @@ enum BAGSLOT
     BAG_TWO,
     BAG_THREE,
     BAG_FOUR,
+};
+
+enum SlotType
+{
+    SLOT_DEFAULT,
+    SLOT_BAG,
+
+    SLOT_MAINHAND,
+    SLOT_SECONDHAND,
+
+    SLOT_HEAD,
+    SLOT_HANDS,
+    SLOT_CHEST,
+    SLOT_BOOTS,
+    SLOT_AMMO,
+    SLOT_BELT,
+    SLOT_NECK,
+    SLOT_RING,
 };
 
 class CInterfaceBag : public CInterface

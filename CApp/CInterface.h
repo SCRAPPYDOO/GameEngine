@@ -1,10 +1,8 @@
 #ifndef _CINTERFACE_H_
     #define _CINTERFACE_H_
 
-#include <SDL.h>
 #include <vector>
 
-#include "CSurface.h"
 #include "CButton.h"
 #include "CApp.h"
 
@@ -23,10 +21,13 @@
 #define INTERFACE_GAMEMENU_H 477
 #define INTERFACE_CHARACTERPANEL_W 224
 #define INTERFACE_CHARACTERPANEL_H 52
+
 #define INTERFACE_BAG_W 577
 #define INTERFACE_BAG_H 598
 #define INTERFACE_EQUIPMENT_W 577
 #define INTERFACE_EQUIPMENT_H 598
+#define INTERFACE_EQUIPMENT_SLOT_H_W 59
+
 #define INTERFACE_CHARACTERSHEET_W
 #define INTERFACE_CHARACTERSHEET_H
 #define INTERFACE_AREAMAP_W
@@ -42,7 +43,7 @@
 #define INTERFACE_BAG_MAXSLOT_X 8
 #define INTERFACE_BAG_MAXSLOT_Y 8
 
-#define MAX_INTERFACEOBJECTS 11
+#define MAX_INTERFACEOBJECTS 12
 
 enum InterfaceType
 {
@@ -57,6 +58,7 @@ enum InterfaceType
     INTERFACE_AREAMAP           = 8,
     INTERFACE_LOOT              = 9,
     INTERFACE_SPELLBOOK         = 10,
+    INTERFACE_MASAGEWINDOW      = 11,
 };
 
 enum InterfaceFlag
@@ -121,6 +123,8 @@ class CInterface
         virtual void AddButtonToSlot(CButton* pButton) { ButtonsList.push_back(pButton); }
         virtual bool AddButtonToSlot(CButton* pButton, int mX, int mY);
         virtual void DeleteButtonFromSlot(CButton* pButton);
+
+        virtual void AddMsg(char* msg) {}
 };
 
 #endif

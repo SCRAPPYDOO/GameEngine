@@ -6,8 +6,6 @@ CInterfaceBag::CInterfaceBag()
 {
     nPosX = 400;
     nPosY = 200;
-    nWidht = INTERFACE_BAG_W;
-    nHeight = INTERFACE_BAG_H;
 
     OldX = 0;
     OldY = 0;

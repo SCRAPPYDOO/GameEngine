@@ -2,6 +2,7 @@
     #define _CAPP_H_
 
 #include <SDL.h>
+#include <SDL_ttf.h>
 #include "math.h"
 
 #include "Define.h"

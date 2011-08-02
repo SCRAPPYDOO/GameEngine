@@ -9,8 +9,6 @@ class CSurface
 	public:
 		CSurface();
 
-		static SDL_Surface* Surf_Colision;
-
 	public:
 		static SDL_Surface* OnLoad(char* File);
 

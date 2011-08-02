@@ -4,8 +4,6 @@ CSurface::CSurface()
 {
 }
 
-SDL_Surface* CSurface::Surf_Colision = NULL;
-
 SDL_Surface* CSurface::OnLoad(char* File) 
 {
 	SDL_Surface* Surf_Temp = NULL;

@@ -33,5 +33,6 @@ void CApp::OnCleanup()
     CEntity::EntityList.clear();
 
     SDL_FreeSurface(Surf_Display);
+    TTF_Quit();
     SDL_Quit();
 }

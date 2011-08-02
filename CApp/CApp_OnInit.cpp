@@ -12,6 +12,11 @@ bool CApp::OnInit()
         return false;
     }
 
+    if( TTF_Init() == -1 )
+    {
+        return false;
+    }
+
  /*   if(CArea::AreaControl.OnLoad("./maps/1.area") == false) 
     	return false;*/
 

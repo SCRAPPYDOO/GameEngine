@@ -1,6 +1,7 @@
 #include "CInterface.h"
 #include "CUnitInfoPanel.h"
 #include "CInterfaceBag.h"
+#include "CInterfaceMsgWindow.h"
 
 CInterface CInterface::InterfaceControl;
 
@@ -71,6 +72,15 @@ bool CInterface::OnLoad()
             nHeight = INTERFACE_SPELLBOOK_H; 
             SurfName = "./interface/interface_loot_surf.png"; break;
         }
+        case INTERFACE_MASAGEWINDOW:
+        {
+            nPosX = 50;
+            nPosY = 400;
+            nWidht = 100;
+            nHeight = 100; 
+            SurfName = "./interface/interface_massagewindow_surf.png"; break;
+        }
+
 
         default: break;
     }
@@ -137,7 +147,7 @@ bool CInterface::LoadInterface()
         {
             InterfaceType eType;
 
-            for(int i=0; i<4; ++i)
+            for(int i=0; i<5; ++i)
             {
                 switch(i)
                 {
@@ -145,6 +155,7 @@ bool CInterface::LoadInterface()
                     case 1: eType = INTERFACE_BUTTON_PANEL; break;           
                     case 2: eType = INTERFACE_CHARACTERPANEL; break;
                     case 3: eType = INTERFACE_LOOT          ; break;
+                    case 4: eType = INTERFACE_MASAGEWINDOW; break;
                     default: break;
                 }
 
@@ -175,6 +186,7 @@ bool CInterface::LoadInterface(InterfaceType eType)
         case INTERFACE_BAG: pInterface = new CInterfaceBag(); break;
         case INTERFACE_LOOT: pInterface = new CInterface(eType); break;
         case INTERFACE_SPELLBOOK: pInterface = new CInterface(eType); break;
+        case INTERFACE_MASAGEWINDOW: pInterface = new CInterfaceMsgWindow(); break;
         default: return false;
     }
 
@@ -458,16 +470,16 @@ bool CInterface::AddButtonToSlot(CButton* pButton, int mX, int mY)
         case INTERFACE_LOOT:
         case INTERFACE_BAG:
         {
-            if(pButton->GetButtonClass() == BUTTONCLASS_SHORTCURT || pButton->GetButtonClass() == BUTTONCLASS_SPELL)
+            if(pButton->GetButtonClass() != BUTTONCLASS_ITEM)
                 return false;
 
+            //For bag slots
             for(int x = 0; x < INTERFACE_BAG_MAXSLOT_X; ++x) 
             {   
                 for(int y = 0; y < INTERFACE_BAG_MAXSLOT_Y; ++y) 
                 {   
-                    if( ( mX > nPosX + 10 + x*33 ) && ( mX < nPosX + 10 + x*33 + 30) && ( mY > nPosY + 100 + y*33 ) && ( mY < nPosY + 100 + y*33 + 30 ) )
-                    {
-                        
+                    if( ( mX > nPosX + 10 + x*100 + 29 ) && ( mX < nPosX + 10 + x*33 + 29 + INTERFACE_EQUIPMENT_SLOT_H_W) && ( mY > nPosY + 100 + y*33 ) && ( mY < nPosY + 100 + y*33 + INTERFACE_EQUIPMENT_SLOT_H_W) )
+                    {      
                         //ToDo: Need to check if on slot  is any aother button then return false
                         if(CButton *Button = GetButton(mX, mY))
                             if(Button)
@@ -476,6 +488,40 @@ bool CInterface::AddButtonToSlot(CButton* pButton, int mX, int mY)
                         pButton->SetPositionX(nPosX + 10 + x*33);
                         pButton->SetPositionY(nPosY + 100 + y*33);
                         ButtonsList.push_back(pButton);
+                        return true;
+                    }
+                }
+            }
+
+            //for equip slots
+            for(int x = 0; x < 2; ++x) 
+            {   
+                for(int y = 0; y < 6; ++y) 
+                {   
+                    if( ( mX > nPosX + 10 + x*33 ) && ( mX < nPosX + 10 + x*33 + 30) && ( mY > nPosY + 100 + y*33 ) && ( mY < nPosY + 100 + y*33 + 30 ) )
+                    {
+                        switch(y)
+                        {
+                            case 0: 
+                            {
+                                //if(x == 0 || ItemType_Ammo != pButton->GetItemType())
+                                //    return false;
+                                //break;
+                            }
+                            case 1:
+                            {
+                                //if(x == 0 && ItemType_Weapon == pButton->GetItemType() || x == 1 && ( ItemType_Weapon == pButton->GetItemType() || ItemType_Shield == pButton->GetItemType() /* || or offhand) */ ))
+                                //    break;
+  
+
+                            }
+                            case 2:
+                            case 3:
+                            case 4:
+                            case 5:
+                            default: return false;
+                        }
+                        //Add Button if no return false;
                         return true;
                     }
                 }

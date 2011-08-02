@@ -13,14 +13,14 @@ CButton::CButton(int nPosX, int nPosY, ButtonType Type)    //Used by button pane
 
     pButtonSurface = NULL;
     eButtonClass = BUTTONCLASS_BUTTON;
-	eType = Type;
+	eButtonType = Type;
     eButtonState = BUTTONSTATE_UNSELECTED;
     eAnimationState = BUTTON_ANIME_NORMAL;
 }
 
 bool CButton::OnLoad()
 {
-    if(OnLoad(eType))
+    if(OnLoad(eButtonType))
         return true;
 
     return false;
@@ -90,7 +90,7 @@ void CButton::Activate()
 {
     //eAnimationState = BUTTON_ANIME_ONCLICK;
 
-    switch(eType)
+    switch(eButtonType)
 	{
 		case BUTTON_PLAY:
 		{
@@ -131,6 +131,7 @@ void CButton::Activate()
         case BUTTON_CHARPANEL_CHARSHEET: break;
         case BUTTON_CHARPANEL_EQUPMENT:
         {
+            CInterface::InterfaceControl.Interface[INTERFACE_MASAGEWINDOW]->AddMsg("equpment");
 			if(!CInterface::InterfaceControl.Interface[INTERFACE_BAG])
 			{
 				CInterface::InterfaceControl.LoadInterface(INTERFACE_BAG);
@@ -154,6 +155,8 @@ void CButton::Activate()
         case BUTTON_CHARPANEL_QUESTDIARY: break;
         case BUTTON_CHARPANEL_GAMEMENU:
         {
+            CInterface::InterfaceControl.Interface[INTERFACE_MASAGEWINDOW]->AddMsg("gamemenu");
+
 			if(!CInterface::InterfaceControl.Interface[INTERFACE_GAMEMENU])
 			{
 				CInterface::InterfaceControl.LoadInterface(INTERFACE_GAMEMENU);

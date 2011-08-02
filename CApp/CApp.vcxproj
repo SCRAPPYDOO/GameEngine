@@ -60,7 +60,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>SDL.lib;SDLmain.lib;SDL_image.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>SDL.lib;SDLmain.lib;SDL_image.lib;SDL_ttf.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <SubSystem>Windows</SubSystem>
     </Link>
   </ItemDefinitionGroup>
@@ -80,6 +80,7 @@
     <ClCompile Include="CFrameControler.cpp" />
     <ClCompile Include="CInterface.cpp" />
     <ClCompile Include="CInterfaceBag.cpp" />
+    <ClCompile Include="CInterfaceMsgWindow.cpp" />
     <ClCompile Include="CItem.cpp" />
     <ClCompile Include="CMap.cpp" />
     <ClCompile Include="CMovementGenerator.cpp" />
@@ -100,8 +101,10 @@
     <ClInclude Include="CFrameControler.h" />
     <ClInclude Include="CInterface.h" />
     <ClInclude Include="CInterfaceBag.h" />
+    <ClInclude Include="CInterfaceMsgWindow.h" />
     <ClInclude Include="CItem.h" />
     <ClInclude Include="CMap.h" />
+    <ClInclude Include="CMasage.h" />
     <ClInclude Include="CMovementGenerator.h" />
     <ClInclude Include="CObject.h" />
     <ClInclude Include="CPlayer.h" />
