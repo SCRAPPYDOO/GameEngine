@@ -160,6 +160,7 @@ bool CInterfaceEquip::AddButtonToSlot(CButton* pButton, int mX, int mY)
             }
         }
     }
+    return false;
 }
 
 

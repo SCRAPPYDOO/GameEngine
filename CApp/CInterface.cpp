@@ -2,6 +2,7 @@
 #include "CInterfaceUnit.h"
 #include "CInterfaceEquip.h"
 #include "CInterfaceMsgWindow.h"
+#include "CInterfaceCharSheet.h"
 
 CInterface CInterface::InterfaceControl;
 
@@ -40,39 +41,56 @@ bool CInterface::OnLoad()
             nHeight = INTERFACE_MAINMENU_H;
             SurfName = "./menu/main_menu_surf.png"; break;
         }
-        case INTERFACE_PLAYERINFO: SurfName = "./interface/interface_unitinfo_surf.png"; break;
+        case INTERFACE_PLAYERINFO:
+        {
+            nWidht = INTERFACE_BUTTON_PANEL_W;
+            nHeight = INTERFACE_BUTTON_PANEL_H;
+            SurfName = "./interface/interface_unitinfo_surf.png"; break;
+        }
         case INTERFACE_BUTTON_PANEL: 
         {
+            nPosX = 0.5 * WWIDTH - 0.5 * INTERFACE_BUTTON_PANEL_W;
+            nPosY = WHEIGHT - INTERFACE_BUTTON_PANEL_H;
             nWidht = INTERFACE_BUTTON_PANEL_W;
             nHeight = INTERFACE_BUTTON_PANEL_H;
             SurfName = "./interface/interface_button_surf.png"; break;
         }
         case INTERFACE_GAMEMENU: 
         {
+            nPosX = 0.5 * WWIDTH - 0.5 * INTERFACE_GAMEMENU_W;
+            nPosY = 0.5 * WHEIGHT - 0.5 * INTERFACE_GAMEMENU_H;
             nWidht = INTERFACE_GAMEMENU_W;
             nHeight = INTERFACE_GAMEMENU_H;
             SurfName = "./menu/menu_gamebackground.png"; break;
         }
         case INTERFACE_CHARACTERPANEL: 
         {
+            nPosX = 0.5 * WWIDTH - 0.5 * INTERFACE_CHARACTERPANEL_W;
+            nPosY = WHEIGHT - INTERFACE_CHARACTERPANEL_H - INTERFACE_BUTTON_PANEL_H;
             nWidht = INTERFACE_CHARACTERPANEL_W;
             nHeight = INTERFACE_CHARACTERPANEL_H; 
             SurfName = "./interface/surf_character_panel.png"; break;
         }
         case INTERFACE_EQUIP:
         {
+            nPosX = 0.5 * WWIDTH - 0.5 * INTERFACE_EQUIPMENT_W;
+            nPosY = 0.5 * WHEIGHT - 0.5 * INTERFACE_EQUIPMENT_H;
             nWidht = INTERFACE_EQUIPMENT_W;
             nHeight = INTERFACE_EQUIPMENT_H;
             SurfName = "./interface/interface_equpment_surf.png"; break;
         }
         case INTERFACE_LOOT:
         {
+            nPosX = 1000;
+            nPosY = 0;
             nWidht = INTERFACE_LOOT_W_H;
             nHeight = INTERFACE_LOOT_W_H; 
             SurfName = "./interface/interface_loot_surf.png"; break;
         }
         case INTERFACE_SPELLBOOK:
         {
+            nPosX = 0.5 * WWIDTH - 0.5 * INTERFACE_SPELLBOOK_W;
+            nPosY = 0.5 * WHEIGHT - 0.5 * INTERFACE_SPELLBOOK_H;
             nWidht = INTERFACE_SPELLBOOK_W;
             nHeight = INTERFACE_SPELLBOOK_H; 
             SurfName = "./interface/interface_loot_surf.png"; break;
@@ -85,8 +103,14 @@ bool CInterface::OnLoad()
             nHeight = 100; 
             SurfName = "./interface/interface_massagewindow_surf.png"; break;
         }
-
-
+        case INTERFACE_CHARACTERSHEET:
+        {
+            nPosX = 0.5 * WWIDTH - 0.5 * INTERFACE_CHARACTERSHEET_W;
+            nPosY = 0.5 * WHEIGHT - 0.5 * INTERFACE_CHARACTERSHEET_H;
+            nWidht = INTERFACE_CHARACTERSHEET_W;
+            nHeight = INTERFACE_CHARACTERSHEET_H; 
+            SurfName = "./interface/interface_charactersheet_surf.png"; break;
+        }
         default: break;
     }
 
@@ -159,7 +183,6 @@ bool CInterface::LoadInterface()
                     case 0: eType = INTERFACE_PLAYERINFO; break;      
                     case 1: eType = INTERFACE_BUTTON_PANEL; break;           
                     case 2: eType = INTERFACE_CHARACTERPANEL; break;
-                    case 3: eType = INTERFACE_LOOT          ; break;
                     case 4: eType = INTERFACE_MASAGEWINDOW; break;
                     default: break;
                 }
@@ -192,6 +215,7 @@ bool CInterface::LoadInterface(InterfaceType eType)
         case INTERFACE_LOOT: pInterface = new CInterface(eType); break;
         case INTERFACE_SPELLBOOK: pInterface = new CInterface(eType); break;
         case INTERFACE_MASAGEWINDOW: pInterface = new CInterfaceMsgWindow(); break;
+        case INTERFACE_CHARACTERSHEET: pInterface = new CInterfaceCharSheet(); break; 
         default: return false;
     }
 
@@ -292,13 +316,12 @@ void CInterface::LoadButtons()
     {
         case INTERFACE_MAINMENU:
 		{
-			for(int i=0; i<3; ++i)
+			for(int i=0; i<2; ++i)
 			{
 				switch(i)
 				{
 					case 0: eType = BUTTON_PLAY; break;
 					case 1: eType = BUTTON_QUIT; break;
-                    case 2: eType = BUTTON_CREATECHARACTER; break;
                     default: break;
 				}
 					
@@ -348,7 +371,7 @@ void CInterface::LoadButtons()
                 switch(i)
                 {
                     case 0: eType = BUTTON_CHARPANEL_CHARSHEET; break;
-                    case 1: eType = BUTTON_CHARPANEL_EQUPMENT; break;
+                    case 1: eType = BUTTON_CHARPANEL_EQUIPMENT; break;
                     case 2: eType = BUTTON_CHARPANEL_SPELLBOOK; break;
                     case 3: eType = BUTTON_CHARPANEL_QUESTDIARY; break;
                     case 4: eType = BUTTON_CHARPANEL_GAMEMENU; break;
@@ -370,15 +393,11 @@ void CInterface::LoadButtons()
 
         case INTERFACE_EQUIP:
 		{
-			for(int i=0; i<5; ++i)
+			for(int i=0; i<1; ++i)
 			{
 				switch(i)
 				{
-					case 0: eType = BUTTON_BAG_QUIT; x = nPosX + nWidht - 30; y = nPosY; break;
-                    case 1: eType = BUTTON_BAG_SLOT_ONE; x = nPosX + i * 33; y = nPosY; break;
-                    case 2: eType = BUTTON_BAG_SLOT_TWO; x = nPosX + i*33; y = nPosY; break;
-                    case 3: eType = BUTTON_BAG_SLOT_THREE; x = nPosX + i*33; y = nPosY; break;
-                    case 4: eType = BUTTON_BAG_SLOT_FOUR; x = nPosX + i*33; y = nPosY; break;
+					case 0: eType = BUTTON_EQUIPMENT_QUIT; x = nPosX + nWidht - 30; y = nPosY; break;
 
                     default: break;
 				}
@@ -396,13 +415,12 @@ void CInterface::LoadButtons()
 
         case INTERFACE_LOOT:
         {
-            for(int i=0; i<3; ++i)
+            for(int i=0; i<2; ++i)
             {
                 switch(i)
                 {
                     case 0: eType = BUTTON_LOOT_QUIT; x = nPosX + INTERFACE_LOOT_W_H - 30; y = nPosY; break;
                     case 1: eType = BUTTON_LOOT_LOOTALL; x = nPosX; y = nPosY + INTERFACE_LOOT_W_H - 30; break;
-                    case 2: eType = BUTTON_SWORD;  x = nPosX; y = nPosY + INTERFACE_LOOT_W_H - 70; break;
                     default: break;
                 }
 
@@ -418,23 +436,22 @@ void CInterface::LoadButtons()
 
         case INTERFACE_SPELLBOOK:
         {
-  //          for(int i=0; i<3; ++i)
-  //          {
-  //              switch(i)
-  //              {
-  //                  case 0: eType = BUTTON_LOOT_QUIT; x = nPosX + INTERFACE_LOOT_W_H - 30; y = nPosY; break;
-  //                  case 1: eType = BUTTON_LOOT_LOOTALL; x = nPosX; y = nPosY + INTERFACE_LOOT_W_H - 30; break;
-  //                  case 2: eType = BUTTON_SWORD;  x = nPosX; y = nPosY + INTERFACE_LOOT_W_H - 70; break;
-  //                  default: break;
-  //              }
+            for(int i=0; i<1; ++i)
+            {
+                switch(i)
+                {
+                    case 0: eType = BUTTON_SPELLBOOK_QUIT; x = nPosX + INTERFACE_SPELLBOOK_W - 30; y = nPosY; break;
 
-  //              CButton *pButton = new CButton(x, y, eType);
+                    default: break;
+                }
 
-  //              if(pButton->OnLoad() == false)
-  //                  break;
+                CButton *pButton = new CButton(x, y, eType);
 
-  //              ButtonsList.push_back(pButton);
-  //          }
+                if(pButton->OnLoad() == false)
+                    break;
+
+                ButtonsList.push_back(pButton);
+            }
             break;
         }
 

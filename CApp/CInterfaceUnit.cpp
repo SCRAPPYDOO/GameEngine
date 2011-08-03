@@ -4,12 +4,9 @@ CInterfaceUnit::CInterfaceUnit()
 {
     nPosX = 5;
     nPosY = 5;
-    nWidht = 600;
-    nHeight = 30;
 
     eInterfaceType = INTERFACE_PLAYERINFO;
 
-    Surf_Interface = NULL;
     Surf_UnitStatus = NULL;
 }
 

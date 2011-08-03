@@ -1,5 +1,5 @@
-#ifndef _CINTERFACEB_H_
-    #define _CINTERFACEB_H_
+#ifndef _CINTERFACEEQUIP_H_
+    #define _CINTERFACEEQUIP_H_
 
 #include "CInterface.h"
 #include "CItem.h"

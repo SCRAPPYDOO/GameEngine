@@ -38,20 +38,17 @@ bool CButton::OnLoad(ButtonType eType)
 	{
 		case BUTTON_PLAY:
         case BUTTON_QUIT:
-        case BUTTON_CREATECHARACTER:
 
         case BUTTON_GAMEMENU_QUIT:
         case BUTTON_GAMEMENU_RETURN: w = 134; break;
 
         case BUTTON_CHARPANEL_CHARSHEET: break;
-        case BUTTON_CHARPANEL_EQUPMENT: break;
+        case BUTTON_CHARPANEL_EQUIPMENT: break;
         case BUTTON_CHARPANEL_SPELLBOOK: break;
         case BUTTON_CHARPANEL_QUESTDIARY: break;
         case BUTTON_CHARPANEL_GAMEMENU: break;
 
-        case BUTTON_BAG_SWITCHBAG: break;
-        case BUTTON_BAG_QUIT: break;
-        case BUTTON_BAG_SLOT_ONE: break;
+        case BUTTON_EQUIPMENT_QUIT: break;
 
         case BUTTON_SWORD:
         {
@@ -127,9 +124,21 @@ void CButton::Activate()
             break;
         }
         //Other Button in Game Menu
-		//Character Mini Panel
-        case BUTTON_CHARPANEL_CHARSHEET: break;
-        case BUTTON_CHARPANEL_EQUPMENT:
+
+		//Character Panel
+        case BUTTON_CHARPANEL_CHARSHEET: 
+        {
+			if(!CInterface::InterfaceControl.Interface[INTERFACE_CHARACTERSHEET])
+			{
+                CInterface::InterfaceControl.Interface[INTERFACE_MASAGEWINDOW]->AddMsg("Enter To Character Sheet");
+				CInterface::InterfaceControl.LoadInterface(INTERFACE_CHARACTERSHEET);
+			}
+			else
+				CInterface::InterfaceControl.CleanUpInterface(INTERFACE_CHARACTERSHEET);
+
+            break;
+        }
+        case BUTTON_CHARPANEL_EQUIPMENT:
         {
             CInterface::InterfaceControl.Interface[INTERFACE_MASAGEWINDOW]->AddMsg("equpment");
 			if(!CInterface::InterfaceControl.Interface[INTERFACE_EQUIP])
@@ -145,6 +154,7 @@ void CButton::Activate()
         {
 			if(!CInterface::InterfaceControl.Interface[INTERFACE_SPELLBOOK])
 			{
+                CInterface::InterfaceControl.Interface[INTERFACE_MASAGEWINDOW]->AddMsg("Enter to SpellBook");
 				CInterface::InterfaceControl.LoadInterface(INTERFACE_SPELLBOOK);
 			}
 			else
@@ -155,10 +165,9 @@ void CButton::Activate()
         case BUTTON_CHARPANEL_QUESTDIARY: break;
         case BUTTON_CHARPANEL_GAMEMENU:
         {
-            CInterface::InterfaceControl.Interface[INTERFACE_MASAGEWINDOW]->AddMsg("gamemenu");
-
 			if(!CInterface::InterfaceControl.Interface[INTERFACE_GAMEMENU])
 			{
+                CInterface::InterfaceControl.Interface[INTERFACE_MASAGEWINDOW]->AddMsg("gamemenu");
 				CInterface::InterfaceControl.LoadInterface(INTERFACE_GAMEMENU);
 			}
 			else
@@ -166,9 +175,9 @@ void CButton::Activate()
 
             break;
         }
-		//Bag Buttons
-        case BUTTON_BAG_SWITCHBAG: break;
-        case BUTTON_BAG_QUIT: 
+
+		//Equipment Buttons
+        case BUTTON_EQUIPMENT_QUIT: 
 		{
 			if(CInterface::InterfaceControl.Interface[INTERFACE_EQUIP])
             {
@@ -177,7 +186,7 @@ void CButton::Activate()
 
 			break;
 		}
-        case BUTTON_BAG_SLOT_ONE: /*CInterfaceB::BagControl.SwitchBag(BAG_ONE);*/ break;
+
         //Interface Loot buttons
         case BUTTON_LOOT_QUIT: 
         {
@@ -189,6 +198,7 @@ void CButton::Activate()
         }
         case BUTTON_LOOT_LOOTALL: break;
 
+        //SpellBook
         case BUTTON_SPELLBOOK_QUIT:         
         {
 			if(CInterface::InterfaceControl.Interface[INTERFACE_SPELLBOOK])
@@ -198,6 +208,8 @@ void CButton::Activate()
             break;
         }
 
+
+        //test
         case BUTTON_SWORD:
         {
 

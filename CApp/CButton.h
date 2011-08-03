@@ -22,42 +22,38 @@ enum ButtonClass
 
 enum ButtonType
 {
-	BUTTON_DEFAULT	= 99,
 	BUTTON_PLAY		= 0,   //enter to world
 	BUTTON_QUIT		= 1,   //quit from game
-
-    BUTTON_CREATECHARACTER = 3,  // create character
 
     //Game Menu Button
     BUTTON_GAMEMENU_QUIT = 10,
     BUTTON_GAMEMENU_RETURN = 11,
 
     BUTTON_CHARPANEL_CHARSHEET = 20,
-    BUTTON_CHARPANEL_EQUPMENT = 21,
+    BUTTON_CHARPANEL_EQUIPMENT = 21,
     BUTTON_CHARPANEL_SPELLBOOK = 22,
     BUTTON_CHARPANEL_QUESTDIARY = 23,
     BUTTON_CHARPANEL_GAMEMENU   = 24,
 
-    BUTTON_BAG_SWITCHBAG    = 50,
-    BUTTON_BAG_QUIT         = 51,
-    BUTTON_BAG_SLOT_ONE     = 52,  //up to 55  4 bag slots
-    BUTTON_BAG_SLOT_TWO     = 53, 
-    BUTTON_BAG_SLOT_THREE   = 54,
-    BUTTON_BAG_SLOT_FOUR    = 55,
+    BUTTON_EQUIPMENT_QUIT         = 51,
 
     BUTTON_LOOT_QUIT        = 56,
     BUTTON_LOOT_LOOTALL     = 57,
 
     BUTTON_SPELLBOOK_QUIT   = 101,
 
+    BUTTON_PANEL_LOCK       = 60,
+
+
     BUTTON_SWORD            = 10001,
+
+    BUTTON_DEFAULT	                = 99,
 };
 
 enum ItemType
 {
     ItemType_Weapon,
     ItemType_Shield,
-
 };
 
 enum ButtonState
