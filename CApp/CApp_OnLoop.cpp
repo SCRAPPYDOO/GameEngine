@@ -2,39 +2,23 @@
 
 void CApp::OnLoop() 
 {
-    switch(eGameState)
-    {
-        case MAIN_MENU:
-        {
+	OnKeyState();												//Handle Key States -> camera movement
 
-            break;
-        }
+	CMovementGenerator::MoveGenerator.OnLoop();
 
-        case TEST:
-        {
-	        OnKeyState();												//Handle Key States -> camera movement
+    for(int i = 0;i < MAX_INTERFACEOBJECTS ;i++) //Update Interface Variables
+	{
+        if(!CInterface::InterfaceControl.Interface[i]) continue;
 
-            // Entities
-            for(int i = 0;i < CEntity::EntityList.size();i++) 
-	        {
-                if(!CEntity::EntityList[i]) continue;
+        CInterface::InterfaceControl.Interface[i]->OnLoop();
+    }
 
-                CEntity::EntityList[i]->OnLoop();
-            }
+    // Entities
+    for(int i = 0;i < CEntity::EntityList.size();i++) 
+	{
+        if(!CEntity::EntityList[i]) continue;
 
-	        CMovementGenerator::MoveGenerator.OnLoop();
-
-            for(int i = 0;i < MAX_INTERFACEOBJECTS ;i++) //Update Interface Variables
-	        {
-                if(!CInterface::InterfaceControl.Interface[i]) continue;
-
-                CInterface::InterfaceControl.Interface[i]->OnLoop();
-            }
-
-            break;
-        }
-
-        default: break;
+        CEntity::EntityList[i]->OnLoop();
     }
 }
 

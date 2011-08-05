@@ -122,6 +122,8 @@ class CInterface
         virtual void DeleteButtonFromSlot(CButton* pButton);
 
         virtual void AddMsg(char* msg) {}
+
+        SDL_Surface* RenderText(char* txt);
 };
 
 #endif

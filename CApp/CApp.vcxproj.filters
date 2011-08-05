@@ -79,13 +79,13 @@
     <ClCompile Include="CObject.cpp">
       <Filter>World</Filter>
     </ClCompile>
-    <ClCompile Include="CPlayer.cpp">
-      <Filter>World</Filter>
-    </ClCompile>
     <ClCompile Include="CEntity.cpp">
       <Filter>World</Filter>
     </ClCompile>
     <ClCompile Include="CItem.cpp">
+      <Filter>World</Filter>
+    </ClCompile>
+    <ClCompile Include="CCharacter.cpp">
       <Filter>World</Filter>
     </ClCompile>
   </ItemGroup>
@@ -147,13 +147,13 @@
     <ClInclude Include="CObject.h">
       <Filter>World</Filter>
     </ClInclude>
-    <ClInclude Include="CPlayer.h">
-      <Filter>World</Filter>
-    </ClInclude>
     <ClInclude Include="CEntity.h">
       <Filter>World</Filter>
     </ClInclude>
     <ClInclude Include="CItem.h">
+      <Filter>World</Filter>
+    </ClInclude>
+    <ClInclude Include="CCharacter.h">
       <Filter>World</Filter>
     </ClInclude>
   </ItemGroup>

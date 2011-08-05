@@ -13,10 +13,7 @@ class CInterfaceMsgWindow : public CInterface
         ~CInterfaceMsgWindow() {}
 
     private:
-        SDL_Color TextColor;
-        TTF_Font *Font;
-
-        char *Masage[INTERFACE_MSGWINDOW_MAX_TEXT_LINES];
+        SDL_Surface *Masage[INTERFACE_MSGWINDOW_MAX_TEXT_LINES];
 
     public:
         bool OnLoad();

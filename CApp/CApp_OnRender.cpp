@@ -24,12 +24,12 @@ void CApp::OnRender()
                 CObject::ObjectList[i]->OnRender(Surf_Display);
             }
 
-            for(int i = 0;i < CEntity::EntityList.size();i++) 
+ /*           for(int i = 0;i < CEntity::EntityList.size();i++) 
 	        {
                 if(!CEntity::EntityList[i]) continue;
 
                 CEntity::EntityList[i]->OnRender(Surf_Display);
-            } 
+            } */
         }
     }
 

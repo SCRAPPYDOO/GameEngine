@@ -2,6 +2,7 @@
 
 CSurface::CSurface() 
 {
+
 }
 
 SDL_Surface* CSurface::OnLoad(char* File) 

@@ -1,6 +1,5 @@
 #include "CObject.h"
 
-///*
 std::vector<CObject*> CObject::ObjectList;
 
 CObject::CObject() 
@@ -38,4 +37,3 @@ void CObject::OnCleanup()
 
     Surf_Object = NULL;
 }
-//*/

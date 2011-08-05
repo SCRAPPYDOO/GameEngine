@@ -527,3 +527,28 @@ bool CInterface::AddButtonToSlot(CButton* pButton, int mX, int mY)
         default: return false;
     }
 }
+
+SDL_Surface* CInterface::RenderText(char* txt)
+{
+    SDL_Surface* pSurface = NULL;
+
+    SDL_Color TextColor;
+
+    TextColor.b = 255;
+    TextColor.g = 50;
+    TextColor.r = 50;
+
+    TTF_Font *Font;
+
+    Font = TTF_OpenFont( "./font/lazy.ttf", 15 );
+
+    if(!Font) return NULL;
+
+    pSurface = TTF_RenderText_Solid(Font, txt, TextColor);
+
+    if(!pSurface) return NULL;
+
+    TTF_CloseFont(Font);
+
+    return pSurface;
+}

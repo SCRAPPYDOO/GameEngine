@@ -2,7 +2,6 @@
     #define _CAPP_H_
 
 #include <SDL.h>
-#include <SDL_ttf.h>
 #include "math.h"
 
 #include "Define.h"
@@ -10,16 +9,13 @@
 #include "CArea.h"
 #include "CCamera.h"
 #include "CEvent.h"
-#include "CEntity.h"
 #include "CSurface.h"
 #include "CMovementGenerator.h"
-#include "CPlayer.h"
 #include "CObject.h"
 #include "CInterface.h"
 #include "CButton.h"
+#include "CCharacter.h"
 
-
-class CEntity;
 class CInterface;
 class CButton;
 
@@ -70,7 +66,6 @@ class CApp : public CEvent
         void OnCleanup();
 
         CEntity* CApp::GetEntity(int x, int y);
-
 };
 
 #endif

@@ -6,7 +6,6 @@
 #include "CSurface.h"
 #include "CCamera.h"
 
-///*
 class CObject
 {
     public:
@@ -40,5 +39,5 @@ class CObject
 
         virtual void OnCleanup();
 };
-//*/
+
 #endif
