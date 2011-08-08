@@ -1,5 +1,6 @@
 #include "CButton.h"
-#include "CInterfaceEquip.h"
+#include "CInterfaceMenager.h"
+#include "CApp.h"
 
 CButton::CButton(int nPosX, int nPosY, ButtonType Type)    //Used by button panel on create
 {
@@ -93,7 +94,7 @@ void CButton::Activate()
 		{
             CApp::eGameState = TEST;
 
-            CInterface::InterfaceControl.LoadInterface();
+            CInterfaceMenager::InterfaceMenager.LoadInterface();
 
             if(CArea::AreaControl.OnLoad("./maps/1.area") == false) 
                 break;
@@ -111,14 +112,14 @@ void CButton::Activate()
         case BUTTON_GAMEMENU_QUIT: 
         {
             CApp::eGameState = MAIN_MENU;
-            CInterface::InterfaceControl.LoadInterface();
+            CInterfaceMenager::InterfaceMenager.LoadInterface();
             break;  
         }
         case BUTTON_GAMEMENU_RETURN: // ingame game menu button return
         {
-			if(CInterface::InterfaceControl.Interface[INTERFACE_GAMEMENU])
+			if(CInterfaceMenager::InterfaceMenager.InterfaceList[INTERFACE_GAMEMENU])
             {
-                CInterface::InterfaceControl.CleanUpInterface(INTERFACE_GAMEMENU);
+                CInterfaceMenager::InterfaceMenager.CleanUpInterface(INTERFACE_GAMEMENU);
             }
 
             break;
@@ -128,50 +129,62 @@ void CButton::Activate()
 		//Character Panel
         case BUTTON_CHARPANEL_CHARSHEET: 
         {
-			if(!CInterface::InterfaceControl.Interface[INTERFACE_CHARACTERSHEET])
+			if(!CInterfaceMenager::InterfaceMenager.InterfaceList[INTERFACE_CHARACTERSHEET])
 			{
-                CInterface::InterfaceControl.Interface[INTERFACE_MASAGEWINDOW]->AddMsg("Enter To Character Sheet");
-				CInterface::InterfaceControl.LoadInterface(INTERFACE_CHARACTERSHEET);
+                CInterfaceMenager::InterfaceMenager.InterfaceList[INTERFACE_MASAGEWINDOW]->AddMsg("Enter To Character Sheet");
+				CInterfaceMenager::InterfaceMenager.LoadInterface(INTERFACE_CHARACTERSHEET);
 			}
 			else
-				CInterface::InterfaceControl.CleanUpInterface(INTERFACE_CHARACTERSHEET);
+				CInterfaceMenager::InterfaceMenager.CleanUpInterface(INTERFACE_CHARACTERSHEET);
 
             break;
         }
         case BUTTON_CHARPANEL_EQUIPMENT:
         {
-            CInterface::InterfaceControl.Interface[INTERFACE_MASAGEWINDOW]->AddMsg("equpment");
-			if(!CInterface::InterfaceControl.Interface[INTERFACE_EQUIP])
+            CInterfaceMenager::InterfaceMenager.InterfaceList[INTERFACE_MASAGEWINDOW]->AddMsg("equpment");
+			if(!CInterfaceMenager::InterfaceMenager.InterfaceList[INTERFACE_EQUIP])
 			{
-				CInterface::InterfaceControl.LoadInterface(INTERFACE_EQUIP);
+				CInterfaceMenager::InterfaceMenager.LoadInterface(INTERFACE_EQUIP);
 			}
 			else
-				CInterface::InterfaceControl.CleanUpInterface(INTERFACE_EQUIP);
+				CInterfaceMenager::InterfaceMenager.CleanUpInterface(INTERFACE_EQUIP);
 
             break;
         }
         case BUTTON_CHARPANEL_SPELLBOOK:
         {
-			if(!CInterface::InterfaceControl.Interface[INTERFACE_SPELLBOOK])
+            CUnit *Unit = new CUnit();
+            if(Unit)
+            {
+                CInterfaceMenager::InterfaceMenager.InterfaceList[INTERFACE_MASAGEWINDOW]->AddMsg("Unit  Stworozny");
+
+                Unit->OnLoad();
+            }
+
+            CUnitMenager::UnitList.push_back(Unit);
+
+			if(!CInterfaceMenager::InterfaceMenager.InterfaceList[INTERFACE_SPELLBOOK])
 			{
-                CInterface::InterfaceControl.Interface[INTERFACE_MASAGEWINDOW]->AddMsg("Enter to SpellBook");
-				CInterface::InterfaceControl.LoadInterface(INTERFACE_SPELLBOOK);
+                CInterfaceMenager::InterfaceMenager.InterfaceList[INTERFACE_MASAGEWINDOW]->AddMsg("Enter to SpellBook !!");
+				CInterfaceMenager::InterfaceMenager.LoadInterface(INTERFACE_SPELLBOOK);
 			}
 			else
-				CInterface::InterfaceControl.CleanUpInterface(INTERFACE_SPELLBOOK);
+				CInterfaceMenager::InterfaceMenager.CleanUpInterface(INTERFACE_SPELLBOOK);
+
+
 
             break;
         }
         case BUTTON_CHARPANEL_QUESTDIARY: break;
         case BUTTON_CHARPANEL_GAMEMENU:
         {
-			if(!CInterface::InterfaceControl.Interface[INTERFACE_GAMEMENU])
+			if(!CInterfaceMenager::InterfaceMenager.InterfaceList[INTERFACE_GAMEMENU])
 			{
-                CInterface::InterfaceControl.Interface[INTERFACE_MASAGEWINDOW]->AddMsg("gamemenu");
-				CInterface::InterfaceControl.LoadInterface(INTERFACE_GAMEMENU);
+                CInterfaceMenager::InterfaceMenager.InterfaceList[INTERFACE_MASAGEWINDOW]->AddMsg("gamemenu");
+				CInterfaceMenager::InterfaceMenager.LoadInterface(INTERFACE_GAMEMENU);
 			}
 			else
-				CInterface::InterfaceControl.CleanUpInterface(INTERFACE_GAMEMENU);
+				CInterfaceMenager::InterfaceMenager.CleanUpInterface(INTERFACE_GAMEMENU);
 
             break;
         }
@@ -179,9 +192,9 @@ void CButton::Activate()
 		//Equipment Buttons
         case BUTTON_EQUIPMENT_QUIT: 
 		{
-			if(CInterface::InterfaceControl.Interface[INTERFACE_EQUIP])
+			if(CInterfaceMenager::InterfaceMenager.InterfaceList[INTERFACE_EQUIP])
             {
-                CInterface::InterfaceControl.CleanUpInterface(INTERFACE_EQUIP);
+                CInterfaceMenager::InterfaceMenager.CleanUpInterface(INTERFACE_EQUIP);
             }
 
 			break;
@@ -190,9 +203,9 @@ void CButton::Activate()
         //Interface Loot buttons
         case BUTTON_LOOT_QUIT: 
         {
-			if(CInterface::InterfaceControl.Interface[INTERFACE_LOOT])
+			if(CInterfaceMenager::InterfaceMenager.InterfaceList[INTERFACE_LOOT])
             {
-                CInterface::InterfaceControl.CleanUpInterface(INTERFACE_LOOT);
+                CInterfaceMenager::InterfaceMenager.CleanUpInterface(INTERFACE_LOOT);
             }
             break;
         }
@@ -201,9 +214,9 @@ void CButton::Activate()
         //SpellBook
         case BUTTON_SPELLBOOK_QUIT:         
         {
-			if(CInterface::InterfaceControl.Interface[INTERFACE_SPELLBOOK])
+			if(CInterfaceMenager::InterfaceMenager.InterfaceList[INTERFACE_SPELLBOOK])
             {
-                CInterface::InterfaceControl.CleanUpInterface(INTERFACE_SPELLBOOK);
+                CInterfaceMenager::InterfaceMenager.CleanUpInterface(INTERFACE_SPELLBOOK);
             }
             break;
         }
@@ -236,7 +249,7 @@ void CButton::OnDrop(int mX, int mY)
     //if(eButtonClass != BUTTONCLASS_SHORTCURT)
     {
         //Check if we are on interface and try to add to him
-        if(CInterface* pInterface = CInterface::InterfaceControl.GetInterface(mX, mY))
+        if(CInterface* pInterface = CInterfaceMenager::InterfaceMenager.GetInterface(mX, mY))
         {
             //if(CInterface* bInterface = CInterface::InterfaceControl.GetInterface(nPreviousX, nPreviousY))
             //{
@@ -259,7 +272,7 @@ void CButton::OnDrop(int mX, int mY)
         }
 
         //If we can go to new interface we return
-        if(CInterface *pOldInterfaceSlot = CInterface::InterfaceControl.GetInterface(nPreviousX, nPreviousY))
+        if(CInterface *pOldInterfaceSlot = CInterfaceMenager::InterfaceMenager.GetInterface(nPreviousX, nPreviousY))
         {
             if(pOldInterfaceSlot)
             {

@@ -1,10 +1,7 @@
 #ifndef _CINTERFACE_H_
     #define _CINTERFACE_H_
 
-#include <vector>
-
 #include "CButton.h"
-#include "CApp.h"
 
 #define MAX_MENU_BUTTONS 2
 #define MAX_BUTTONPANEL_BUTTONS 10
@@ -73,9 +70,6 @@ class CInterface
         CInterface(InterfaceType eType);
         virtual ~CInterface() {}
 
-        static CInterface			 InterfaceControl;
-        CInterface*                  Interface[MAX_INTERFACEOBJECTS];
-
     protected:
         std::vector<CButton*>     ButtonsList;
         SDL_Surface* Surf_Interface;
@@ -101,7 +95,7 @@ class CInterface
         virtual void OnCleanup();
 
     public:
-        CInterface* GetInterface(int nPosX, int nPosY);
+        
         InterfaceType GetInterfaceType() { return eInterfaceType; }
 
         int GetPosX() const { return nPosX;}
@@ -110,10 +104,7 @@ class CInterface
         int GetHeight() const { return nHeight;}
 
         bool HasFlag(InterfaceFlag Flag) { if(nInterfaceFlag && Flag) return true; return false; }
-        void CleanUpInterface();
-        void CleanUpInterface(InterfaceType eType);
-		bool LoadInterface();
-        bool LoadInterface(InterfaceType eType);
+
         bool IsInterfaceOnPos(int nX, int nY);
 
         virtual CButton* GetButton(int nPosX, int nPosY) const;

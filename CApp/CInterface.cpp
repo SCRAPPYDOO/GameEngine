@@ -4,14 +4,9 @@
 #include "CInterfaceMsgWindow.h"
 #include "CInterfaceCharSheet.h"
 
-CInterface CInterface::InterfaceControl;
-
 CInterface::CInterface() 
 {
-	for(int i=0; i<MAX_INTERFACEOBJECTS; ++i)
-	{
-		Interface[i] = NULL;
-	}
+
 }
 
 CInterface::CInterface(InterfaceType eType)
@@ -156,110 +151,6 @@ void CInterface::OnCleanup()
     }
 
     ButtonsList.clear();
-}
-
-bool CInterface::LoadInterface()
-{
-    CleanUpInterface();
-
-    switch(CApp::eGameState)
-    {
-        case MAIN_MENU:
-        {
-            if(LoadInterface(INTERFACE_MAINMENU) == false)
-                return false;
-
-            break;
-        }
-
-        case TEST:
-        {
-            InterfaceType eType;
-
-            for(int i=0; i<5; ++i)
-            {
-                switch(i)
-                {
-                    case 0: eType = INTERFACE_PLAYERINFO; break;      
-                    case 1: eType = INTERFACE_BUTTON_PANEL; break;           
-                    case 2: eType = INTERFACE_CHARACTERPANEL; break;
-                    case 4: eType = INTERFACE_MASAGEWINDOW; break;
-                    default: break;
-                }
-
-                if(LoadInterface(eType) == false)
-                    return false;
-            }
-
-            break;
-        }
-
-        default: return false;
-    }
-
-	return true;
-}
-
-bool CInterface::LoadInterface(InterfaceType eType)
-{
-    CInterface* pInterface = NULL;
-
-    switch(eType)
-    {
-        case INTERFACE_MAINMENU: pInterface = new CInterface(eType); break;
-        case INTERFACE_PLAYERINFO: pInterface = new CInterfaceUnit(); break;
-        case INTERFACE_BUTTON_PANEL: pInterface = new CInterface(eType); break;
-        case INTERFACE_GAMEMENU: pInterface = new CInterface(eType); break;
-        case INTERFACE_CHARACTERPANEL: pInterface = new CInterface(eType); break;
-        case INTERFACE_EQUIP: pInterface = new CInterfaceEquip(); break;
-        case INTERFACE_LOOT: pInterface = new CInterface(eType); break;
-        case INTERFACE_SPELLBOOK: pInterface = new CInterface(eType); break;
-        case INTERFACE_MASAGEWINDOW: pInterface = new CInterfaceMsgWindow(); break;
-        case INTERFACE_CHARACTERSHEET: pInterface = new CInterfaceCharSheet(); break; 
-        default: return false;
-    }
-
-    if(pInterface && pInterface->OnLoad() == false)
-        return false;
-
-	Interface[eType] = pInterface;
-
-    return true;
-}
-
-CInterface* CInterface::GetInterface(int nPosX, int nPosY)
-{
-	for(int i = 0; i < MAX_INTERFACEOBJECTS; i++) 
-    {   
-        if(!Interface[i]) continue;
-                
-        if( ( nPosX > Interface[i]->GetPosX() ) && ( nPosX < Interface[i]->GetPosX() + Interface[i]->GetWidht()) && ( nPosY > Interface[i]->GetPosY() ) && ( nPosY < Interface[i]->GetPosY() + Interface[i]->GetHeight() ) )
-        {
-            return Interface[i];
-        }
-    }
-
-    return NULL;
-}
-
-void CInterface::CleanUpInterface()
-{
-	for(int i = 0;i < MAX_INTERFACEOBJECTS;i++) 
-    {
-        if(!Interface[i]) continue;
-
-        Interface[i]->OnCleanup();
-		Interface[i] = NULL;
-    }
-}
-
-void CInterface::CleanUpInterface(InterfaceType eType)
-{	
-	if(Interface[eType] == NULL)
-		return;
-
-	Interface[eType]->OnCleanup();
-	Interface[eType] = NULL; 
 }
 
 bool CInterface::IsInterfaceOnPos(int nX, int nY)

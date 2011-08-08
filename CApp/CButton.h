@@ -2,9 +2,7 @@
     #define _CBUTTON_H_
 
 #include <vector>
-
 #include "CSurface.h"
-#include "CInterface.h"
 
 #define GAME_BUTTON_SIZE_W 30
 #define GAME_BUTTON_SIZE_H 30

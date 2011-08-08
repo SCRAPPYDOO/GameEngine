@@ -3,6 +3,7 @@
 
 #include <SDL.h>
 #include "math.h"
+#include <vector>
 
 #include "Define.h"
 
@@ -11,13 +12,17 @@
 #include "CEvent.h"
 #include "CSurface.h"
 #include "CMovementGenerator.h"
-#include "CObject.h"
-#include "CInterface.h"
+
+
+#include "CInterfaceMenager.h"
 #include "CButton.h"
-#include "CCharacter.h"
+
+#include "CObjectMenager.h"
+#include "CUnitMenager.h"
 
 class CInterface;
 class CButton;
+class CUnit;
 
 class CApp : public CEvent 
 {
@@ -28,9 +33,6 @@ class CApp : public CEvent
 
         static CInterface* pSelectedInterface;
         static CButton* pSelectedButton;
-
-        static CEntity* pSelectedUnit;
-        CEntity* pSelectedTarget;
 
     private:
         bool            Running;
@@ -64,8 +66,6 @@ class CApp : public CEvent
         void OnRender();
 
         void OnCleanup();
-
-        CEntity* CApp::GetEntity(int x, int y);
 };
 
 #endif

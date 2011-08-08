@@ -79,14 +79,20 @@
     <ClCompile Include="CObject.cpp">
       <Filter>World</Filter>
     </ClCompile>
-    <ClCompile Include="CEntity.cpp">
-      <Filter>World</Filter>
-    </ClCompile>
     <ClCompile Include="CItem.cpp">
       <Filter>World</Filter>
     </ClCompile>
-    <ClCompile Include="CCharacter.cpp">
+    <ClCompile Include="CObjectMenager.cpp">
       <Filter>World</Filter>
+    </ClCompile>
+    <ClCompile Include="CUnit.cpp">
+      <Filter>World</Filter>
+    </ClCompile>
+    <ClCompile Include="CUnitMenager.cpp">
+      <Filter>World</Filter>
+    </ClCompile>
+    <ClCompile Include="CInterfaceMenager.cpp">
+      <Filter>Interface</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -147,14 +153,20 @@
     <ClInclude Include="CObject.h">
       <Filter>World</Filter>
     </ClInclude>
-    <ClInclude Include="CEntity.h">
-      <Filter>World</Filter>
-    </ClInclude>
     <ClInclude Include="CItem.h">
       <Filter>World</Filter>
     </ClInclude>
-    <ClInclude Include="CCharacter.h">
+    <ClInclude Include="CObjectMenager.h">
       <Filter>World</Filter>
+    </ClInclude>
+    <ClInclude Include="CUnit.h">
+      <Filter>World</Filter>
+    </ClInclude>
+    <ClInclude Include="CUnitMenager.h">
+      <Filter>World</Filter>
+    </ClInclude>
+    <ClInclude Include="CInterfaceMenager.h">
+      <Filter>Interface</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

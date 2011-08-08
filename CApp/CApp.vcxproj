@@ -75,21 +75,23 @@
     <ClCompile Include="CArea.cpp" />
     <ClCompile Include="CButton.cpp" />
     <ClCompile Include="CCamera.cpp" />
-    <ClCompile Include="CCharacter.cpp" />
-    <ClCompile Include="CEntity.cpp" />
     <ClCompile Include="CEvent.cpp" />
     <ClCompile Include="CFrameControler.cpp" />
     <ClCompile Include="CInterface.cpp" />
     <ClCompile Include="CInterfaceCharSheet.cpp" />
     <ClCompile Include="CInterfaceEquip.cpp" />
+    <ClCompile Include="CInterfaceMenager.cpp" />
     <ClCompile Include="CInterfaceMsgWindow.cpp" />
     <ClCompile Include="CItem.cpp" />
     <ClCompile Include="CMap.cpp" />
     <ClCompile Include="CMovementGenerator.cpp" />
     <ClCompile Include="CObject.cpp" />
+    <ClCompile Include="CObjectMenager.cpp" />
     <ClCompile Include="CSurface.cpp" />
     <ClCompile Include="CTile.cpp" />
     <ClCompile Include="CInterfaceUnit.cpp" />
+    <ClCompile Include="CUnit.cpp" />
+    <ClCompile Include="CUnitMenager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CAnimation.h" />
@@ -97,22 +99,24 @@
     <ClInclude Include="CArea.h" />
     <ClInclude Include="CButton.h" />
     <ClInclude Include="CCamera.h" />
-    <ClInclude Include="CCharacter.h" />
-    <ClInclude Include="CEntity.h" />
     <ClInclude Include="CEvent.h" />
     <ClInclude Include="CFrameControler.h" />
     <ClInclude Include="CInterface.h" />
     <ClInclude Include="CInterfaceCharSheet.h" />
     <ClInclude Include="CInterfaceEquip.h" />
+    <ClInclude Include="CInterfaceMenager.h" />
     <ClInclude Include="CInterfaceMsgWindow.h" />
     <ClInclude Include="CItem.h" />
     <ClInclude Include="CMap.h" />
     <ClInclude Include="CMasage.h" />
     <ClInclude Include="CMovementGenerator.h" />
     <ClInclude Include="CObject.h" />
+    <ClInclude Include="CObjectMenager.h" />
     <ClInclude Include="CSurface.h" />
     <ClInclude Include="CTile.h" />
     <ClInclude Include="CInterfaceUnit.h" />
+    <ClInclude Include="CUnit.h" />
+    <ClInclude Include="CUnitMenager.h" />
     <ClInclude Include="Define.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

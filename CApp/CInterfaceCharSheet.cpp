@@ -17,7 +17,7 @@ int TxtPosition[INTERFACE_CHARSHEET_MAX][2] =
 CInterfaceCharSheet::CInterfaceCharSheet()
 {
     eInterfaceType = INTERFACE_CHARACTERSHEET;
-    pChar = NULL;
+    //pChar = NULL;
 
     for(int i = 0;i < INTERFACE_CHARSHEET_MAX;i++) 
     {
@@ -70,10 +70,6 @@ void CInterfaceCharSheet::OnCleanup()
 
 void CInterfaceCharSheet::UpdateInterface()
 {
-    if(pChar = CApp::pSelectedUnit)
-        if(!pChar)
-            return;
-
     char* pText = "error when geting a text";
 
     //Update Statistics and things from char convert to char and render them
@@ -81,7 +77,7 @@ void CInterfaceCharSheet::UpdateInterface()
     {
         switch(i)
         {
-            case 0: pText = pChar->GetName();
+            /*case 0: pText = pChar->GetName();*/
 
             default: return;
         }

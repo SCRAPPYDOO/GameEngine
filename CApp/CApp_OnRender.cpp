@@ -10,34 +10,29 @@ void CApp::OnRender()
 
 	SDL_FillRect(Surf_Display, &Rect, 0);
 
-    switch(eGameState)
+	CArea::AreaControl.OnRender(Surf_Display, -CCamera::CameraControl.GetX(), -CCamera::CameraControl.GetY());
+
+    // Objects
+    for(int i = 0;i < CObjectMenager::ObjectList.size();i++) 
     {
-        case TEST:
-        {
-	        CArea::AreaControl.OnRender(Surf_Display, -CCamera::CameraControl.GetX(), -CCamera::CameraControl.GetY());
+        if(!CObjectMenager::ObjectList[i]) continue;
 
-            // Objects
-            for(int i = 0;i < CObject::ObjectList.size();i++) 
-            {
-                if(!CObject::ObjectList[i]) continue;
+        CObjectMenager::ObjectList[i]->OnRender(Surf_Display);
+    }
 
-                CObject::ObjectList[i]->OnRender(Surf_Display);
-            }
+    // Units
+    for(int i = 0;i < CUnitMenager::UnitList.size();i++) 
+    {
+        if(!CUnitMenager::UnitList[i]) continue;
 
- /*           for(int i = 0;i < CEntity::EntityList.size();i++) 
-	        {
-                if(!CEntity::EntityList[i]) continue;
-
-                CEntity::EntityList[i]->OnRender(Surf_Display);
-            } */
-        }
+        CUnitMenager::UnitList[i]->OnRender(Surf_Display);
     }
 
 	for(int i = 0; i < MAX_INTERFACEOBJECTS; i++) 
     {   
-        if(!CInterface::InterfaceControl.Interface[i]) continue;
+        if(!CInterfaceMenager::InterfaceMenager.InterfaceList[i]) continue;
                 
-        CInterface::InterfaceControl.Interface[i]->OnRender(Surf_Display);
+        CInterfaceMenager::InterfaceMenager.InterfaceList[i]->OnRender(Surf_Display);
     }
 
     //OurHandledButton

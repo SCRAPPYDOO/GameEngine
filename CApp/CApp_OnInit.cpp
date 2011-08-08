@@ -17,7 +17,7 @@ bool CApp::OnInit()
         return false;
     }
 
-    if(CInterface::InterfaceControl.LoadInterface() == false)
+    if(CInterfaceMenager::InterfaceMenager.LoadInterface() == false)
         return false;
 
     return true;

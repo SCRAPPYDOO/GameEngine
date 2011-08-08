@@ -6,19 +6,19 @@ void CApp::OnLoop()
 
 	CMovementGenerator::MoveGenerator.OnLoop();
 
-    for(int i = 0;i < MAX_INTERFACEOBJECTS ;i++) //Update Interface Variables
-	{
-        if(!CInterface::InterfaceControl.Interface[i]) continue;
+    // Units
+    for(int i = 0;i < CUnitMenager::UnitList.size();i++) 
+    {
+        if(!CUnitMenager::UnitList[i]) continue;
 
-        CInterface::InterfaceControl.Interface[i]->OnLoop();
+        CUnitMenager::UnitList[i]->OnLoop();
     }
 
-    // Entities
-    for(int i = 0;i < CEntity::EntityList.size();i++) 
+    for(int i = 0;i < MAX_INTERFACEOBJECTS ;i++) //Update Interface Variables
 	{
-        if(!CEntity::EntityList[i]) continue;
+        if(!CInterfaceMenager::InterfaceMenager.InterfaceList[i]) continue;
 
-        CEntity::EntityList[i]->OnLoop();
+        CInterfaceMenager::InterfaceMenager.InterfaceList[i]->OnLoop();
     }
 }
 

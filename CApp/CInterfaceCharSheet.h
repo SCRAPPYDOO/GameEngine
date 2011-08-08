@@ -13,7 +13,7 @@ class CInterfaceCharSheet : public CInterface
         ~CInterfaceCharSheet() {}
 
     private:
-        CEntity* pChar; //character with we show on character sheet
+        //CEntity* pChar; //character with we show on character sheet
         SDL_Surface* TextSurface[INTERFACE_CHARSHEET_MAX];
 
     public:

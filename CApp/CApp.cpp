@@ -5,7 +5,6 @@ CApp CApp::GameControl;
 
 CInterface*     CApp::pSelectedInterface;
 CButton*        CApp::pSelectedButton;
-CEntity*        CApp::pSelectedUnit;
 
 CApp::CApp() 
 {
@@ -15,9 +14,6 @@ CApp::CApp()
 
     pSelectedInterface = NULL;
     pSelectedButton = NULL;
-
-    pSelectedUnit = NULL;
-    pSelectedTarget = NULL;
 
     Running = true;					//Main Loop
 }

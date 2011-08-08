@@ -6,11 +6,23 @@
 #include "CSurface.h"
 #include "CCamera.h"
 
+enum ObjectFlag
+{
+    OBJECT_FLAG_NULL            = 0x0001,
+    OBJECT_FLAG_OPENED          = 0x0002,
+    OBJECT_FLAG_CLOSED          = 0x0004,
+
+};
+
+enum ObjectType
+{
+    OBJECT_TYPE_NULL            = 0,
+    OBJECT_TYPE_DOOR            = 1,
+    OBJECT_TYPE_CHEST           = 2,
+};
+
 class CObject
 {
-    public:
-        static std::vector<CObject*>    ObjectList;
-
     protected:
         SDL_Surface*    Surf_Object;
 

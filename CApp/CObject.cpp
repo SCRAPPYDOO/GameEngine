@@ -1,7 +1,5 @@
 #include "CObject.h"
 
-std::vector<CObject*> CObject::ObjectList;
-
 CObject::CObject() 
 {
     Surf_Object = NULL;

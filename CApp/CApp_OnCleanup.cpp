@@ -4,33 +4,32 @@ void CApp::OnCleanup()
 {
 	CArea::AreaControl.OnCleanup();
 
-    // Entities
-    for(int i = 0;i < CEntity::EntityList.size();i++) 
+    // Units
+    for(int i = 0;i < CUnitMenager::UnitList.size();i++) 
     {
-        if(!CEntity::EntityList[i]) continue;
+        if(!CUnitMenager::UnitList[i]) continue;
 
-        CEntity::EntityList[i]->OnCleanup();
+        CUnitMenager::UnitList[i]->OnCleanup();
     }
 
     // Objects
-    for(int i = 0;i < CObject::ObjectList.size();i++) 
+    for(int i = 0;i < CObjectMenager::ObjectList.size();i++) 
     {
-        if(!CObject::ObjectList[i]) continue;
+        if(!CObjectMenager::ObjectList[i]) continue;
 
-        CObject::ObjectList[i]->OnCleanup();
+        CObjectMenager::ObjectList[i]->OnCleanup();
     }
 
     // Interface
 	for(int i = 0;i < MAX_INTERFACEOBJECTS;i++) 
     {
-        if(!CInterface::InterfaceControl.Interface[i]) continue;
+        if(!CInterfaceMenager::InterfaceMenager.InterfaceList[i]) continue;
 
-        CInterface::InterfaceControl.Interface[i]->OnCleanup();
-        CInterface::InterfaceControl.Interface[i] = NULL;
+        CInterfaceMenager::InterfaceMenager.InterfaceList[i]->OnCleanup();
+        CInterfaceMenager::InterfaceMenager.InterfaceList[i] = NULL;
     }
 
-    CObject::ObjectList.clear();
-    CEntity::EntityList.clear();
+    CObjectMenager::ObjectList.clear();
 
     SDL_FreeSurface(Surf_Display);
     TTF_Quit();
