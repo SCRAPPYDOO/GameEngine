@@ -20,6 +20,8 @@
 #include "CObjectMenager.h"
 #include "CUnitMenager.h"
 
+#include "CPlayer.h"
+
 class CInterface;
 class CButton;
 class CUnit;

@@ -3,20 +3,34 @@
 
 #include "CInterface.h"
 
+enum InterfaceUnitDefines
+{
+    HEALTHBARRANGE = 100,
+    HEALTHBARHEIGHT = 20,
+};
+
 class CInterfaceUnit : public CInterface
 {
     public:
         CInterfaceUnit();
         ~CInterfaceUnit() {}
 
-        SDL_Surface* Surf_Interface;
-
-        SDL_Surface* Surf_UnitStatus;
-
     public:
         bool OnLoad();
+        void OnLoop();
         void OnRender(SDL_Surface* Surf_Display);
         void OnCleanup();
+
+    private:
+        int nHealth;
+        int nMaxHealth;
+        int nHealthBarRange;
+        SDL_Surface* Surf_UnitStatus;
+        SDL_Surface* Surf_UnitImage;
+        SDL_Surface* Surf_UnitName;
+
+    public:
+        void UpdateHealth();
 };
 
 #endif

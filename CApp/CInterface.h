@@ -2,6 +2,7 @@
     #define _CINTERFACE_H_
 
 #include "CButton.h"
+#include "CPlayer.h"
 
 #define MAX_MENU_BUTTONS 2
 #define MAX_BUTTONPANEL_BUTTONS 10

@@ -105,6 +105,10 @@ class CUnit
         }
 
 
+        //Character Methods
+        virtual char* GetName() { return NULL; }
+        virtual int GetActualHealth() const { return NULL; }
+        virtual int GetMaxHealth() const { return NULL; }
 
 };
 

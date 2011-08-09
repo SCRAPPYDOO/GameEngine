@@ -1,5 +1,4 @@
 #include "CApp.h"
-//
 
 void CApp::OnEvent(SDL_Event* Event) 
 {
@@ -105,6 +104,17 @@ void CApp::OnLButtonDown(int x,int y)
             return;
         }
     }
+
+    //if(CUnit* pUnit = CUnitMenager::GetUnit(x, y))
+    //    if(pUnit)
+    //        if(pUnit == CPlayer::Player.pSelectedUnit)
+    //        {
+    //            return;
+    //        }
+    //        else
+    //        {
+    //            CPlayer::Player.pTargetedUnit = pUnit;
+    //        }
 }
 
 void CApp::OnLButtonUp(int x,int y)

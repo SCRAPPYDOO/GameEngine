@@ -1,8 +1,7 @@
 #ifndef _CUNITMENAGER_H_
     #define _CUNITMENAGER_H_
 
-#include "CUnit.h"
-#include <vector>
+#include "CCharacter.h"
 
 class CUnitMenager
 {

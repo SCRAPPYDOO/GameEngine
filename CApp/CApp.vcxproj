@@ -75,6 +75,7 @@
     <ClCompile Include="CArea.cpp" />
     <ClCompile Include="CButton.cpp" />
     <ClCompile Include="CCamera.cpp" />
+    <ClCompile Include="CCharacter.cpp" />
     <ClCompile Include="CEvent.cpp" />
     <ClCompile Include="CFrameControler.cpp" />
     <ClCompile Include="CInterface.cpp" />
@@ -87,6 +88,7 @@
     <ClCompile Include="CMovementGenerator.cpp" />
     <ClCompile Include="CObject.cpp" />
     <ClCompile Include="CObjectMenager.cpp" />
+    <ClCompile Include="CPlayer.cpp" />
     <ClCompile Include="CSurface.cpp" />
     <ClCompile Include="CTile.cpp" />
     <ClCompile Include="CInterfaceUnit.cpp" />
@@ -99,6 +101,7 @@
     <ClInclude Include="CArea.h" />
     <ClInclude Include="CButton.h" />
     <ClInclude Include="CCamera.h" />
+    <ClInclude Include="CCharacter.h" />
     <ClInclude Include="CEvent.h" />
     <ClInclude Include="CFrameControler.h" />
     <ClInclude Include="CInterface.h" />
@@ -112,6 +115,7 @@
     <ClInclude Include="CMovementGenerator.h" />
     <ClInclude Include="CObject.h" />
     <ClInclude Include="CObjectMenager.h" />
+    <ClInclude Include="CPlayer.h" />
     <ClInclude Include="CSurface.h" />
     <ClInclude Include="CTile.h" />
     <ClInclude Include="CInterfaceUnit.h" />

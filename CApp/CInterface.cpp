@@ -38,8 +38,10 @@ bool CInterface::OnLoad()
         }
         case INTERFACE_PLAYERINFO:
         {
-            nWidht = INTERFACE_BUTTON_PANEL_W;
-            nHeight = INTERFACE_BUTTON_PANEL_H;
+            nPosX = 5;
+            nPosY = 5;
+            nWidht = INTERFACE_PLAYERINFO_W;
+            nHeight = INTERFACE_PLAYERINFO_H;
             SurfName = "./interface/interface_unitinfo_surf.png"; break;
         }
         case INTERFACE_BUTTON_PANEL: 

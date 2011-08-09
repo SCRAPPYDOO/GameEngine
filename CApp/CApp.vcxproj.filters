@@ -94,6 +94,12 @@
     <ClCompile Include="CInterfaceMenager.cpp">
       <Filter>Interface</Filter>
     </ClCompile>
+    <ClCompile Include="CPlayer.cpp">
+      <Filter>World</Filter>
+    </ClCompile>
+    <ClCompile Include="CCharacter.cpp">
+      <Filter>World</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CAnimation.h">
@@ -167,6 +173,12 @@
     </ClInclude>
     <ClInclude Include="CInterfaceMenager.h">
       <Filter>Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="CPlayer.h">
+      <Filter>World</Filter>
+    </ClInclude>
+    <ClInclude Include="CCharacter.h">
+      <Filter>World</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

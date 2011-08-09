@@ -40,13 +40,13 @@ bool CUnit::OnLoad()
 {
     if((Surf_Unit = CSurface::OnLoad("./anim/1.png")) == NULL) 
     {
-        CInterfaceMenager::InterfaceMenager.InterfaceList[INTERFACE_MASAGEWINDOW]->AddMsg("Unit Image Not Loaded");
+        //CInterfaceMenager::InterfaceMenager.InterfaceList[INTERFACE_MASAGEWINDOW]->AddMsg("Unit Image Not Loaded");
         return false;
     }
 
     nUnitFlag = nUnitFlag | UNIT_FLAG_GOSSIP;
 
-    CInterfaceMenager::InterfaceMenager.InterfaceList[INTERFACE_MASAGEWINDOW]->AddMsg("Unit Image Loaded");
+    //CInterfaceMenager::InterfaceMenager.InterfaceList[INTERFACE_MASAGEWINDOW]->AddMsg("Unit Image Loaded");
 
     return true;
 }
