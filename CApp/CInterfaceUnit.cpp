@@ -2,13 +2,28 @@
 
 CInterfaceUnit::CInterfaceUnit()
 {
+    pUnit               = NULL; 
     nHealth             = 0;
     nMaxHealth          = 0;
     nHealthBarRange     = 0;
     Surf_UnitStatus     = NULL;
     Surf_UnitImage      = NULL;
     Surf_UnitName       = NULL;
-    eInterfaceType = INTERFACE_PLAYERINFO;  
+    Surf_Percentage     = NULL; 
+    eInterfaceType      = INTERFACE_PLAYERINFO;
+}
+
+CInterfaceUnit::CInterfaceUnit(InterfaceType eType)
+{
+    pUnit               = NULL;      
+    nHealth             = 0;
+    nMaxHealth          = 0;
+    nHealthBarRange     = 0;
+    Surf_UnitStatus     = NULL;
+    Surf_UnitImage      = NULL;
+    Surf_UnitName       = NULL;
+    Surf_Percentage     = NULL; 
+    eInterfaceType = eType;
 }
 
 bool CInterfaceUnit::OnLoad()
@@ -19,11 +34,13 @@ bool CInterfaceUnit::OnLoad()
     if((Surf_UnitStatus = CSurface::OnLoad("./interface/interface_unitinfo_status.png")) == NULL) 
         return false;
 
-    if(CPlayer::Player.pPlayerCharacter != NULL)
-    {
-        char* name = CPlayer::Player.pPlayerCharacter->GetName();
+    UpdateUnit();
 
-        Surf_UnitName = RenderText(name);
+    if(pUnit)
+    {
+        char* name = pUnit->GetName();
+        if(name)
+            Surf_UnitName = RenderText(name);
 
         /*Surf_UnitImage = CPlayer::Player.pPlayerCharacter->GetImage();*/
     }
@@ -33,6 +50,9 @@ bool CInterfaceUnit::OnLoad()
 
 void CInterfaceUnit::OnLoop()
 {
+    CInterface::OnLoop();
+
+    UpdateUnit();
     UpdateHealth();
 }
 
@@ -45,6 +65,9 @@ void CInterfaceUnit::OnRender(SDL_Surface* Surf_Display)
 
     if(Surf_UnitStatus)
         CSurface::OnDraw(Surf_Display, Surf_UnitStatus, nPosX, nPosY + INTERFACE_PLAYERINFO_H, 0, 0, nHealthBarRange, HEALTHBARHEIGHT); //hp
+
+    if(Surf_Percentage)
+        CSurface::OnDraw(Surf_Display, Surf_Percentage, nPosX + 0.5 * INTERFACE_PLAYERINFO_H, nPosY + INTERFACE_PLAYERINFO_H); //hp
 
     if(Surf_UnitName)
         CSurface::OnDraw(Surf_Display, Surf_UnitName, nPosX, nPosY - 20);
@@ -62,11 +85,42 @@ void CInterfaceUnit::OnCleanup()
 
 void CInterfaceUnit::UpdateHealth()
 {
-    if(CPlayer::Player.pPlayerCharacter != NULL)
+    if(pUnit)
     {
-        nHealth = CPlayer::Player.pPlayerCharacter->GetActualHealth();
-        nMaxHealth = CPlayer::Player.pPlayerCharacter->GetMaxHealth();
+        nHealth = pUnit->GetActualHealth();
+        nMaxHealth = pUnit->GetMaxHealth();
+        nHealthBarRange = nHealth / (nMaxHealth / HEALTHBARRANGE);
     }
 
-    nHealthBarRange = nHealth / (nMaxHealth / HEALTHBARRANGE);
+    
+
+    //ToDo: Display a text over the health bar with percentage
+
+    //char txt = static_cast<char>(nHealthBarRange);
+
+    //char* pCarrier = &txt;
+
+    //Surf_Percentage = RenderText(pCarrier);
+}
+
+void CInterfaceUnit::UpdateUnit()
+{
+    switch(eInterfaceType)
+    {
+        case INTERFACE_PLAYERINFO:
+        {
+            if(CPlayer::Player.pPlayerCharacter != NULL)
+                pUnit = CPlayer::Player.pPlayerCharacter;
+            break;
+        }
+
+        case INTERFACE_TARGET:
+        {
+            if(CPlayer::Player.pTargetedUnit != NULL)
+                pUnit = CPlayer::Player.pTargetedUnit;
+            break;
+        }
+
+        default: pUnit = NULL; break;
+    }
 }

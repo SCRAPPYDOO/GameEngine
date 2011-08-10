@@ -13,6 +13,7 @@ class CInterfaceUnit : public CInterface
 {
     public:
         CInterfaceUnit();
+        CInterfaceUnit(InterfaceType eType);
         ~CInterfaceUnit() {}
 
     public:
@@ -22,16 +23,19 @@ class CInterfaceUnit : public CInterface
         void OnCleanup();
 
     private:
+        CUnit* pUnit;
         int nHealth;
         int nMaxHealth;
         int nHealthBarRange;
         SDL_Surface* Surf_UnitStatus;
         SDL_Surface* Surf_UnitImage;
         SDL_Surface* Surf_UnitName;
+        SDL_Surface* Surf_Percentage;
 
     public:
         void UpdateHealth();
-};
+        void UpdateUnit();
 
+};
 #endif
 

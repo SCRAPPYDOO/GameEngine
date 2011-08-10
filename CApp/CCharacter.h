@@ -26,6 +26,9 @@ class CCharacter : public CUnit
         int GetActualHealth() const { return nActualHealth; }
         int GetMaxHealth() const { return nMaxHealth; }
 
+        void SetHealth(int nValue) { nActualHealth = nValue; }
+
+        bool IsAlive() const { if(nActualHealth > 0) return true; return false; }
 };
 
 #endif

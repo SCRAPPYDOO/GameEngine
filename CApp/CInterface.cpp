@@ -108,6 +108,16 @@ bool CInterface::OnLoad()
             nHeight = INTERFACE_CHARACTERSHEET_H; 
             SurfName = "./interface/interface_charactersheet_surf.png"; break;
         }
+
+        case INTERFACE_TARGET:
+        {
+            nPosX = 0.5 * WWIDTH - 0.5 * INTERFACE_PLAYERINFO_W;
+            nPosY = 5;
+            nWidht = INTERFACE_PLAYERINFO_W;
+            nHeight = INTERFACE_PLAYERINFO_H;
+            SurfName = "./interface/interface_unitinfo_surf.png";; break;
+        }
+
         default: break;
     }
 
@@ -433,7 +443,7 @@ SDL_Surface* CInterface::RenderText(char* txt)
 
     TTF_Font *Font;
 
-    Font = TTF_OpenFont( "./font/lazy.ttf", 15 );
+    Font = TTF_OpenFont( "./font/times.ttf", 15 );
 
     if(!Font) return NULL;
 

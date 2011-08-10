@@ -19,7 +19,10 @@ enum UnitFlag
     ENTITY_FLAG_GRAVITY = 0x02,
     ENTITY_FLAG_GHOST   = 0x04,
     ENTITY_FLAG_MAPONLY = 0x08,
+
     UNIT_FLAG_GOSSIP    = 0x10,
+    UNIT_FLAG_VENDOR    = 0x20,
+    UNIT_FLAG_LOOTABLE  = 0x40,
 };
 
 enum UnitMovementFlag
@@ -69,9 +72,6 @@ class CUnit
         int             CurrentFrameCol;
         int             CurrentFrameRow;
 
-    protected: //Status Information
-        bool            UnitIsAlive;
-
     public:
         float GetPosX() const { return fPosX; }
         float GetPosY() const { return fPosY; }
@@ -104,11 +104,14 @@ class CUnit
             return false;
         }
 
-
         //Character Methods
         virtual char* GetName() { return NULL; }
         virtual int GetActualHealth() const { return NULL; }
         virtual int GetMaxHealth() const { return NULL; }
+
+        virtual void SetHealth(int nValue) { }
+
+        virtual bool IsAlive() const { return true; }
 
 };
 

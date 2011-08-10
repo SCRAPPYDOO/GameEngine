@@ -22,11 +22,8 @@ CCharacter::CCharacter()
     CurrentFrameCol = 0;
     CurrentFrameRow = 0;
 
-    UnitIsAlive = true;
-
-
     cCharacterName = "Marcin";
 
-    nActualHealth = 20;
-    nMaxHealth = 100;
+    nActualHealth = 32;
+    nMaxHealth = 234;
 }

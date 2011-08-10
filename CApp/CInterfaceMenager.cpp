@@ -33,7 +33,7 @@ bool CInterfaceMenager::LoadInterface()
         {
             InterfaceType eType;
 
-            for(int i=0; i<5; ++i)
+            for(int i=0; i<6; ++i)
             {
                 switch(i)
                 {
@@ -41,6 +41,7 @@ bool CInterfaceMenager::LoadInterface()
                     case 1: eType = INTERFACE_BUTTON_PANEL; break;           
                     case 2: eType = INTERFACE_CHARACTERPANEL; break;
                     case 4: eType = INTERFACE_MASAGEWINDOW; break;
+                    case 5: eType = INTERFACE_TARGET; break;
                     default: break;
                 }
 
@@ -72,7 +73,8 @@ bool CInterfaceMenager::LoadInterface(InterfaceType eType)
         case INTERFACE_LOOT: pInterface = new CInterface(eType); break;
         case INTERFACE_SPELLBOOK: pInterface = new CInterface(eType); break;
         case INTERFACE_MASAGEWINDOW: pInterface = new CInterfaceMsgWindow(); break;
-        case INTERFACE_CHARACTERSHEET: pInterface = new CInterfaceCharSheet(); break; 
+        case INTERFACE_CHARACTERSHEET: pInterface = new CInterfaceCharSheet(); break;
+        case INTERFACE_TARGET: pInterface = new CInterfaceUnit(eType); break;
         default: return false;
     }
 

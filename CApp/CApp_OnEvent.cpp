@@ -11,6 +11,7 @@ void CApp::OnKeyDown(SDLKey sym, SDLMod mod, Uint16 unicode)
     {
         case SDLK_ESCAPE: 
         {
+            CPlayer::Player.pPlayerCharacter->SetHealth(5);
 			if(!CInterfaceMenager::InterfaceMenager.InterfaceList[INTERFACE_GAMEMENU])
 			{
 				CInterfaceMenager::InterfaceMenager.LoadInterface(INTERFACE_GAMEMENU);
@@ -29,20 +30,27 @@ void CApp::OnKeyUp(SDLKey sym, SDLMod mod, Uint16 unicode)
 
 void CApp::OnMouseMove(int mX, int mY, int relX, int relY, bool Left,bool Right,bool Middle)
 { 
-    if(CInterface* pInterface = CInterfaceMenager::InterfaceMenager.GetInterface(mX, mY))
-         if(pInterface)
-             pInterface->OnMouseMove(mX, mY, relX, relY, Left, Right, Middle);
+    //ToDo: Change cursor image when move on different objects
+    if(!Left)
+    {
+        if(CInterface* pInterface = CInterfaceMenager::InterfaceMenager.GetInterface(mX, mY))
+             if(pInterface)
+                 pInterface->OnMouseMove(mX, mY, relX, relY, Left, Right, Middle);
 
-    //Interface
-    //Entitys
-    //StaticObjects
-    if(CUnit* pUnit = CUnitMenager::GetUnit(mX, mY))
-        if(pUnit && !pUnit->HasFlag(UNIT_FLAG_GOSSIP))
-            CInterfaceMenager::InterfaceMenager.InterfaceList[INTERFACE_MASAGEWINDOW]->AddMsg("Mam Flage");
-       
+        //Interface
+        //Entitys
+        //StaticObjects
 
+        if(CUnit* pUnit = CUnitMenager::GetUnit(mX, mY))
+        {
+            if(pUnit && pUnit->HasFlag(UNIT_FLAG_GOSSIP))
+                CInterfaceMenager::InterfaceMenager.InterfaceList[INTERFACE_MASAGEWINDOW]->AddMsg("Mam Flage");
 
-    if(Left)
+            if(pUnit && pUnit->HasFlag(UNIT_FLAG_VENDOR))
+                CInterfaceMenager::InterfaceMenager.InterfaceList[INTERFACE_MASAGEWINDOW]->AddMsg("Mam Flage");
+        }
+    }
+    else
     {
         if(pSelectedButton != NULL && (pSelectedButton->GetButtonState() == BUTTONSTATE_SELECTED || pSelectedButton->GetButtonState() == BUTTONSTATE_MOVED) && !pSelectedButton->HasFlag(BUTTONFLAG_NOTMOVED) )
         {
@@ -74,6 +82,37 @@ void CApp::OnRButtonDown(int x,int y)
 {
     if(CApp::eGameState == MAIN_MENU) //We Dont Use RButton In Menu                                       
         return;
+
+    CPlayer::Player.pPlayerCharacter->SetHealth(55);
+}
+
+void CApp::OnRButtonUp(int mX, int mY)
+{
+    if(CUnit* pUnit = CUnitMenager::GetUnit(mX, mY))
+    {
+        if(pUnit)
+        {
+            //if(pUnit->IsEnemy())
+            //{
+                 /* CanAttack();*/  
+            //    return;
+            //}
+
+            if(!pUnit->IsAlive() && pUnit->HasFlag(UNIT_FLAG_LOOTABLE))
+            {
+                CInterfaceMenager::InterfaceMenager.InterfaceList[INTERFACE_MASAGEWINDOW]->AddMsg("Looting Corps");
+                return;
+            }
+
+            //If Chat Available
+            if(pUnit->HasFlag(UNIT_FLAG_GOSSIP))
+            {
+                //ToDo: Create Chat Window Load Gossip by Unit ID
+                CInterfaceMenager::InterfaceMenager.InterfaceList[INTERFACE_MASAGEWINDOW]->AddMsg("Wlaczam Gossip");
+                return;
+            }
+        }
+    }
 }
 
 void CApp::OnLButtonDown(int x,int y)

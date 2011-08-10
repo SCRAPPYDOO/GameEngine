@@ -32,8 +32,6 @@ CUnit::CUnit()
 
     CurrentFrameCol = 0;
     CurrentFrameRow = 0;
-
-    UnitIsAlive = true;
 }
 
 bool CUnit::OnLoad() 
@@ -44,7 +42,7 @@ bool CUnit::OnLoad()
         return false;
     }
 
-    nUnitFlag = nUnitFlag | UNIT_FLAG_GOSSIP;
+    nUnitFlag = nUnitFlag | UNIT_FLAG_GOSSIP | UNIT_FLAG_LOOTABLE;
 
     //CInterfaceMenager::InterfaceMenager.InterfaceList[INTERFACE_MASAGEWINDOW]->AddMsg("Unit Image Loaded");
 

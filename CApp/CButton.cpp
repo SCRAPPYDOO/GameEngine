@@ -153,16 +153,6 @@ void CButton::Activate()
         }
         case BUTTON_CHARPANEL_SPELLBOOK:
         {
-            CUnit *Unit = new CUnit();
-            if(Unit)
-            {
-                CInterfaceMenager::InterfaceMenager.InterfaceList[INTERFACE_MASAGEWINDOW]->AddMsg("Unit  Stworozny");
-
-                Unit->OnLoad();
-            }
-
-            CUnitMenager::UnitList.push_back(Unit);
-
 			if(!CInterfaceMenager::InterfaceMenager.InterfaceList[INTERFACE_SPELLBOOK])
 			{
                 CInterfaceMenager::InterfaceMenager.InterfaceList[INTERFACE_MASAGEWINDOW]->AddMsg("Enter to SpellBook !!");
@@ -170,8 +160,6 @@ void CButton::Activate()
 			}
 			else
 				CInterfaceMenager::InterfaceMenager.CleanUpInterface(INTERFACE_SPELLBOOK);
-
-
 
             break;
         }

@@ -39,7 +39,7 @@
 #define INTERFACE_BAG_MAXSLOT_X 8
 #define INTERFACE_BAG_MAXSLOT_Y 8
 
-#define MAX_INTERFACEOBJECTS 12
+
 
 enum InterfaceType
 {
@@ -54,7 +54,11 @@ enum InterfaceType
     INTERFACE_LOOT              = 9,
     INTERFACE_SPELLBOOK         = 10,
     INTERFACE_MASAGEWINDOW      = 11,
+    INTERFACE_TARGET            = 12,
+    //If U ADD new Interface Update Value Below
 };
+
+#define MAX_INTERFACEOBJECTS 13
 
 enum InterfaceFlag
 {
