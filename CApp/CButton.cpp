@@ -90,6 +90,14 @@ void CButton::Activate()
 
     switch(eButtonType)
 	{
+
+        case BUTTON_MENU_CREATECHARACTER: //Go To Create Character Menu
+        {
+            CInterfaceMenager::InterfaceMenager.CleanUpInterface(INTERFACE_MAINMENU);
+            CInterfaceMenager::InterfaceMenager.LoadInterface(INTERFACE_CHARACTERCREATOR);
+            break;
+        }
+
 		case BUTTON_PLAY:
 		{
             CApp::eGameState = TEST;
@@ -209,6 +217,14 @@ void CButton::Activate()
             break;
         }
 
+        //Chreate Character Buttons
+        case BUTTON_CREATECHAR_NEXT:
+        case BUTTON_CREATECHAR_BACK:
+        case BUTTON_CREATECHAR_END:
+        {
+            CInterfaceMenager::InterfaceMenager.InterfaceList[INTERFACE_CHARACTERCREATOR]->OnButtonActivate(eButtonType);
+            break;
+        }
 
         //test
         case BUTTON_SWORD:

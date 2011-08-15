@@ -18,7 +18,7 @@ class CPlayer
 
 		bool OnLoad() 
 		{
-			LoadCharacter();
+			//LoadCharacter();
 			return true;
 		}
 

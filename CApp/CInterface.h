@@ -34,11 +34,13 @@
 #define INTERFACE_SPELLBOOK_W 300
 #define INTERFACE_SPELLBOOK_H 500
 
+#define INTERFACE_CHARACTERCREATOR_W 1280
+#define INTERFACE_CHARACTERCREATOR_H 720
+
 //Number of Slots for items spells buttons
 #define INTERFACE_BUTTON_PANEL_MAXSLOTS 10
 #define INTERFACE_BAG_MAXSLOT_X 8
 #define INTERFACE_BAG_MAXSLOT_Y 8
-
 
 
 enum InterfaceType
@@ -85,6 +87,24 @@ class CInterface
         int nPosX, nPosY, nWidht, nHeight, nDistX, nDistY;
         int OldX, OldY;
 
+    public:
+        int GetPosX() const { return nPosX;}
+        int GetPosY() const { return nPosY;}
+        int GetWidht() const { return nWidht;}
+        int GetHeight() const { return nHeight;}
+
+        bool HasFlag(InterfaceFlag Flag) { if(nInterfaceFlag && Flag) return true; return false; }
+        bool IsInterfaceOnPos(int nX, int nY);
+
+        virtual CButton* GetButton(int nPosX, int nPosY) const;
+        virtual void AddButtonToSlot(CButton* pButton) { ButtonsList.push_back(pButton); }
+        virtual bool AddButtonToSlot(CButton* pButton, int mX, int mY);
+        virtual void DeleteButtonFromSlot(CButton* pButton);
+
+        virtual void AddMsg(char* msg) {}
+
+        SDL_Surface* RenderText(char* txt);
+
 	public:
         virtual bool OnLoad();	
             virtual void LoadButtons();
@@ -100,27 +120,7 @@ class CInterface
         virtual void OnRender(SDL_Surface* Surf_Display);
         virtual void OnCleanup();
 
-    public:
-        
-        InterfaceType GetInterfaceType() { return eInterfaceType; }
-
-        int GetPosX() const { return nPosX;}
-        int GetPosY() const { return nPosY;}
-        int GetWidht() const { return nWidht;}
-        int GetHeight() const { return nHeight;}
-
-        bool HasFlag(InterfaceFlag Flag) { if(nInterfaceFlag && Flag) return true; return false; }
-
-        bool IsInterfaceOnPos(int nX, int nY);
-
-        virtual CButton* GetButton(int nPosX, int nPosY) const;
-        virtual void AddButtonToSlot(CButton* pButton) { ButtonsList.push_back(pButton); }
-        virtual bool AddButtonToSlot(CButton* pButton, int mX, int mY);
-        virtual void DeleteButtonFromSlot(CButton* pButton);
-
-        virtual void AddMsg(char* msg) {}
-
-        SDL_Surface* RenderText(char* txt);
+        virtual void OnButtonActivate(ButtonType Type) {} // called when button activate
 };
 
 #endif

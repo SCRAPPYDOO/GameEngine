@@ -27,7 +27,6 @@ enum ButtonType
 	BUTTON_MENU_DELETE_CHARACTER	= 4,
 	BUTTON_MENU_ENTERTOWORLD		= 5,
 
-
     //Game Menu Button
     BUTTON_GAMEMENU_QUIT = 10,
     BUTTON_GAMEMENU_RETURN = 11,
@@ -46,6 +45,12 @@ enum ButtonType
     BUTTON_SPELLBOOK_QUIT   = 101,
 
     BUTTON_PANEL_LOCK       = 60,
+
+   //Create Character Buttons
+    BUTTON_CREATECHAR_NEXT  = 130,
+    BUTTON_CREATECHAR_BACK = 131,
+    BUTTON_CREATECHAR_END = 132,
+
 
 
     BUTTON_SWORD            = 10001,

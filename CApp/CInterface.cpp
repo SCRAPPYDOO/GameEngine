@@ -113,7 +113,12 @@ bool CInterface::OnLoad()
             nPosY = 5;
             nWidht = INTERFACE_PLAYERINFO_W;
             nHeight = INTERFACE_PLAYERINFO_H;
-            SurfName = "./interface/interface_unitinfo_surf.png";; break;
+            SurfName = "./interface/interface_unitinfo_surf.png"; break;
+        }
+
+        case INTERFACE_CHARACTERCREATOR:
+        {
+            SurfName = "./interface/interface_character_creator.png"; break;
         }
 
         default: break;
@@ -217,12 +222,13 @@ void CInterface::LoadButtons()
     {
         case INTERFACE_MAINMENU:
 		{
-			for(int i=0; i<2; ++i)
+			for(int i=0; i<3; ++i)
 			{
 				switch(i)
 				{
 					case 0: eType = BUTTON_PLAY; break;
 					case 1: eType = BUTTON_QUIT; break;
+                    case 2: eType = BUTTON_MENU_CREATECHARACTER; break;
                     default: break;
 				}
 					

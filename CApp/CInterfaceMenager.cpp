@@ -5,6 +5,7 @@
 #include "CInterfaceMsgWindow.h"
 #include "CInterfaceCharSheet.h"
 #include "CInterfaceMenu.h"
+#include "CInterfaceCharacterCreator.h"
 
 CInterfaceMenager CInterfaceMenager::InterfaceMenager;
 
@@ -76,6 +77,7 @@ bool CInterfaceMenager::LoadInterface(InterfaceType eType)
         case INTERFACE_MASAGEWINDOW: pInterface = new CInterfaceMsgWindow(); break;
         case INTERFACE_CHARACTERSHEET: pInterface = new CInterfaceCharSheet(); break;
         case INTERFACE_TARGET: pInterface = new CInterfaceUnit(eType); break;
+        case INTERFACE_CHARACTERCREATOR: pInterface = new CInterfaceCharacterCreator(); break;
         default: return false;
     }
 
