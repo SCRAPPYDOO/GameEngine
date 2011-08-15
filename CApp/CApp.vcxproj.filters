@@ -100,6 +100,12 @@
     <ClCompile Include="CCharacter.cpp">
       <Filter>World</Filter>
     </ClCompile>
+    <ClCompile Include="CInterfaceMenu.cpp">
+      <Filter>Interface</Filter>
+    </ClCompile>
+    <ClCompile Include="CInterfaceCharacterCreator.cpp">
+      <Filter>Interface</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CAnimation.h">
@@ -179,6 +185,12 @@
     </ClInclude>
     <ClInclude Include="CCharacter.h">
       <Filter>World</Filter>
+    </ClInclude>
+    <ClInclude Include="CInterfaceMenu.h">
+      <Filter>Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="CInterfaceCharacterCreator.h">
+      <Filter>Interface</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

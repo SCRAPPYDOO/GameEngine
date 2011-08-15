@@ -23,6 +23,11 @@ enum ButtonType
 	BUTTON_PLAY		= 0,   //enter to world
 	BUTTON_QUIT		= 1,   //quit from game
 
+	BUTTON_MENU_CREATECHARACTER		= 3,
+	BUTTON_MENU_DELETE_CHARACTER	= 4,
+	BUTTON_MENU_ENTERTOWORLD		= 5,
+
+
     //Game Menu Button
     BUTTON_GAMEMENU_QUIT = 10,
     BUTTON_GAMEMENU_RETURN = 11,

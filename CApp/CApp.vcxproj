@@ -79,9 +79,11 @@
     <ClCompile Include="CEvent.cpp" />
     <ClCompile Include="CFrameControler.cpp" />
     <ClCompile Include="CInterface.cpp" />
+    <ClCompile Include="CInterfaceCharacterCreator.cpp" />
     <ClCompile Include="CInterfaceCharSheet.cpp" />
     <ClCompile Include="CInterfaceEquip.cpp" />
     <ClCompile Include="CInterfaceMenager.cpp" />
+    <ClCompile Include="CInterfaceMenu.cpp" />
     <ClCompile Include="CInterfaceMsgWindow.cpp" />
     <ClCompile Include="CItem.cpp" />
     <ClCompile Include="CMap.cpp" />
@@ -105,9 +107,11 @@
     <ClInclude Include="CEvent.h" />
     <ClInclude Include="CFrameControler.h" />
     <ClInclude Include="CInterface.h" />
+    <ClInclude Include="CInterfaceCharacterCreator.h" />
     <ClInclude Include="CInterfaceCharSheet.h" />
     <ClInclude Include="CInterfaceEquip.h" />
     <ClInclude Include="CInterfaceMenager.h" />
+    <ClInclude Include="CInterfaceMenu.h" />
     <ClInclude Include="CInterfaceMsgWindow.h" />
     <ClInclude Include="CItem.h" />
     <ClInclude Include="CMap.h" />

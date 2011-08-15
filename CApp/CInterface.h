@@ -55,10 +55,11 @@ enum InterfaceType
     INTERFACE_SPELLBOOK         = 10,
     INTERFACE_MASAGEWINDOW      = 11,
     INTERFACE_TARGET            = 12,
+	INTERFACE_CHARACTERCREATOR  = 13,
     //If U ADD new Interface Update Value Below
 };
 
-#define MAX_INTERFACEOBJECTS 13
+#define MAX_INTERFACEOBJECTS 14
 
 enum InterfaceFlag
 {

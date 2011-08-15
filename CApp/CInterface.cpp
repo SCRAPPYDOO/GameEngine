@@ -1,8 +1,4 @@
 #include "CInterface.h"
-#include "CInterfaceUnit.h"
-#include "CInterfaceEquip.h"
-#include "CInterfaceMsgWindow.h"
-#include "CInterfaceCharSheet.h"
 
 CInterface::CInterface() 
 {
@@ -32,6 +28,8 @@ bool CInterface::OnLoad()
     {
         case INTERFACE_MAINMENU:
         {
+			nPosX = 0;
+			nPosY = 0;
             nWidht = INTERFACE_MAINMENU_W;
             nHeight = INTERFACE_MAINMENU_H;
             SurfName = "./menu/main_menu_surf.png"; break;
@@ -234,9 +232,9 @@ void CInterface::LoadButtons()
 				CButton *pButton = new CButton(x, y, eType);
 
                 if(pButton->OnLoad() == false)
-                    break;
+					return;
 
-                ButtonsList.push_back(pButton);
+				ButtonsList.push_back(pButton);
 			}
 
 			break;
@@ -455,3 +453,4 @@ SDL_Surface* CInterface::RenderText(char* txt)
 
     return pSurface;
 }
+

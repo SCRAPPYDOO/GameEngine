@@ -9,24 +9,26 @@ void CApp::OnRender()
 	Rect.h = WHEIGHT;
 
 	SDL_FillRect(Surf_Display, &Rect, 0);
+	if(CApp::eGameState == TEST)
+	{
+		CArea::AreaControl.OnRender(Surf_Display, -CCamera::CameraControl.GetX(), -CCamera::CameraControl.GetY());
 
-	CArea::AreaControl.OnRender(Surf_Display, -CCamera::CameraControl.GetX(), -CCamera::CameraControl.GetY());
+		// Objects
+		for(int i = 0;i < CObjectMenager::ObjectList.size();i++) 
+		{
+			if(!CObjectMenager::ObjectList[i]) continue;
 
-    // Objects
-    for(int i = 0;i < CObjectMenager::ObjectList.size();i++) 
-    {
-        if(!CObjectMenager::ObjectList[i]) continue;
+			CObjectMenager::ObjectList[i]->OnRender(Surf_Display);
+		}
 
-        CObjectMenager::ObjectList[i]->OnRender(Surf_Display);
-    }
+		// Units
+		for(int i = 0;i < CUnitMenager::UnitList.size();i++) 
+		{
+			if(!CUnitMenager::UnitList[i]) continue;
 
-    // Units
-    for(int i = 0;i < CUnitMenager::UnitList.size();i++) 
-    {
-        if(!CUnitMenager::UnitList[i]) continue;
-
-        CUnitMenager::UnitList[i]->OnRender(Surf_Display);
-    }
+			CUnitMenager::UnitList[i]->OnRender(Surf_Display);
+		}
+	}
 
 	for(int i = 0; i < MAX_INTERFACEOBJECTS; i++) 
     {   

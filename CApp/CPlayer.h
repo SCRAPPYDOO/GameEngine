@@ -2,6 +2,7 @@
     #define _CPLAYER_H_
 
 #include "CUnit.h"
+#include "CCharacter.h"
 
 class CPlayer
 {
@@ -15,11 +16,20 @@ class CPlayer
 
         ~CPlayer() {}
 
+		bool OnLoad() 
+		{
+			LoadCharacter();
+			return true;
+		}
+
     public:
         static CPlayer Player;
         CUnit* pPlayerCharacter;
         CUnit* pSelectedUnit;
         CUnit* pTargetedUnit;
+
+	public:
+
 };
 
 #endif

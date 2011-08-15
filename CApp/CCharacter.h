@@ -3,8 +3,6 @@
 
 #include "CUnit.h"
 
-
-
 class CCharacter : public CUnit
 {
     public:

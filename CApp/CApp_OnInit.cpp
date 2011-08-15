@@ -17,18 +17,11 @@ bool CApp::OnInit()
         return false;
     }
 
+	if(CPlayer::Player.OnLoad() == false)
+		return false;
+
     if(CInterfaceMenager::InterfaceMenager.LoadInterface() == false)
         return false;
-
-
-    //Test Player class
-    CUnit* pUnit = new CCharacter();
-    if(pUnit)
-    {
-        pUnit->OnLoad();
-        CPlayer::Player.pPlayerCharacter = pUnit;
-        CUnitMenager::UnitList.push_back(pUnit);
-    }
 
     return true;
 }

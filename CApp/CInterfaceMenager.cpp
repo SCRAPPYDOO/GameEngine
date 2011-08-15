@@ -4,6 +4,7 @@
 #include "CInterfaceEquip.h"
 #include "CInterfaceMsgWindow.h"
 #include "CInterfaceCharSheet.h"
+#include "CInterfaceMenu.h"
 
 CInterfaceMenager CInterfaceMenager::InterfaceMenager;
 
@@ -64,7 +65,7 @@ bool CInterfaceMenager::LoadInterface(InterfaceType eType)
 
     switch(eType)
     {
-        case INTERFACE_MAINMENU: pInterface = new CInterface(eType); break;
+        case INTERFACE_MAINMENU: pInterface = new CInterfaceMenu(); break;
         case INTERFACE_PLAYERINFO: pInterface = new CInterfaceUnit(); break;
         case INTERFACE_BUTTON_PANEL: pInterface = new CInterface(eType); break;
         case INTERFACE_GAMEMENU: pInterface = new CInterface(eType); break;
