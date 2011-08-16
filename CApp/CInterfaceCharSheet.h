@@ -2,7 +2,6 @@
     #define _CINTERFACECHARSHEET_H_
 
 #include "CInterface.h"
-#include <string>
 
 #define INTERFACE_CHARSHEET_MAX 10
  

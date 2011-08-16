@@ -23,6 +23,12 @@ bool CApp::OnInit()
     if(CInterfaceMenager::InterfaceMenager.LoadInterface() == false)
         return false;
 
+    //Test Character don delete this for now
+    CUnit* unit = new CCharacter();
+    unit->OnLoad();
+    CUnitMenager::UnitList.push_back(unit);
+    CPlayer::Player.pPlayerCharacter = unit;
+
     return true;
 }
 

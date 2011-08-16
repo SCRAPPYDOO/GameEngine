@@ -82,6 +82,7 @@
     <ClCompile Include="CInterfaceCharacterCreator.cpp" />
     <ClCompile Include="CInterfaceCharSheet.cpp" />
     <ClCompile Include="CInterfaceEquip.cpp" />
+    <ClCompile Include="CInterfaceMassageHandler.cpp" />
     <ClCompile Include="CInterfaceMenager.cpp" />
     <ClCompile Include="CInterfaceMenu.cpp" />
     <ClCompile Include="CInterfaceMsgWindow.cpp" />
@@ -110,6 +111,7 @@
     <ClInclude Include="CInterfaceCharacterCreator.h" />
     <ClInclude Include="CInterfaceCharSheet.h" />
     <ClInclude Include="CInterfaceEquip.h" />
+    <ClInclude Include="CInterfaceMassageHandler.h" />
     <ClInclude Include="CInterfaceMenager.h" />
     <ClInclude Include="CInterfaceMenu.h" />
     <ClInclude Include="CInterfaceMsgWindow.h" />

@@ -85,3 +85,4 @@ void CInterfaceCharSheet::UpdateInterface()
         TextSurface[i] = RenderText(pText);
     }  
 }
+

@@ -435,7 +435,37 @@ bool CInterface::AddButtonToSlot(CButton* pButton, int mX, int mY)
     }
 }
 
-SDL_Surface* CInterface::RenderText(char* txt)
+SDL_Surface* CInterface::RenderText(int T)
+{
+    std::stringstream s;
+    s << T; //zak³¹damy ¿e T ma zdefiniowany operator<< na ostream
+
+    std::string m = s.str();
+
+    SDL_Surface* pSurface = NULL;
+
+    SDL_Color TextColor;
+
+    TextColor.b = 255;
+    TextColor.g = 50;
+    TextColor.r = 50;
+
+    TTF_Font *Font;
+
+    Font = TTF_OpenFont( "./font/times.ttf", 15 );
+
+    if(!Font) return NULL;
+
+    pSurface = TTF_RenderText_Solid(Font, m.c_str(), TextColor);
+
+    if(!pSurface) return NULL;
+
+    TTF_CloseFont(Font);
+
+    return pSurface;
+}
+
+SDL_Surface* CInterface::RenderText(char* T)
 {
     SDL_Surface* pSurface = NULL;
 
@@ -451,7 +481,7 @@ SDL_Surface* CInterface::RenderText(char* txt)
 
     if(!Font) return NULL;
 
-    pSurface = TTF_RenderText_Solid(Font, txt, TextColor);
+    pSurface = TTF_RenderText_Solid(Font, T, TextColor);
 
     if(!pSurface) return NULL;
 
@@ -460,3 +490,27 @@ SDL_Surface* CInterface::RenderText(char* txt)
     return pSurface;
 }
 
+SDL_Surface* CInterface::RenderText(std::string T)
+{
+    SDL_Surface* pSurface = NULL;
+
+    SDL_Color TextColor;
+
+    TextColor.b = 255;
+    TextColor.g = 50;
+    TextColor.r = 50;
+
+    TTF_Font *Font;
+
+    Font = TTF_OpenFont( "./font/times.ttf", 15 );
+
+    if(!Font) return NULL;
+
+    pSurface = TTF_RenderText_Solid(Font, T.c_str(), TextColor);
+
+    if(!pSurface) return NULL;
+
+    TTF_CloseFont(Font);
+
+    return pSurface;
+}

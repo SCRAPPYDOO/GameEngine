@@ -92,15 +92,9 @@ void CInterfaceUnit::UpdateHealth()
         nHealthBarRange = nHealth / (nMaxHealth / HEALTHBARRANGE);
     }
 
-    
+    std::string s = ConvertIntToString(nHealthBarRange) + "%";
 
-    //ToDo: Display a text over the health bar with percentage
-
-    //char txt = static_cast<char>(nHealthBarRange);
-
-    //char* pCarrier = &txt;
-
-    //Surf_Percentage = RenderText(pCarrier);
+    Surf_Percentage = RenderText(s);
 }
 
 void CInterfaceUnit::UpdateUnit()
