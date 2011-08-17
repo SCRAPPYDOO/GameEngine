@@ -98,11 +98,11 @@ void CInterfaceUnit::CleanUpHealthBar()
     if(Surf_Percentage)
         SDL_FreeSurface(Surf_Percentage);
 
-    if(Surf_UnitName)
-        SDL_FreeSurface(Surf_UnitName);
+    if(Surf_UnitStatus)
+        SDL_FreeSurface(Surf_UnitStatus);
 
     Surf_Percentage = NULL;
-    Surf_UnitName = NULL;
+    Surf_UnitStatus = NULL;
 }
 
 void CInterfaceUnit::UpdateHealth()

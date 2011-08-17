@@ -11,16 +11,28 @@ void CApp::OnKeyDown(SDLKey sym, SDLMod mod, Uint16 unicode)
     {
         case SDLK_ESCAPE: 
         {
-            CPlayer::Player.pPlayerCharacter->SetHealth(5);
-			if(!CInterfaceMenager::InterfaceMenager.InterfaceList[INTERFACE_GAMEMENU])
-			{
-				CInterfaceMenager::InterfaceMenager.LoadInterface(INTERFACE_GAMEMENU);
-			}
-			else
-				CInterfaceMenager::InterfaceMenager.CleanUpInterface(INTERFACE_GAMEMENU);
+            switch(CApp::eGameState)
+            {
+                case TEST:
+                {
+                    CPlayer::Player.pPlayerCharacter->SetHealth(5);
+			        if(!CInterfaceMenager::InterfaceMenager.InterfaceList[INTERFACE_GAMEMENU])
+			        {
+				        CInterfaceMenager::InterfaceMenager.LoadInterface(INTERFACE_GAMEMENU);
+			        }
+			        else
+				        CInterfaceMenager::InterfaceMenager.CleanUpInterface(INTERFACE_GAMEMENU);
 
-            break;
+                    break;
+                }
+
+                default: break;
+            }
+            
+            
         }
+
+        default: break;
     }
 }
 
