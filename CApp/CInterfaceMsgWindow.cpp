@@ -49,7 +49,7 @@ void CInterfaceMsgWindow::AddMsg(char* msg)
     {  
         if(i == (INTERFACE_MSGWINDOW_MAX_TEXT_LINES - 1))
         {
-            Masage[i] = RenderText(msg);
+            Masage[i] = CSurface::RenderText(msg);
             return;
         }
 

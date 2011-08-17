@@ -121,17 +121,6 @@ class CInterface
         virtual void OnCleanup();
 
         virtual void OnButtonActivate(ButtonType Type) {} // called when button activate
-
-        std::string ConvertIntToString(int Value) const
-        {
-            std::stringstream s;
-            s << Value; //zak³¹damy ¿e T ma zdefiniowany operator<< na ostream
-            return s.str();
-        }
-
-        SDL_Surface* RenderText(char* T);
-        SDL_Surface* RenderText(int T);
-        SDL_Surface* RenderText(std::string T);
 };
 
 #endif

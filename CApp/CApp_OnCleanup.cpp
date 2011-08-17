@@ -32,6 +32,7 @@ void CApp::OnCleanup()
     CObjectMenager::ObjectList.clear();
 
     SDL_FreeSurface(Surf_Display);
+    TTF_CloseFont(CSurface::Font);
     TTF_Quit();
     SDL_Quit();
 }

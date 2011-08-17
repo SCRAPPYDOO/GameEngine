@@ -18,6 +18,11 @@ bool CInterfaceMenu::OnLoad()
     return true;
 }
 
+void CInterfaceMenu::OnLoop()
+{
+    CInterface::OnLoop();
+}
+
 void CInterfaceMenu::OnRender(SDL_Surface* Surf_Display)
 {
 	CInterface::OnRender(Surf_Display);

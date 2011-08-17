@@ -105,7 +105,7 @@ class CUnit
         }
 
         //Character Methods
-        virtual char* GetName() { return NULL; }
+        virtual std::string GetName() { return " "; }
         virtual int GetActualHealth() const { return NULL; }
         virtual int GetMaxHealth() const { return NULL; }
 

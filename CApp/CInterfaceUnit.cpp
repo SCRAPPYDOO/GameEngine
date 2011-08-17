@@ -38,9 +38,9 @@ bool CInterfaceUnit::OnLoad()
 
     if(pUnit)
     {
-        char* name = pUnit->GetName();
-        if(name)
-            Surf_UnitName = RenderText(name);
+        std::string name = pUnit->GetName();
+
+        Surf_UnitName = CSurface::RenderText(name);
 
         /*Surf_UnitImage = CPlayer::Player.pPlayerCharacter->GetImage();*/
     }
@@ -58,6 +58,8 @@ void CInterfaceUnit::OnLoop()
 
 void CInterfaceUnit::OnRender(SDL_Surface* Surf_Display)
 {
+    if(Surf_Display == NULL) return;
+
     CInterface::OnRender(Surf_Display);
 
     if(Surf_UnitImage)
@@ -71,16 +73,36 @@ void CInterfaceUnit::OnRender(SDL_Surface* Surf_Display)
 
     if(Surf_UnitName)
         CSurface::OnDraw(Surf_Display, Surf_UnitName, nPosX, nPosY - 20);
+
+    CleanUpHealthBar();
 }
 
 void CInterfaceUnit::OnCleanup()
 {
 	CInterface::OnCleanup();
 
-    if(Surf_UnitStatus) 
-		SDL_FreeSurface(Surf_UnitStatus);
+    if(Surf_UnitImage)
+        SDL_FreeSurface(Surf_UnitImage);
 
-	Surf_UnitStatus = NULL;
+    if(Surf_UnitName)
+        SDL_FreeSurface(Surf_UnitName);
+
+    Surf_UnitName = NULL;
+    Surf_UnitImage = NULL;
+
+    CleanUpHealthBar();
+}
+
+void CInterfaceUnit::CleanUpHealthBar()
+{
+    if(Surf_Percentage)
+        SDL_FreeSurface(Surf_Percentage);
+
+    if(Surf_UnitName)
+        SDL_FreeSurface(Surf_UnitName);
+
+    Surf_Percentage = NULL;
+    Surf_UnitName = NULL;
 }
 
 void CInterfaceUnit::UpdateHealth()
@@ -89,12 +111,11 @@ void CInterfaceUnit::UpdateHealth()
     {
         nHealth = pUnit->GetActualHealth();
         nMaxHealth = pUnit->GetMaxHealth();
-        nHealthBarRange = nHealth / (nMaxHealth / HEALTHBARRANGE);
-    }
+        nHealthBarRange = nHealth / (nMaxHealth / HEALTHBARRANGE);  
+    } 
 
-    std::string s = ConvertIntToString(nHealthBarRange) + "%";
 
-    Surf_Percentage = RenderText(s);
+    Surf_Percentage = CSurface::RenderText(nHealthBarRange);
 }
 
 void CInterfaceUnit::UpdateUnit()

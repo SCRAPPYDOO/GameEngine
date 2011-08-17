@@ -79,10 +79,10 @@ void CInterfaceCharSheet::UpdateInterface()
         {
             /*case 0: pText = pChar->GetName();*/
 
-            default: return;
+            default: break;
         }
 
-        TextSurface[i] = RenderText(pText);
+        TextSurface[i] = CSurface::RenderText(pText);
     }  
 }
 

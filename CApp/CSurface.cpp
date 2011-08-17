@@ -1,5 +1,8 @@
 #include "CSurface.h"
 
+TTF_Font* CSurface::Font = NULL;
+SDL_Color CSurface::TextColor = { 255, 50, 50 };
+
 CSurface::CSurface() 
 {
 
@@ -74,3 +77,39 @@ bool CSurface::Transparent(SDL_Surface* Surf_Dest, int R, int G, int B)
 	return true;
 }
 
+SDL_Surface* CSurface::RenderText(std::string strText)
+{
+    SDL_Surface* pSurface = NULL;
+
+    pSurface = TTF_RenderText_Solid(CSurface::Font, strText.c_str(), CSurface::TextColor);
+    
+    if(!pSurface) return NULL;
+
+    return pSurface;
+}
+
+template<typename Typ>
+std::string ConvertToString(Typ T)
+{
+    std::stringstream s;
+    s << T;
+    return s.str();
+}
+
+SDL_Surface* CSurface::RenderText(int nValue)
+{
+    std::string strText = ConvertToString(nValue);
+    return RenderText(strText);
+}
+
+SDL_Surface* CSurface::RenderText(char* cText)
+{
+    std::string strText = ConvertToString(cText);
+    return RenderText(strText);
+}
+
+SDL_Surface* CSurface::RenderText(char cText)
+{
+    std::string strText = ConvertToString(cText);
+    return RenderText(strText);
+}

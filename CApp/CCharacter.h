@@ -13,14 +13,14 @@ class CCharacter : public CUnit
 
 
     protected:
-        char* cCharacterName;
+        std::string cCharacterName;
 
         int nActualHealth;
         int nMaxHealth;
 
     public:
         //Character Methods
-        char* GetName() { return cCharacterName; }
+        std::string GetName() { return cCharacterName; }
         int GetActualHealth() const { return nActualHealth; }
         int GetMaxHealth() const { return nMaxHealth; }
 

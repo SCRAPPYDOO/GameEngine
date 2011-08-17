@@ -36,6 +36,9 @@ class CInterfaceUnit : public CInterface
         void UpdateHealth();
         void UpdateUnit();
 
+        void CleanUpHealthBar();
+
+
 };
 #endif
 
