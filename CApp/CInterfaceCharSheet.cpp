@@ -2,8 +2,8 @@
 
 int TxtPosition[INTERFACE_CHARSHEET_MAX][2] =
 {
-    {5, 5},
-    {11, 5},
+    {8, 44}, //Character Name 
+    {429, 169}, //Actual Health
     {66, 5},
     {22, 5},
     {77, 5},
@@ -39,7 +39,7 @@ bool CInterfaceCharSheet::OnLoad()
 void CInterfaceCharSheet::OnLoop()
 {
     CInterface::OnLoop();
-
+    CleanUpTextSurface();
     UpdateInterface();
 }
 
@@ -58,7 +58,11 @@ void CInterfaceCharSheet::OnRender(SDL_Surface* Surf_Display)
 void CInterfaceCharSheet::OnCleanup()
 {
     CInterface::OnCleanup();
+    CleanUpTextSurface();
+}
 
+void CInterfaceCharSheet::CleanUpTextSurface()
+{
     for(int i=0; i<INTERFACE_CHARSHEET_MAX; ++i)
     {
         if(TextSurface[i]) 
@@ -70,19 +74,22 @@ void CInterfaceCharSheet::OnCleanup()
 
 void CInterfaceCharSheet::UpdateInterface()
 {
-    char* pText = "error when geting a text";
-
-    //Update Statistics and things from char convert to char and render them
     for(int i=0; i<INTERFACE_CHARSHEET_MAX; ++i)
-    {
+    { 
+        std::string strText = "";
+        int nValue = 0;
+
         switch(i)
         {
-            /*case 0: pText = pChar->GetName();*/
+            case 0: strText = CPlayer::Player.pPlayerCharacter->GetName(); TextSurface[i] = CSurface::RenderText(strText); break;
+           
+            case 1: nValue = CPlayer::Player.pPlayerCharacter->GetActualHealth(); TextSurface[i] = CSurface::RenderText(nValue); break;
 
             default: break;
         }
 
-        TextSurface[i] = CSurface::RenderText(pText);
+        
+        
     }  
 }
 

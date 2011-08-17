@@ -87,6 +87,10 @@ void CInterfaceUnit::OnCleanup()
     if(Surf_UnitName)
         SDL_FreeSurface(Surf_UnitName);
 
+    if(Surf_UnitStatus)
+        SDL_FreeSurface(Surf_UnitStatus);
+
+    Surf_UnitStatus = NULL;
     Surf_UnitName = NULL;
     Surf_UnitImage = NULL;
 
@@ -98,11 +102,7 @@ void CInterfaceUnit::CleanUpHealthBar()
     if(Surf_Percentage)
         SDL_FreeSurface(Surf_Percentage);
 
-    if(Surf_UnitStatus)
-        SDL_FreeSurface(Surf_UnitStatus);
-
     Surf_Percentage = NULL;
-    Surf_UnitStatus = NULL;
 }
 
 void CInterfaceUnit::UpdateHealth()
@@ -113,7 +113,6 @@ void CInterfaceUnit::UpdateHealth()
         nMaxHealth = pUnit->GetMaxHealth();
         nHealthBarRange = nHealth / (nMaxHealth / HEALTHBARRANGE);  
     } 
-
 
     Surf_Percentage = CSurface::RenderText(nHealthBarRange);
 }

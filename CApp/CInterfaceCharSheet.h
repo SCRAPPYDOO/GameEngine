@@ -21,6 +21,7 @@ class CInterfaceCharSheet : public CInterface
         void OnRender(SDL_Surface* Surf_Display);
         void OnCleanup();
 
+        void CleanUpTextSurface();
         void UpdateInterface();
 };
 

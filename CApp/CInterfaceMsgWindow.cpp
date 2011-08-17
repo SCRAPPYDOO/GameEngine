@@ -18,6 +18,13 @@ bool CInterfaceMsgWindow::OnLoad()
     return true;
 }
 
+void CInterfaceMsgWindow::OnLoop()
+{
+    CInterface::OnLoop();
+    CleanUpMassageSurf();
+    RenderMassage();
+}
+
 void CInterfaceMsgWindow::OnRender(SDL_Surface* Surf_Display)
 {
     CInterface::OnRender(Surf_Display);
@@ -27,13 +34,17 @@ void CInterfaceMsgWindow::OnRender(SDL_Surface* Surf_Display)
         if(!Masage[i]) continue;
 
         CSurface::OnDraw(Surf_Display, Masage[i], nPosX, nPosY + i * 10 + 40); 
-    }  
+    }   
 }    
 
 void CInterfaceMsgWindow::OnCleanup()
 {
     CInterface::OnCleanup();
+    CleanUpMassageSurf();
+}
 
+void CInterfaceMsgWindow::CleanUpMassageSurf()
+{
     for(int i=0; i<INTERFACE_MSGWINDOW_MAX_TEXT_LINES; ++i)
     {
         if(Masage[i]) 
@@ -45,14 +56,25 @@ void CInterfaceMsgWindow::OnCleanup()
 
 void CInterfaceMsgWindow::AddMsg(char* msg)
 {
-    for(int i = 0;i < INTERFACE_MSGWINDOW_MAX_TEXT_LINES;i++) 
+    for(int i = 0;i < INTERFACE_MSGWINDOW_MAX_TEXT_LINES;++i) 
     {  
         if(i == (INTERFACE_MSGWINDOW_MAX_TEXT_LINES - 1))
         {
-            Masage[i] = CSurface::RenderText(msg);
+            std::stringstream s;
+            s << msg;
+
+            MasageList[i] = s.str();
             return;
         }
 
-        Masage[i] = Masage[i+1]; 
+        MasageList[i] = MasageList[i+1]; 
+    } 
+}
+
+void CInterfaceMsgWindow::RenderMassage()
+{
+    for(int i = 0;i < INTERFACE_MSGWINDOW_MAX_TEXT_LINES;++i) 
+    {  
+        Masage[i] = CSurface::RenderText(MasageList[i]);
     } 
 }

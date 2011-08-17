@@ -13,13 +13,17 @@ class CInterfaceMsgWindow : public CInterface
         ~CInterfaceMsgWindow() {}
 
     private:
+        std::string MasageList[INTERFACE_MSGWINDOW_MAX_TEXT_LINES];
         SDL_Surface *Masage[INTERFACE_MSGWINDOW_MAX_TEXT_LINES];
 
     public:
         bool OnLoad();
+        void OnLoop();
         void OnRender(SDL_Surface* Surf_Display);
         void OnCleanup(); 
 
+        void CleanUpMassageSurf();
+        void RenderMassage();
         void AddMsg(char* msg);
 };
 
