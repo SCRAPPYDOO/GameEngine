@@ -20,9 +20,6 @@ bool CApp::OnInit()
     CSurface::Font = TTF_OpenFont( "./font/times.ttf", 15 );
     if(CSurface::Font == NULL) return false;
 
-	if(CPlayer::Player.OnLoad() == false)
-		return false;
-
     if(CInterfaceMenager::InterfaceMenager.LoadInterface() == false)
         return false;
 

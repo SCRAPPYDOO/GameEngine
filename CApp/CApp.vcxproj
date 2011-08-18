@@ -91,6 +91,7 @@
     <ClCompile Include="CMovementGenerator.cpp" />
     <ClCompile Include="CObject.cpp" />
     <ClCompile Include="CObjectMenager.cpp" />
+    <ClCompile Include="CObjectUnit.cpp" />
     <ClCompile Include="CPlayer.cpp" />
     <ClCompile Include="CSurface.cpp" />
     <ClCompile Include="CTile.cpp" />
@@ -121,6 +122,7 @@
     <ClInclude Include="CMovementGenerator.h" />
     <ClInclude Include="CObject.h" />
     <ClInclude Include="CObjectMenager.h" />
+    <ClInclude Include="CObjectUnit.h" />
     <ClInclude Include="CPlayer.h" />
     <ClInclude Include="CSurface.h" />
     <ClInclude Include="CTile.h" />

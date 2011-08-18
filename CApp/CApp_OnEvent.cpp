@@ -15,7 +15,7 @@ void CApp::OnKeyDown(SDLKey sym, SDLMod mod, Uint16 unicode)
             {
                 case TEST:
                 {
-                    CPlayer::Player.pPlayerCharacter->SetHealth(5);
+                    CPlayer::Player.pPlayerCharacter->SetActualHealth(5);
 			        if(!CInterfaceMenager::InterfaceMenager.InterfaceList[INTERFACE_GAMEMENU])
 			        {
 				        CInterfaceMenager::InterfaceMenager.LoadInterface(INTERFACE_GAMEMENU);
@@ -55,11 +55,7 @@ void CApp::OnMouseMove(int mX, int mY, int relX, int relY, bool Left,bool Right,
 
         if(CUnit* pUnit = CUnitMenager::GetUnit(mX, mY))
         {
-            if(pUnit && pUnit->HasFlag(UNIT_FLAG_GOSSIP))
-                CInterfaceMenager::InterfaceMenager.InterfaceList[INTERFACE_MASAGEWINDOW]->AddMsg("Mam Flage");
-
-            if(pUnit && pUnit->HasFlag(UNIT_FLAG_VENDOR))
-                CInterfaceMenager::InterfaceMenager.InterfaceList[INTERFACE_MASAGEWINDOW]->AddMsg("Mam Flage");
+ 
         }
     }
     else
@@ -95,7 +91,7 @@ void CApp::OnRButtonDown(int x,int y)
     if(CApp::eGameState == MAIN_MENU) //We Dont Use RButton In Menu                                       
         return;
 
-    CPlayer::Player.pPlayerCharacter->SetHealth(55);
+    CPlayer::Player.pPlayerCharacter->SetActualHealth(55);
 }
 
 void CApp::OnRButtonUp(int mX, int mY)
@@ -158,14 +154,14 @@ void CApp::OnLButtonDown(int x,int y)
 
     //if(CUnit* pUnit = CUnitMenager::GetUnit(x, y))
     //    if(pUnit)
-    //        if(pUnit == CPlayer::Player.pSelectedUnit)
-    //        {
-    //            return;
-    //        }
-    //        else
-    //        {
+    //        ////if(pUnit == CPlayer::Player.pSelectedUnit)
+    //        ////{
+    //        ////    return;
+    //        ////}
+    //        ////else
+    //        ////{
     //            CPlayer::Player.pTargetedUnit = pUnit;
-    //        }
+    //        //}
 }
 
 void CApp::OnLButtonUp(int x,int y)

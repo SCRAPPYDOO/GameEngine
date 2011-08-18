@@ -39,7 +39,7 @@ bool CInterfaceCharSheet::OnLoad()
 void CInterfaceCharSheet::OnLoop()
 {
     CInterface::OnLoop();
-    CleanUpTextSurface();
+    
     UpdateInterface();
 }
 
@@ -58,10 +58,10 @@ void CInterfaceCharSheet::OnRender(SDL_Surface* Surf_Display)
 void CInterfaceCharSheet::OnCleanup()
 {
     CInterface::OnCleanup();
-    CleanUpTextSurface();
+    CleanUpSurface();
 }
 
-void CInterfaceCharSheet::CleanUpTextSurface()
+void CInterfaceCharSheet::CleanUpSurface()
 {
     for(int i=0; i<INTERFACE_CHARSHEET_MAX; ++i)
     {
@@ -72,24 +72,34 @@ void CInterfaceCharSheet::CleanUpTextSurface()
     }  
 }
 
+
 void CInterfaceCharSheet::UpdateInterface()
 {
+	CleanUpSurface();
+
     for(int i=0; i<INTERFACE_CHARSHEET_MAX; ++i)
     { 
         std::string strText = "";
         int nValue = 0;
 
+		int Type = 0;
+
         switch(i)
         {
-            case 0: strText = CPlayer::Player.pPlayerCharacter->GetName(); TextSurface[i] = CSurface::RenderText(strText); break;
-           
-            case 1: nValue = CPlayer::Player.pPlayerCharacter->GetActualHealth(); TextSurface[i] = CSurface::RenderText(nValue); break;
+			//string types
+            case 0: strText = CPlayer::Player.pPlayerCharacter->GetName(); Type = 1; break;
 
+			//int types
+            case 1: nValue = CPlayer::Player.pPlayerCharacter->GetActualHealth(); Type = 2; break;
             default: break;
         }
 
-        
-        
+		switch(Type)
+		{
+            case 1: TextSurface[i] = CSurface::RenderText(strText); break;
+            case 2: TextSurface[i] = CSurface::RenderText(nValue); break;
+			default: break;
+		}   
     }  
 }
 

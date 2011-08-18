@@ -1,7 +1,6 @@
 #ifndef _CPLAYER_H_
     #define _CPLAYER_H_
 
-#include "CUnit.h"
 #include "CCharacter.h"
 
 class CPlayer
@@ -13,22 +12,15 @@ class CPlayer
             pSelectedUnit = NULL;
             pTargetedUnit = NULL;
         }
-
         ~CPlayer() {}
 
-		bool OnLoad() 
-		{
-			return true;
-		}
+        static CPlayer Player;
 
     public:
-        static CPlayer Player;
+        
         CUnit* pPlayerCharacter;
         CUnit* pSelectedUnit;
         CUnit* pTargetedUnit;
-
-	public:
-
 };
 
 #endif

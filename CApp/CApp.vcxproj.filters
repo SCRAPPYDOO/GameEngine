@@ -109,6 +109,9 @@
     <ClCompile Include="CInterfaceMassageHandler.cpp">
       <Filter>Interface</Filter>
     </ClCompile>
+    <ClCompile Include="CObjectUnit.cpp">
+      <Filter>World</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CAnimation.h">
@@ -197,6 +200,9 @@
     </ClInclude>
     <ClInclude Include="CInterfaceMassageHandler.h">
       <Filter>Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="CObjectUnit.h">
+      <Filter>World</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

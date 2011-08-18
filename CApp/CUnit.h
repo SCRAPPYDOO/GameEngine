@@ -1,17 +1,61 @@
 #ifndef _CUNIT_H_
     #define _CUNIT_H_
 
-#include "CArea.h"
-#include "CAnimation.h"
-#include "CCamera.h"
-#include "CFrameControler.h"
-#include "CSurface.h"
+#include "CObjectUnit.h"
 
 enum UnitType
 {
     ENTITY_TYPE_GENERIC = 0,
     ENTITY_TYPE_PLAYER
 };
+
+enum RaceType
+{
+	RACE_NULL,
+	RACE_DRAGONBORN,
+	RACE_DWARF,
+	RACE_ELADRIN,
+	RACE_ELF,
+	RACE_HALFELF,
+	RACE_HALFLING,
+	RACE_HUMAN,
+	RACE_TIEFLING,
+};
+
+enum ClassType
+{
+	CLASS_NULL,
+	CLASS_CLERIC,
+	CLASS_FIGHTER,
+	CLASS_PALADIN,
+	CLASS_RANGER,
+	CLASS_ROGUE,
+	CLASS_WARLOCK,
+	CLASS_WARLORD,
+	CLASS_WIZARD,
+};
+
+enum ParagonClassType
+{
+
+};
+
+enum EpicClassType
+{
+
+};
+
+enum AbilityType
+{
+	ABILITY_STRENGHT,
+	ABILITY_CONSTITUTION,
+	ABILITY_DEXTERITY,
+	ABILITY_INTELLIGENCE,
+	ABILITY_WISDOM,
+	ABILITY_CHARISMA,
+};
+
+#define MAX_ABILITY 6
 
 enum UnitFlag
 {
@@ -25,94 +69,47 @@ enum UnitFlag
     UNIT_FLAG_LOOTABLE  = 0x40,
 };
 
-enum UnitMovementFlag
-{
-    UNIT_MOVEMENT_FLAG_NOTMOVE    = 0,
-    UNIT_MOVEMENT_FLAG_RUN        = 1,
-    UNIT_MOVEMENT_FLAG_WALK       = 4,
-    UNIT_MOVEMENT_FLAG_SNEAK      = 8,
-};
-
-class CUnit
+class CUnit : public CObjectUnit
 {
     public:
         CUnit();
         ~CUnit() {}
 
     public:
-
-        virtual bool OnLoad();
-        virtual void OnLoop();
-        virtual void OnRender(SDL_Surface* Surf_Display);
-        virtual void OnCleanup();
-
-        virtual void OnAnimate();
-        /*virtual void OnCollision(CUnit* pUnit);*/
+        bool OnLoad();
+        void OnLoop();
+        void OnRender(SDL_Surface* Surf_Display);
+        void OnCleanup();
 
     protected:
-        CAnimation      Anim_Control;
-        SDL_Surface*    Surf_Unit;
+        std::string cCharacterName;
+        int nActualHealth;
+        int nMaxHealth;
+        int nCharacterLevel;
 
-    protected: //Movement Information
-        float           fPosX;
-        float           fPosY;
-        int             nWidth;
-        int             nHeight;
+		RaceType Race;
+		ClassType Class;
+		int Ability[MAX_ABILITY];
 
-        float           fRadius;  //radius of colision box
-        float           fGoX;   // destination point
-        float           fGoY;   
-        float           fNewX;  //position where we are going to
-        float           fNewY;  
-        float           fSpeed; 
+        int nUnitFlag;
+       
+    public: //Atributes Methods
+        std::string GetName() const { return cCharacterName; }
+        int GetActualHealth() const { return nActualHealth; }
+        void SetActualHealth(int nValue) { nActualHealth = nValue; }
+        int GetMaxHealth() const { return nMaxHealth; }
+        int GetCharacterLevel() const { return nCharacterLevel; }
 
-        int             nUnitFlag;
-        int             nUnitMovementFlag;
+		RaceType GetRace() const { return Race; }
+		ClassType GetClass() const { return Class; }
+		int GetAbility(AbilityType Abil) const { return Ability[Abil]; }
+		void SetAbility(AbilityType Abil, int nValue) { Ability[Abil] = nValue; }
 
-        int             CurrentFrameCol;
-        int             CurrentFrameRow;
+        bool HasFlag(UnitFlag Flag) const { if(nUnitFlag & Flag) return true; return false; }
+        void SetFlag(UnitFlag Flag) { nUnitFlag = nUnitFlag | Flag; }
 
-    public:
-        float GetPosX() const { return fPosX; }
-        float GetPosY() const { return fPosY; }
-        int GetWidht() const { return nWidth; }
-        int GetHeight() const { return nHeight; }
-          
-    public: //Movement Methods                                 
-        virtual void OnMoveToPoint();                                                   //trigered by MovementGenerator
-        virtual void OnMoveToPoint(int nGoPosX, int nGoPosY);                           //trigered by CApp->OnEvent->MouseRClick
-
-        virtual bool IsOnPoint(int goX, int goY);                                       //We check if we are near point
-        virtual void StopMove();
-
-        virtual int GetAnimPosX();
-        virtual int GetAnimPosY();
-
-        bool    Collides(int oX, int oY, int oW, int oH);
-        bool    IsInColision();
-        double  GetDistance( float x1, float y1, float x2, float y2 );
-        bool    IsInRange(CUnit* pUnit);
-
-        bool    PosValid(int NewX, int NewY);
-        bool    PosValidTile(CTile* pTile);
-        bool    PosValidEntity(CUnit* pUnit, int NewX, int NewY); 
-
-        bool HasFlag(UnitFlag Flag) const
-        {
-            if(nUnitFlag & Flag)
-                return true;
-            return false;
-        }
-
-        //Character Methods
-        virtual std::string GetName() { return " "; }
-        virtual int GetActualHealth() const { return NULL; }
-        virtual int GetMaxHealth() const { return NULL; }
-
-        virtual void SetHealth(int nValue) { }
-
-        virtual bool IsAlive() const { return true; }
-
+    public: //Def Methods
+        bool IsAlive() const { if(nActualHealth > 0) return true; return false; }
 };
 
 #endif
