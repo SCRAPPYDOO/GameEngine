@@ -9,22 +9,35 @@ enum
 
 };
 
+enum 
+{
+	CHAR_NAME,
+	CHAR_RACE,
+	CHAR_LEVEL,
+	CHAR_CLASS,
+	CHAR_MAX_SURF,
+};
+
 class CInterfaceMenu : public CInterface
 {
     public:
         CInterfaceMenu();
         ~CInterfaceMenu() {}
-		SDL_Surface * Surf_character;
 
     public: //Virtual
         bool OnLoad();
         void OnLoop();
 		void OnRender(SDL_Surface* Surf_Display);
         void OnCleanup();
+		void OnButtonActivate(ButtonType Type);
 
 		bool LoadCharacters();
 
 	private:
+		int SelectedChar;
+		SDL_Surface* SelectedCharSurf;
+		SDL_Surface* Surf[INTERFACE_MENU_MAXCHARSLOTS][CHAR_MAX_SURF];
+		CUnit* Character[INTERFACE_MENU_MAXCHARSLOTS];
 		//List Of Sharacters
 };
 

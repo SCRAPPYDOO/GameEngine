@@ -98,6 +98,17 @@ void CButton::Activate()
             break;
         }
 
+		case BUTTON_MENU_SLOT_ONE:
+		case BUTTON_MENU_SLOT_TWO:
+		case BUTTON_MENU_SLOT_THREE:
+		case BUTTON_MENU_SLOT_FOUR:
+		case BUTTON_MENU_SLOT_FIVE:
+		case BUTTON_MENU_SLOT_SIX:
+		{
+			CInterfaceMenager::InterfaceMenager.InterfaceList[INTERFACE_MAINMENU]->OnButtonActivate(eButtonType);
+			break;
+		}
+
 		case BUTTON_PLAY:
 		{
             CApp::eGameState = TEST;

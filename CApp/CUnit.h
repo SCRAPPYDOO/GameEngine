@@ -53,9 +53,34 @@ enum AbilityType
 	ABILITY_INTELLIGENCE,
 	ABILITY_WISDOM,
 	ABILITY_CHARISMA,
+	ABILITY_MAX,
 };
 
-#define MAX_ABILITY 6
+enum SkillType
+{
+	SKILL_ACROBATICS,
+	SKILL_ARCANA, 
+	SKILL_ATHLETICS, 
+	SKILL_BLUFF, 
+	SKILL_DIPLOMACY, 
+	SKILL_DUNGEONEERING, 
+	SKILL_ENDURANCE, 
+	SKILL_HEAL,
+	SKILL_HISTORY,
+	SKILL_INSIGHT,
+	SKILL_INTIMIDATE, 
+	SKILL_NATURE, 
+	SKILL_PERCEPTION, 
+	SKILL_RELIGION, 
+	SKILL_STEALTH, 
+	SKILL_STREETWISE, 
+	SKILL_MAX,
+};
+
+enum FeatType
+{
+	FEAT_NULL = 0x00000000000001,
+};
 
 enum UnitFlag
 {
@@ -88,8 +113,16 @@ class CUnit : public CObjectUnit
         int nCharacterLevel;
 
 		RaceType Race;
+
 		ClassType Class;
-		int Ability[MAX_ABILITY];
+
+		int Ability[ABILITY_MAX];
+
+		bool Skill[SKILL_MAX];
+
+
+
+
 
         int nUnitFlag;
        
@@ -101,9 +134,22 @@ class CUnit : public CObjectUnit
         int GetCharacterLevel() const { return nCharacterLevel; }
 
 		RaceType GetRace() const { return Race; }
+
 		ClassType GetClass() const { return Class; }
+
+		//Abilitys
 		int GetAbility(AbilityType Abil) const { return Ability[Abil]; }
 		void SetAbility(AbilityType Abil, int nValue) { Ability[Abil] = nValue; }
+
+		//Skills
+		bool IsSkillTrained(SkillType SkillT) const { return Skill[SkillT]; }
+		void TrainSkill(SkillType SkillT) { Skill[SkillT] = true; }
+		//bool CheckSkill(SkillType SkillT, int DificultyClass);
+		//AbilityType GetSkillAbility(SkillType SkillT);
+
+
+
+
 
         bool HasFlag(UnitFlag Flag) const { if(nUnitFlag & Flag) return true; return false; }
         void SetFlag(UnitFlag Flag) { nUnitFlag = nUnitFlag | Flag; }

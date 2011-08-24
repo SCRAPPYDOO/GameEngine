@@ -21,16 +21,19 @@ CInterfaceCharacterCreator::CInterfaceCharacterCreator()
 	Class = CLASS_NULL;
 
 	//Abilitys Step
-	for(int i=0; i<MAX_ABILITY; ++i)
+	for(int i=0; i<ABILITY_MAX; ++i)
 	{
-		Ability[i] = 0;
+		if(i > 4)
+			Ability[i] = 8;
+		else
+			Ability[i] = 10;
 	}
 
 	AbilityPoints = 0;  //points to spend
 	SelectedAbi = ABILITY_STRENGHT;
 	SurfAbilityPoints = NULL;
 
-	for(int i=0; i<MAX_ABILITY; ++i)
+	for(int i=0; i<ABILITY_MAX; ++i)
 	{
 		SurfAbility[i] = NULL;
 	}
@@ -62,7 +65,7 @@ void CInterfaceCharacterCreator::OnRender(SDL_Surface* Surf_Display)
 		CSurface::OnDraw(Surf_Display, Surf_StepTitle, nPosX + 600, nPosY + 50);
 
 	//Abilitys Step
-	for(int i=0; i<MAX_ABILITY; ++i)
+	for(int i=0; i<ABILITY_MAX; ++i)
 	{
 		if(SurfAbility[i])
 			CSurface::OnDraw(Surf_Display, SurfAbility[i], 350, 200 + i*35);
@@ -84,12 +87,14 @@ void CInterfaceCharacterCreator::OnButtonActivate(ButtonType Type)
     {
         case BUTTON_CREATECHAR_NEXT:
         {
+			CleanupStepSurface();
             ++nActualStep;
             LoadStep();
             break;
         }
         case BUTTON_CREATECHAR_BACK:
         {
+			CleanupStepSurface();
             --nActualStep;
             LoadStep();
             break;
@@ -215,7 +220,7 @@ void CInterfaceCharacterCreator::LoadStep()
 		{
 			strTitle = "CHOOSE YOUR ABILITYS";
 
-			AbilityPoints = 22;
+			//AbilityPoints = 22;
 
 			for(int i=0; i<MAX_ABI; ++i)
 			{
@@ -345,15 +350,15 @@ void CInterfaceCharacterCreator::IncreaseAbility()
 	{
 		default:
 		case 8: 
-		case 9:  Koszt = 1; break;
-		case 10: Koszt = 1; break;
-		case 11: Koszt = 2; break;
-		case 12: Koszt = 3; break;
-		case 13: Koszt = 5; break;
-		case 14: Koszt = 7; break;
-		case 15: Koszt = 9; break;
-		case 16: Koszt = 12; break;
-		case 17: Koszt = 16; break;
+		case 9: 
+		case 10:
+		case 11: 
+		case 12: Koszt = 1; break;
+		case 13: 
+		case 14: 
+		case 15: Koszt = 2; break;
+		case 16: Koszt = 3; break;
+		case 17: Koszt = 4; break;
 	}
 
 	if(AbilityPoints >= Koszt)
@@ -373,14 +378,14 @@ void CInterfaceCharacterCreator::DecreaseAbility()
 		default:
 		case 9:  
 		case 10: 
-		case 11: Koszt = 1; break;
-		case 12: Koszt = 2; break;
-		case 13: Koszt = 3; break;
-		case 14: Koszt = 5; break;
-		case 15: Koszt = 7; break;
-		case 16: Koszt = 9; break;
-		case 17: Koszt = 12; break;
-		case 18: Koszt = 16; break;
+		case 11: 
+		case 12: 
+		case 13: Koszt = 1; break;
+		case 14: 
+		case 15: 
+		case 16: Koszt = 2; break;
+		case 17: Koszt = 3; break;
+		case 18: Koszt = 4; break;
 	}
 
 	AbilityPoints += Koszt;
@@ -393,7 +398,7 @@ void CInterfaceCharacterCreator::LoadStepSurface()
 	{
 		case STEP_ABILITY:
 		{
-			for(int i=0; i<MAX_ABILITY; ++i)
+			for(int i=0; i<ABILITY_MAX; ++i)
 			{
 				SurfAbility[i] = CSurface::RenderText(Ability[i]);
 			}
@@ -413,7 +418,7 @@ void CInterfaceCharacterCreator::CleanupStepSurface()
 	{
 		case STEP_ABILITY:
 		{
-			for(int i=0; i<MAX_ABILITY; ++i)
+			for(int i=0; i<ABILITY_MAX; ++i)
 			{
 				if(SurfAbility[i]) 
 					SDL_FreeSurface(SurfAbility[i]);
@@ -430,4 +435,34 @@ void CInterfaceCharacterCreator::CleanupStepSurface()
 		}
 		default: break;
 	}
+}
+
+void CInterfaceCharacterCreator::GetTrainedSkills()
+{
+	switch(Class)
+	{
+		case CLASS_CLERIC:
+		{
+			Skill[SKILL_RELIGION] = true;
+			break;
+		}
+		case CLASS_FIGHTER:
+		case CLASS_PALADIN:
+		case CLASS_RANGER:
+		case CLASS_ROGUE:
+		case CLASS_WARLOCK:
+		case CLASS_WARLORD:
+		case CLASS_WIZARD:
+		default: break;
+	}
+}
+
+int CInterfaceCharacterCreator::GetClassSkillPoints()
+{
+}
+void CInterfaceCharacterCreator::GetAvailableSkills()
+{
+}
+int CInterfaceCharacterCreator::GetRaceSkillPoints()
+{
 }
