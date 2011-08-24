@@ -1,9 +1,16 @@
 #ifndef _CAPP_H_
     #define _CAPP_H_
 
+#include "CMySQL.h"
+
 #include <SDL.h>
 #include "math.h"
 #include <vector>
+
+//#include <stdlib.h>
+//#include <iostream>
+//#include <sstream>
+//#include <stdexcept>
 
 #include "Define.h"
 
@@ -69,6 +76,7 @@ class CApp : public CEvent
         void OnRender();
 
         void OnCleanup();
+
 };
 
 #endif

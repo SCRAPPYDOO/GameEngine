@@ -14,6 +14,27 @@ CInterfaceCharacterCreator::CInterfaceCharacterCreator()
 
     nActualStep = 0;
     Surf_StepTitle = NULL;
+
+
+	//Selected Variables
+	Race = RACE_NULL;
+	Class = CLASS_NULL;
+
+	//Abilitys Step
+	for(int i=0; i<MAX_ABILITY; ++i)
+	{
+		Ability[i] = 0;
+	}
+
+	AbilityPoints = 0;  //points to spend
+	SelectedAbi = ABILITY_STRENGHT;
+	SurfAbilityPoints = NULL;
+
+	for(int i=0; i<MAX_ABILITY; ++i)
+	{
+		SurfAbility[i] = NULL;
+	}
+
 }
 
 bool CInterfaceCharacterCreator::OnLoad()
@@ -29,8 +50,8 @@ bool CInterfaceCharacterCreator::OnLoad()
 void CInterfaceCharacterCreator::OnLoop()
 {
 	CInterface::OnLoop();
-
-
+	CleanupStepSurface();
+	LoadStepSurface();
 }
 
 void CInterfaceCharacterCreator::OnRender(SDL_Surface* Surf_Display)
@@ -39,6 +60,16 @@ void CInterfaceCharacterCreator::OnRender(SDL_Surface* Surf_Display)
 
 	if(Surf_StepTitle)
 		CSurface::OnDraw(Surf_Display, Surf_StepTitle, nPosX + 600, nPosY + 50);
+
+	//Abilitys Step
+	for(int i=0; i<MAX_ABILITY; ++i)
+	{
+		if(SurfAbility[i])
+			CSurface::OnDraw(Surf_Display, SurfAbility[i], 350, 200 + i*35);
+	}
+
+	if(SurfAbilityPoints)
+		CSurface::OnDraw(Surf_Display, SurfAbilityPoints, 350, 200 + 7*35);
 }
 
 void CInterfaceCharacterCreator::OnCleanup()
@@ -90,18 +121,14 @@ void CInterfaceCharacterCreator::OnButtonActivate(ButtonType Type)
 		case BUTTON_CREATECHAR_WARLORD: Class = CLASS_WARLORD; break;
 		case BUTTON_CREATECHAR_WIZARD: Class = CLASS_WIZARD; break;
 
-		case BUTTON_CREATECHAR_STR_PLUS: IncreaseAbility(ABILITY_STRENGHT); break;
-		case BUTTON_CREATECHAR_STR_MINUS:DecreaseAbility(ABILITY_STRENGHT); break;
-		case BUTTON_CREATECHAR_CON_PLUS: IncreaseAbility(ABILITY_CONSTITUTION); break;
-		case BUTTON_CREATECHAR_CON_MINUS:DecreaseAbility(ABILITY_CONSTITUTION); break;
-		case BUTTON_CREATECHAR_DEX_PLUS: IncreaseAbility(ABILITY_DEXTERITY); break;
-		case BUTTON_CREATECHAR_DEX_MINUS:DecreaseAbility(ABILITY_DEXTERITY); break;
-		case BUTTON_CREATECHAR_INT_PLUS: IncreaseAbility(ABILITY_INTELLIGENCE); break;
-		case BUTTON_CREATECHAR_INT_MINUS:DecreaseAbility(ABILITY_INTELLIGENCE); break;
-		case BUTTON_CREATECHAR_WIS_PLUS: IncreaseAbility(ABILITY_WISDOM); break;
-		case BUTTON_CREATECHAR_WIS_MINUS:DecreaseAbility(ABILITY_WISDOM); break;
-		case BUTTON_CREATECHAR_CHA_PLUS: IncreaseAbility(ABILITY_CHARISMA); break;
-		case BUTTON_CREATECHAR_CHA_MINUS:DecreaseAbility(ABILITY_CHARISMA); break;
+		case BUTTON_CREATECHAR_STR: SelectedAbi = ABILITY_STRENGHT; break;
+		case BUTTON_CREATECHAR_CON: SelectedAbi = ABILITY_CONSTITUTION; break;
+		case BUTTON_CREATECHAR_DEX: SelectedAbi = ABILITY_DEXTERITY; break;
+		case BUTTON_CREATECHAR_INT: SelectedAbi = ABILITY_INTELLIGENCE; break;
+		case BUTTON_CREATECHAR_WIS: SelectedAbi = ABILITY_WISDOM; break;
+		case BUTTON_CREATECHAR_CHA: SelectedAbi = ABILITY_CHARISMA; break;
+		case BUTTON_CREATECHAR_INCREASE: IncreaseAbility(); break;
+		case BUTTON_CREATECHAR_DECREASE: DecreaseAbility(); break;
 
         default: break;
     }
@@ -189,6 +216,32 @@ void CInterfaceCharacterCreator::LoadStep()
 			strTitle = "CHOOSE YOUR ABILITYS";
 
 			AbilityPoints = 22;
+
+			for(int i=0; i<MAX_ABI; ++i)
+			{
+				switch(i)
+				{
+					case 0: eType = BUTTON_CREATECHAR_STR; break;
+					case 1: eType = BUTTON_CREATECHAR_CON; break;
+					case 2: eType = BUTTON_CREATECHAR_DEX; break;
+					case 3: eType = BUTTON_CREATECHAR_INT; break;
+					case 4: eType = BUTTON_CREATECHAR_WIS; break;
+					case 5: eType = BUTTON_CREATECHAR_CHA; break;
+					case 6: eType = BUTTON_CREATECHAR_INCREASE; break;
+					case 7: eType = BUTTON_CREATECHAR_DECREASE; break;
+				}
+
+				x = 300;
+				y = 200 + i*35;
+
+				CButton *pButton = new CButton(x, y, eType);
+
+				if(pButton->OnLoad() == false)
+					continue;
+ 
+				ButtonsList.push_back(pButton);
+			}
+
 			//load modified abilitys via  race and class
 
 			break;
@@ -283,12 +336,12 @@ void CInterfaceCharacterCreator::CleanupStep()
 	Surf_StepTitle = NULL;
 }
 
-void CInterfaceCharacterCreator::IncreaseAbility(AbilityType Abi)
+void CInterfaceCharacterCreator::IncreaseAbility()
 {
-	if(Ability[Abi] > 17 || AbilityPoints == 0) return;
+	if(Ability[SelectedAbi] > 17 || AbilityPoints == 0) return;
 
 	int Koszt = 20;
-	switch(Ability[Abi])
+	switch(Ability[SelectedAbi])
 	{
 		default:
 		case 8: 
@@ -306,16 +359,16 @@ void CInterfaceCharacterCreator::IncreaseAbility(AbilityType Abi)
 	if(AbilityPoints >= Koszt)
 	{
 		AbilityPoints -= Koszt;
-		++Ability[Abi];
+		++Ability[SelectedAbi];
 	}
 }
 
-void CInterfaceCharacterCreator::DecreaseAbility(AbilityType Abi)
+void CInterfaceCharacterCreator::DecreaseAbility()
 {
-	if(Ability[Abi] < 9 ) return;
+	if(Ability[SelectedAbi] < 9 ) return;
 
 	int Koszt = 0;
-	switch(Ability[Abi])
+	switch(Ability[SelectedAbi])
 	{
 		default:
 		case 9:  
@@ -331,7 +384,7 @@ void CInterfaceCharacterCreator::DecreaseAbility(AbilityType Abi)
 	}
 
 	AbilityPoints += Koszt;
-	--Ability[Abi];
+	--Ability[SelectedAbi];
 }
 
 void CInterfaceCharacterCreator::LoadStepSurface()
@@ -340,18 +393,41 @@ void CInterfaceCharacterCreator::LoadStepSurface()
 	{
 		case STEP_ABILITY:
 		{
+			for(int i=0; i<MAX_ABILITY; ++i)
+			{
+				SurfAbility[i] = CSurface::RenderText(Ability[i]);
+			}
+
+		    SurfAbilityPoints = CSurface::RenderText(AbilityPoints);
+
 			break;
 		}
 		default: break;
 	}
 
-
-
 }
 
 void CInterfaceCharacterCreator::CleanupStepSurface()
 {
+	switch(nActualStep)
+	{
+		case STEP_ABILITY:
+		{
+			for(int i=0; i<MAX_ABILITY; ++i)
+			{
+				if(SurfAbility[i]) 
+					SDL_FreeSurface(SurfAbility[i]);
 
+				SurfAbility[i] = NULL;
+			}
 
+			if(SurfAbilityPoints) 
+				SDL_FreeSurface(SurfAbilityPoints);
 
+			SurfAbilityPoints = NULL;
+
+			break;
+		}
+		default: break;
+	}
 }

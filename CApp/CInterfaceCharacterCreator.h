@@ -26,6 +26,7 @@ enum CharacterCreatorParameters
 {
 	MAX_RACE = 8,
 	MAX_CLASS = 8,
+	MAX_ABI	= 8,
 
 
 };
@@ -45,8 +46,8 @@ class CInterfaceCharacterCreator : public CInterface
 
         void LoadStep();
         void CleanupStep();
-		void IncreaseAbility(AbilityType Abi);
-		void DecreaseAbility(AbilityType Abi);
+		void IncreaseAbility();
+		void DecreaseAbility();
 		void LoadStepSurface();
 		void CleanupStepSurface();
 
@@ -62,9 +63,9 @@ class CInterfaceCharacterCreator : public CInterface
 		//Abilitys Step
 		int Ability[MAX_ABILITY];  //abilitys for char
 		int AbilityPoints;  //points to spend
+		AbilityType SelectedAbi;
 		SDL_Surface* SurfAbilityPoints;
 		SDL_Surface* SurfAbility[MAX_ABILITY]; //surface for showing aabilitys points
-
 };
 
 #endif

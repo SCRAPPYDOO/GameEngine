@@ -204,5 +204,8 @@
     <ClInclude Include="CObjectUnit.h">
       <Filter>World</Filter>
     </ClInclude>
+    <ClInclude Include="CMySQL.h">
+      <Filter>Engine</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
