@@ -104,7 +104,7 @@ void CButton::OnCleanup()
 
 void CButton::Activate()
 {
-	if(ButtonIndex > 999 && ButtonIndex < 1086)
+	if(ButtonIndex > HeroicFeatsBegin - 1 && ButtonIndex < HeroicFeatsEnd)
     {
         CInterfaceMenager::InterfaceMenager.InterfaceList[INTERFACE_CHARACTERCREATOR]->OnButtonActivate(ButtonIndex);
 		return;

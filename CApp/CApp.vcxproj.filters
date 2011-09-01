@@ -216,11 +216,11 @@
     <ClInclude Include="FeatDefines.h">
       <Filter>Character</Filter>
     </ClInclude>
-    <ClInclude Include="SpellDefines.h">
-      <Filter>Character</Filter>
-    </ClInclude>
     <ClInclude Include="CInterfaceLoot.h">
       <Filter>Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="PowerDefine.h">
+      <Filter>Character</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

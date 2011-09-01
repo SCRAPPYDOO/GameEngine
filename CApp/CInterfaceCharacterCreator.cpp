@@ -171,13 +171,12 @@ void CInterfaceCharacterCreator::OnButtonActivate(ButtonType Type)
 
         default: break;
     }
-
-
 }
 
 void CInterfaceCharacterCreator::OnButtonActivate(int Type)
 {
-	if(Type > 999 && Type < 1086)
+	//Step: Feats
+	if(Type >= HeroicFeatsBegin && Type < HeroicFeatsEnd) 
     {
         SelectFeat(Type); 
     }
@@ -336,7 +335,7 @@ void CInterfaceCharacterCreator::LoadStep()
 			if(Char.GetRace() == RACE_HUMAN)
 				FeatPoints = 2; //Humans Gain 2
 
-			//GetAutomaticFeats(); // get all automatic learned feats
+			GetClassFeatures(); // get all automatic learned feats
 			GenerateAvailableFeatsList();
 
 			//show feats without learned feats
@@ -364,6 +363,28 @@ void CInterfaceCharacterCreator::LoadStep()
         case STEP_POWERS: 
 		{
 			strTitle = "CHOOSE YOUR POWERS";
+
+			AvailablePowerList.clear();
+			GetClassPower();
+			GenerateAvailablePowerList();
+
+			for(int i=0; i<AvailablePowerList.size(); ++i)
+			{
+				if(!AvailablePowerList[i]) continue;
+
+				ButtonIndex = AvailablePowerList[i];
+				
+				x = 300;
+				y = 200 + i*35;
+
+				CButton *pButton = new CButton(x, y, ButtonIndex);
+
+				if(pButton->OnLoad() == false)
+					continue;
+ 
+				ButtonsList.push_back(pButton);
+			}
+
 			break;
 		}
 
@@ -787,6 +808,21 @@ void CInterfaceCharacterCreator::SelectFeat(int Type)
 	}
 }
 
+int ClassFeatures[6][6] =
+{
+	{ 1086, 1087, 1088, 1089 }, //cleric
+	{  },
+};
+
+void CInterfaceCharacterCreator::GetClassFeatures()
+{
+	int Class = static_cast<int>(Char.GetClass());
+	for(int i = 0; i<6; ++i)
+	{
+		Char.TrainFeat(ClassFeatures[Class][i]);
+	}
+}
+
 void CInterfaceCharacterCreator::GenerateAvailableFeatsList()
 {
 	//If We Already Trained On This Feat
@@ -799,7 +835,44 @@ void CInterfaceCharacterCreator::GenerateAvailableFeatsList()
 	}
 }
 
+//### Step:: Powers ###//
+void CInterfaceCharacterCreator::SelectPower(int PowerIndex)
+{
+	//////If We Already Trained On This Feat
+	////for(int i=0; i<Char.FeatList.size(); ++i)
+	////{
+	////	if(!Char.FeatList[i]) continue;
 
+	////	if(Char.IsFeatTrained(Type))
+	////	{
+	////		Char.UnTrainFeat(Type);
+	////		++FeatPoints;
+	////		return;
+	////	}
+	////}
+
+	////if(FeatPoints > 0)
+	////{
+	////	Char.TrainFeat(Type);
+	////	--FeatPoints;
+	////}
+}
+void CInterfaceCharacterCreator::GetClassPower()
+{
+
+}
+
+void CInterfaceCharacterCreator::GenerateAvailablePowerList()
+{
+	//If We Already Trained On This Feat
+	for(int PowerIndex = PowerIndexBegin; PowerIndex < PowerIndexMax; ++PowerIndex)
+	{
+		if(!Char.IsPowerTrained(PowerIndex))
+		{
+			AvailablePowerList.push_back(PowerIndex);
+		}
+	}
+}
 
 
 

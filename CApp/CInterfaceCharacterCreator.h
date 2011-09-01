@@ -60,9 +60,13 @@ class CInterfaceCharacterCreator : public CInterface
 
 		//Step: Feats
 		void SelectFeat(int Type);
-
+		void GetClassFeatures();
 		void GenerateAvailableFeatsList();
 
+		//step: Powers
+		void SelectPower(int PowerIndex);
+		void GetClassPower();
+		void GenerateAvailablePowerList();
 
 		//text generator
 		std::string GetRaceName(RaceType Type);
@@ -97,6 +101,13 @@ class CInterfaceCharacterCreator : public CInterface
 		//Step Feats
 		int FeatPoints;
 		std::vector <int> FeatList;
+
+		//Step: Powers
+		int AtWillPower;
+		int EncounterPower;
+		int DailyPower;
+		int UtilityPower;
+		std::vector <int> AvailablePowerList;
 };
 
 #endif

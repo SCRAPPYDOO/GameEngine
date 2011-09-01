@@ -96,6 +96,13 @@ enum FeatType
 	FeatWeaponProficiency, 
 	FeatWintertouched,
 
+	//Class Feats Cleric
+	ChannelDivinity, 
+	HealersLore, 
+	HealingWord, 
+	RitualCasting,
+
+
 ////Paragon Tier Feats
 //Action Recovery Human Gain extra saving throws by spending action point
 //Agile Athlete — Roll twice with Acrobatics and Athletics checks

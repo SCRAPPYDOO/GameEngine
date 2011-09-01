@@ -3,6 +3,7 @@
 
 #include "CObjectUnit.h"
 #include "FeatDefines.h"
+#include "PowerDefine.h"
 
 enum UnitType
 {
@@ -21,6 +22,7 @@ enum RaceType
 	RACE_HUMAN,
 	RACE_TIEFLING,
 
+	RACE_MAX,
 	RACE_NORACE,
 };
 
@@ -35,6 +37,7 @@ enum ClassType
 	CLASS_WARLORD,
 	CLASS_WIZARD,
 
+	CLASS_MAX,
 	CLASS_NOCLASS,
 };
 
@@ -92,9 +95,9 @@ enum UnitFlag
     UNIT_FLAG_LOOTABLE  = 0x40,
 };
 
-struct Spell
+struct Power
 {
-	int SpellIndex;
+	int PowerIndex;
 };
 
 class CUnit : public CObjectUnit
@@ -111,7 +114,7 @@ class CUnit : public CObjectUnit
 
 		std::vector <int> SkillList;
 		std::vector <int> FeatList;
-		std::vector <Spell> SpellBook;
+		std::vector <Power> SpellBook;
 
     protected:
 		int UnitID;
@@ -243,6 +246,11 @@ class CUnit : public CObjectUnit
 			}
 		}
 
+		//Powers
+		bool IsPowerTrained(int PowerIndex)
+		{
+			return false;
+		}
 
 
 
