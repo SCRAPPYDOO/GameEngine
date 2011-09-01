@@ -49,7 +49,7 @@ enum ButtonType
     BUTTON_LOOT_QUIT        = 56,
     BUTTON_LOOT_LOOTALL     = 57,
 
-    BUTTON_SPELLBOOK_QUIT   = 101,
+    BUTTON_SPELLBOOK_QUIT   = 40,
 
     BUTTON_PANEL_LOCK       = 60,
 
@@ -85,9 +85,113 @@ enum ButtonType
 	BUTTON_CREATECHAR_INCREASE,
 	BUTTON_CREATECHAR_DECREASE,
 
+	BUTTON_CREATECHAR_SKILL_ACROBATICS = 100,
+	BUTTON_CREATECHAR_SKILL_ARCANA, 
+	BUTTON_CREATECHAR_SKILL_ATHLETICS, 
+	BUTTON_CREATECHAR_SKILL_BLUFF, 
+	BUTTON_CREATECHAR_SKILL_DIPLOMACY, 
+	BUTTON_CREATECHAR_SKILL_DUNGEONEERING, 
+	BUTTON_CREATECHAR_SKILL_ENDURANCE, 
+	BUTTON_CREATECHAR_SKILL_HEAL,
+	BUTTON_CREATECHAR_SKILL_HISTORY,
+	BUTTON_CREATECHAR_SKILL_INSIGHT,
+	BUTTON_CREATECHAR_SKILL_INTIMIDATE, 
+	BUTTON_CREATECHAR_SKILL_NATURE, 
+	BUTTON_CREATECHAR_SKILL_PERCEPTION, 
+	BUTTON_CREATECHAR_SKILL_RELIGION, 
+	BUTTON_CREATECHAR_SKILL_STEALTH, 
+	BUTTON_CREATECHAR_SKILL_STREETWISE,
+
+	//FeatActionSurge = 1000, 
+	//FeatAgileHunter,
+	//FeatAlertness,
+	//FeatArmorOfBahamut,
+	//FeatArmorProficiencyChainmail,
+	//FeatArmorProficiencyLeather, 
+	//FeatArmorProficiencyHide,
+	//FeatArmorProficiencyPlate,
+	//FeatArmorProficiencyScale,
+	//FeatAstralFire, 
+	//FeatAvandrasRescue, 
+	//FeatBackstabber,
+	//FeatBladeOpportunist,
+	//FeatBurningBlizzard, 
+	//FeatCombatReflexes,
+	//FeatCorellonsGrace, 
+	//FeatDarkFury,
+	//FeatDefensiveMobility,
+	//FeatDistractingShield, 
+	//FeatDodgeGiants, 
+	//FeatDragonbornFrenzy, 
+	//FeatDragonbornSenses, 
+	//FeatDurable,
+	//FeatDwarvenWeaponTraining,
+	//FeatEladrinSoldier, 
+	//FeatElvenPrecision, 
+	//FeatEnlargedDragonBreath,
+	//FeatEscapeArtist, 
+	//FeatExpandedSpellbook, 
+	//FeatFarShot, 
+	//FeatFarThrow, 
+	//FeatFastRunner, 
+	//FeatFerociousRebuke, 
+	//FeatGroupInsight, 
+	//FeatHalflingAgility, 
+	//FeatHarmonyOfErathis, 
+	//FeatHealingHands,
+	//FeatHellfireBlood, 
+	//FeatHumanPerseverance, 
+	//FeatImprovedDarkOnesBlessing, 
+	//FeatImprovedFateOfTheVoid,
+	//FeatImprovedInitiative, 
+	//FeatImprovedMistyStep,
+	//FeatInspiredRecovery,
+	//FeatInspiringPresence,
+	//FeatIounsPoise, 
+	//FeatJackOfAllTrades,
+	//FeatKordsFavor, 
+	//FeatLethalHunter,
+	//FeatHuntersQuarry,
+	//FeatLightStep,
+	//FeatStealth,
+	//FeatLinguist, 
+	//FeatLongJumper, 
+	//FeatLostInTheCrowd, 
+	//FeatMelorasTide, 
+	//FeatMoradinsResolve, 
+	//FeatMountedCombat,
+	//FeatNimbleBlade,
+	//FeatPelorsRadiance, 
+	//FeatPotentChallenge, 
+	//FeatCombatChallenge, 
+	//FeatPowerAttack, 
+	//FeatPowerfulCharge, 
+	//FeatPreciseHunter, 
+	//FeatPressTheAdvantage,
+	//FeatQuickDraw, 
+	//FeatRagingStorm, 
+	//FeatRavenQueensBlessing, 
+	//FeatRitualCaster, 
+	//FeatSehaninesReversal, 
+	//FeatShieldProficiencyHeavy,
+	//FeatShieldProficiencyLight,
+	//FeatShieldPush,
+	//FeatSkillFocus, 
+	//FeatSkillTraining,
+	//FeatSureClimber, 
+	//FeatSurpriseKnockdown, 
+	//FeatTacticalAssault,
+	//FeatTacticalPresence, 
+	//FeatToughness, 
+	//FeatTwoWeaponDefense, 
+	//FeatTwoWeaponFighting, 
+	//FeatWeaponFocus,
+	//FeatWeaponProficiency, 
+	//FeatWintertouched,
+
     BUTTON_SWORD            = 10001,
 
-    BUTTON_DEFAULT	                = 99,
+    BUTTON_DEFAULT	                = 100000,
 };
 
 enum ItemType
@@ -123,7 +227,8 @@ class CButton
 	public:
         CButton() {}
         CButton(int nPosX, int nPosY, ButtonType Type);
-        ~CButton() {}
+        CButton(int nPosX, int nPosY, int Type);
+		~CButton() {}
 
     protected:
         SDL_Surface*     pButtonSurface;
@@ -132,6 +237,8 @@ class CButton
 		ButtonType       eButtonType;
         ButtonState      eButtonState;
         ButtonAnimeState eAnimationState;
+
+		int ButtonIndex;
 
 		int				 nButtonFlag;
 		int x, y, w, h;

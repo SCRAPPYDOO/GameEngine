@@ -37,7 +37,6 @@ class CInterfaceMenu : public CInterface
 		int SelectedChar;
 		SDL_Surface* SelectedCharSurf;
 		SDL_Surface* Surf[INTERFACE_MENU_MAXCHARSLOTS][CHAR_MAX_SURF];
-		CUnit* Character[INTERFACE_MENU_MAXCHARSLOTS];
 		//List Of Sharacters
 };
 

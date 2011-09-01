@@ -19,6 +19,24 @@ CButton::CButton(int nPosX, int nPosY, ButtonType Type)    //Used by button pane
     eAnimationState = BUTTON_ANIME_NORMAL;
 }
 
+CButton::CButton(int nPosX, int nPosY, int Type)    //Used by button panel on create
+{
+	ButtonIndex = Type;
+
+	x = nPosX;
+	y = nPosY;
+	w = 30;
+	h = 30;
+    nButtonFlag = 0;
+    nPreviousX = x;
+    nPreviousY = y;
+
+    pButtonSurface = NULL;
+    eButtonClass = BUTTONCLASS_BUTTON;
+    eButtonState = BUTTONSTATE_UNSELECTED;
+    eAnimationState = BUTTON_ANIME_NORMAL;
+}
+
 bool CButton::OnLoad()
 {
     if(OnLoad(eButtonType))
@@ -86,10 +104,27 @@ void CButton::OnCleanup()
 
 void CButton::Activate()
 {
+	if(ButtonIndex > 999 && ButtonIndex < 1086)
+    {
+        CInterfaceMenager::InterfaceMenager.InterfaceList[INTERFACE_CHARACTERCREATOR]->OnButtonActivate(ButtonIndex);
+		return;
+	}
+
     //eAnimationState = BUTTON_ANIME_ONCLICK;
 
     switch(eButtonType)
 	{
+		case BUTTON_MENU_DELETE_CHARACTER: 
+		{
+			//Delet Char(SelectedChar)
+			break;
+		}
+		case BUTTON_MENU_ENTERTOWORLD: 
+		{
+			//CPlayer->LoadCharacter(SelectedCharacter);
+			//ButtonPlay;
+
+		}
 
         case BUTTON_MENU_CREATECHARACTER: //Go To Create Character Menu
         {
@@ -256,6 +291,22 @@ void CButton::Activate()
 		case BUTTON_CREATECHAR_CHA:
 		case BUTTON_CREATECHAR_INCREASE:
 		case BUTTON_CREATECHAR_DECREASE:
+		case BUTTON_CREATECHAR_SKILL_ACROBATICS:
+		case BUTTON_CREATECHAR_SKILL_ARCANA:
+		case BUTTON_CREATECHAR_SKILL_ATHLETICS:
+		case BUTTON_CREATECHAR_SKILL_BLUFF:
+		case BUTTON_CREATECHAR_SKILL_DIPLOMACY:
+		case BUTTON_CREATECHAR_SKILL_DUNGEONEERING: 
+		case BUTTON_CREATECHAR_SKILL_ENDURANCE:
+		case BUTTON_CREATECHAR_SKILL_HEAL:
+		case BUTTON_CREATECHAR_SKILL_HISTORY:
+		case BUTTON_CREATECHAR_SKILL_INSIGHT:
+		case BUTTON_CREATECHAR_SKILL_INTIMIDATE:
+		case BUTTON_CREATECHAR_SKILL_NATURE:
+		case BUTTON_CREATECHAR_SKILL_PERCEPTION:
+		case BUTTON_CREATECHAR_SKILL_RELIGION:
+		case BUTTON_CREATECHAR_SKILL_STEALTH:
+		case BUTTON_CREATECHAR_SKILL_STREETWISE:
         {
             CInterfaceMenager::InterfaceMenager.InterfaceList[INTERFACE_CHARACTERCREATOR]->OnButtonActivate(eButtonType);
             break;
@@ -270,6 +321,8 @@ void CButton::Activate()
 
 		default: break;
 	}
+
+
 }
 
 bool CButton::IsButtonOnPos(int mX, int mY)

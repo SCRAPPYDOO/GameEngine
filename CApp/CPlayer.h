@@ -21,6 +21,15 @@ class CPlayer
         CUnit* pPlayerCharacter;
         CUnit* pSelectedUnit;
         CUnit* pTargetedUnit;
+		int nSelectedSpell;
+
+		void LoadCharacter(int CharID) 
+		{
+			//zaladuj wszytko z plikuj lub z bazy
+			pPlayerCharacter = new CCharacter();
+			//pPlayerCharacter->LoadCharFromFile(CharID);
+			//dodaj do listy unitow
+		}
 };
 
 #endif

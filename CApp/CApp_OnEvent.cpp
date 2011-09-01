@@ -96,18 +96,25 @@ void CApp::OnRButtonDown(int x,int y)
 
 void CApp::OnRButtonUp(int mX, int mY)
 {
+	//if is loot asand klik nie byl na  loot delete  okno lootu
     if(CUnit* pUnit = CUnitMenager::GetUnit(mX, mY))
     {
         if(pUnit)
         {
+			if(CPlayer::Player.nSelectedSpell != 0)
+			////	SelectedPlayer->CastSpel->SelectedSApell
             //if(pUnit->IsEnemy())
             //{
                  /* CanAttack();*/  
             //    return;
             //}
 
-            if(!pUnit->IsAlive() && pUnit->HasFlag(UNIT_FLAG_LOOTABLE))
+            if(/*!pUnit->IsAlive() &&*/ pUnit->HasFlag(UNIT_FLAG_LOOTABLE))
             {
+				if(CInterfaceMenager::InterfaceMenager.InterfaceList[INTERFACE_LOOT] != NULL) return;
+
+				CInterfaceMenager::InterfaceMenager.LoadInterface(INTERFACE_LOOT);
+				CInterfaceMenager::InterfaceMenager.InterfaceList[INTERFACE_LOOT]->LoadLoot(pUnit->GetID());
                 CInterfaceMenager::InterfaceMenager.InterfaceList[INTERFACE_MASAGEWINDOW]->AddMsg("Looting Corps");
                 return;
             }

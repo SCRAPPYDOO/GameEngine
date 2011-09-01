@@ -121,6 +121,9 @@ class CInterface
         virtual void OnCleanup();
 
         virtual void OnButtonActivate(ButtonType Type) {} // called when button activate
+		virtual void OnButtonActivate(int Type) {}
+
+		virtual void LoadLoot(int ID) {}
 };
 
 #endif

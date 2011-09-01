@@ -33,8 +33,10 @@ bool CArea::OnLoad(char* File)
 
     fscanf(FileHandle, "%d\n", &AreaSize);
 
-    for(int X = 0;X < AreaSize;X++) {
-        for(int Y = 0;Y < AreaSize;Y++) {
+    for(int X = 0;X < AreaSize;X++) 
+	{
+        for(int Y = 0;Y < AreaSize;Y++) 
+		{
             char MapFile[255];
 
             fscanf(FileHandle, "%s ", MapFile);

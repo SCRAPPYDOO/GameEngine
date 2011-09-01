@@ -1,5 +1,8 @@
 #include "CInterfaceMenu.h"
 
+#include <string> 
+#include <fstream>
+
 CInterfaceMenu::CInterfaceMenu()
 {
 	OldX = 0;
@@ -14,7 +17,6 @@ CInterfaceMenu::CInterfaceMenu()
 			Surf[i][x] = NULL;
 		}
 
-		Character[i] = NULL;
 	}
 }
 
@@ -46,7 +48,8 @@ bool CInterfaceMenu::OnLoad()
 		ButtonsList.push_back(pButton);
 	}
 
-	LoadCharacters();
+	if(!LoadCharacters())
+		return false;
 
     return true;
 }
@@ -93,7 +96,6 @@ void CInterfaceMenu::OnCleanup()
 			Surf[i][x] = NULL;
 		}
 
-		Character[i] = NULL;
 	}
 }
 
@@ -112,33 +114,49 @@ void CInterfaceMenu::OnButtonActivate(ButtonType Type)
     }
 }
 
+struct Char
+{
+	char asd;
+	char a;
+};
+
 bool CInterfaceMenu::LoadCharacters()
 {
-	for(int i=0; i<INTERFACE_MENU_MAXCHARSLOTS; ++i)
-	{
-		if(i==3) continue;
+	//for(int i=0; i<INTERFACE_MENU_MAXCHARSLOTS; ++i)
+	//{
+	//	//*c*//*har Char[4];*/
+	//	//for(int i=0; i<4; i++)
+	//	//{
+	//	//	Char[i] = NULL;
+	//	//}
+	//	Char c;
+	//	 FILE* FileHandle = fopen("./char/char.txt", "r");
 
-		Character[i] = new CCharacter();
-		//if(!ImportChar(i))
-		//{
-		//	delete Character[i];
-		//	Character[i] = NULL;
-		//	break;
-		//}
+	//	if(FileHandle == NULL) {
+	//		return false;
+	//	}
+
+	//	fscanf(FileHandle, "%d:%d", &c.a, &c.asd); //get all from this line
+
+	//	//fscanf(FileHandle, "\n"); // next line ?
+
+
+	//	fclose(FileHandle);
+
 		//now we ned to get and render all info from character
 		for(int x=0; x<CHAR_MAX_SURF; ++x)
 		{
 			switch(x)
 			{
-				case 0: Surf[i][x] = CSurface::RenderText("Malavon"); break;
-				case 1:	Surf[i][x] = CSurface::RenderText("Elf"); break;
-				case 2:	Surf[i][x] = CSurface::RenderText("Level 1"); break;
-				case 3:	Surf[i][x] = CSurface::RenderText("Wizard"); break;
-				//case 4:	Surf[i][x] = CSurface::RenderText("Marcin"); break;
+				//case 0: Surf[i][x] = CSurface::RenderText(c.a); break;
+				//case 1:	Surf[i][x] = CSurface::RenderText(c.asd); break;
+				//case 2:	Surf[i][x] = CSurface::RenderText(Char[2]); break;
+				//case 3:	Surf[i][x] = CSurface::RenderText(Char[3]); break;
+				/*case 4:	Surf[i][x] = CSurface::RenderText("Marcin"); break;*/
 				default: break;
 			}
 		}
-	}
+	//}
 
 	return true;
 }

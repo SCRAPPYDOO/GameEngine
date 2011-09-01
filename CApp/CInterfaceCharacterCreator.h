@@ -41,6 +41,7 @@ class CInterfaceCharacterCreator : public CInterface
 		void OnRender(SDL_Surface* Surf_Display);
         void OnCleanup();
         void OnButtonActivate(ButtonType Type);
+		void OnButtonActivate(int Type);
 
         void LoadStep();
         void CleanupStep();
@@ -48,14 +49,32 @@ class CInterfaceCharacterCreator : public CInterface
 		void DecreaseAbility();
 		void LoadStepSurface();
 		void CleanupStepSurface();
+		void UpdateSurface();  //Update all choosen stats on right side of the screen
 
 		//Step Skills
+		void SelectSkill(ButtonType Type);
 		void GetTrainedSkills();
-		int GetClassSkillPoints();
+		void GetClassSkillPoints();
 		void GetAvailableSkills();
-		int GetRaceSkillPoints();
+		void GetRaceSkillPoints();
+
+		//Step: Feats
+		void SelectFeat(int Type);
+
+		void GenerateAvailableFeatsList();
+
+
+		//text generator
+		std::string GetRaceName(RaceType Type);
+		std::string GetClassName(ClassType Type);
+		std::string GetSkillName(int Index);
+		std::string GetFeatName(int Index);
 
     protected:
+		CCharacter Char;
+
+		SDL_Surface* Stat[10];
+
         int nActualStep;
 
         SDL_Surface* Surf_StepTitle;
@@ -73,7 +92,11 @@ class CInterfaceCharacterCreator : public CInterface
 
 		//Step Skills
 		int SkillPoints;
-		bool Skill[SKILL_MAX];
+		std::vector <int> SkillList; //Available Skill To Choose By Class
+
+		//Step Feats
+		int FeatPoints;
+		std::vector <int> FeatList;
 };
 
 #endif

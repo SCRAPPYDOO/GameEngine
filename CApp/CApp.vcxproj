@@ -86,6 +86,7 @@
     <ClCompile Include="CInterfaceCharacterCreator.cpp" />
     <ClCompile Include="CInterfaceCharSheet.cpp" />
     <ClCompile Include="CInterfaceEquip.cpp" />
+    <ClCompile Include="CInterfaceLoot.cpp" />
     <ClCompile Include="CInterfaceMassageHandler.cpp" />
     <ClCompile Include="CInterfaceMenager.cpp" />
     <ClCompile Include="CInterfaceMenu.cpp" />
@@ -116,6 +117,7 @@
     <ClInclude Include="CInterfaceCharacterCreator.h" />
     <ClInclude Include="CInterfaceCharSheet.h" />
     <ClInclude Include="CInterfaceEquip.h" />
+    <ClInclude Include="CInterfaceLoot.h" />
     <ClInclude Include="CInterfaceMassageHandler.h" />
     <ClInclude Include="CInterfaceMenager.h" />
     <ClInclude Include="CInterfaceMenu.h" />
@@ -135,6 +137,8 @@
     <ClInclude Include="CUnit.h" />
     <ClInclude Include="CUnitMenager.h" />
     <ClInclude Include="Define.h" />
+    <ClInclude Include="FeatDefines.h" />
+    <ClInclude Include="SpellDefines.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

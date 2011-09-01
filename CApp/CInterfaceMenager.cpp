@@ -6,6 +6,7 @@
 #include "CInterfaceCharSheet.h"
 #include "CInterfaceMenu.h"
 #include "CInterfaceCharacterCreator.h"
+#include "CInterfaceLoot.h"
 
 CInterfaceMenager CInterfaceMenager::InterfaceMenager;
 
@@ -72,7 +73,7 @@ bool CInterfaceMenager::LoadInterface(InterfaceType eType)
         case INTERFACE_GAMEMENU: pInterface = new CInterface(eType); break;
         case INTERFACE_CHARACTERPANEL: pInterface = new CInterface(eType); break;
         case INTERFACE_EQUIP: pInterface = new CInterfaceEquip(); break;
-        case INTERFACE_LOOT: pInterface = new CInterface(eType); break;
+        case INTERFACE_LOOT: pInterface = new CInterfaceLoot(); break;
         case INTERFACE_SPELLBOOK: pInterface = new CInterface(eType); break;
         case INTERFACE_MASAGEWINDOW: pInterface = new CInterfaceMsgWindow(); break;
         case INTERFACE_CHARACTERSHEET: pInterface = new CInterfaceCharSheet(); break;

@@ -11,6 +11,9 @@
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
       <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
+    <Filter Include="Character">
+      <UniqueIdentifier>{e7a0b2d8-b4ea-4a55-9d8d-758b21a1e43c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CAnimation.cpp">
@@ -112,6 +115,9 @@
     <ClCompile Include="CObjectUnit.cpp">
       <Filter>World</Filter>
     </ClCompile>
+    <ClCompile Include="CInterfaceLoot.cpp">
+      <Filter>Interface</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CAnimation.h">
@@ -206,6 +212,15 @@
     </ClInclude>
     <ClInclude Include="CMySQL.h">
       <Filter>Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="FeatDefines.h">
+      <Filter>Character</Filter>
+    </ClInclude>
+    <ClInclude Include="SpellDefines.h">
+      <Filter>Character</Filter>
+    </ClInclude>
+    <ClInclude Include="CInterfaceLoot.h">
+      <Filter>Interface</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

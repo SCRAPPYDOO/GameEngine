@@ -2,6 +2,7 @@
     #define _CUNIT_H_
 
 #include "CObjectUnit.h"
+#include "FeatDefines.h"
 
 enum UnitType
 {
@@ -11,7 +12,6 @@ enum UnitType
 
 enum RaceType
 {
-	RACE_NULL,
 	RACE_DRAGONBORN,
 	RACE_DWARF,
 	RACE_ELADRIN,
@@ -20,11 +20,12 @@ enum RaceType
 	RACE_HALFLING,
 	RACE_HUMAN,
 	RACE_TIEFLING,
+
+	RACE_NORACE,
 };
 
 enum ClassType
 {
-	CLASS_NULL,
 	CLASS_CLERIC,
 	CLASS_FIGHTER,
 	CLASS_PALADIN,
@@ -33,6 +34,8 @@ enum ClassType
 	CLASS_WARLOCK,
 	CLASS_WARLORD,
 	CLASS_WIZARD,
+
+	CLASS_NOCLASS,
 };
 
 enum ParagonClassType
@@ -58,7 +61,7 @@ enum AbilityType
 
 enum SkillType
 {
-	SKILL_ACROBATICS,
+	SKILL_ACROBATICS = 100,
 	SKILL_ARCANA, 
 	SKILL_ATHLETICS, 
 	SKILL_BLUFF, 
@@ -73,13 +76,8 @@ enum SkillType
 	SKILL_PERCEPTION, 
 	SKILL_RELIGION, 
 	SKILL_STEALTH, 
-	SKILL_STREETWISE, 
-	SKILL_MAX,
-};
-
-enum FeatType
-{
-	FEAT_NULL = 0x00000000000001,
+	SKILL_STREETWISE,
+	SKILL_THIEVERY,
 };
 
 enum UnitFlag
@@ -94,6 +92,11 @@ enum UnitFlag
     UNIT_FLAG_LOOTABLE  = 0x40,
 };
 
+struct Spell
+{
+	int SpellIndex;
+};
+
 class CUnit : public CObjectUnit
 {
     public:
@@ -106,7 +109,13 @@ class CUnit : public CObjectUnit
         void OnRender(SDL_Surface* Surf_Display);
         void OnCleanup();
 
+		std::vector <int> SkillList;
+		std::vector <int> FeatList;
+		std::vector <Spell> SpellBook;
+
     protected:
+		int UnitID;
+
         std::string cCharacterName;
         int nActualHealth;
         int nMaxHealth;
@@ -118,23 +127,21 @@ class CUnit : public CObjectUnit
 
 		int Ability[ABILITY_MAX];
 
-		bool Skill[SKILL_MAX];
-
-
-
-
 
         int nUnitFlag;
        
     public: //Atributes Methods
+		int GetID() const { return UnitID; }
+
         std::string GetName() const { return cCharacterName; }
         int GetActualHealth() const { return nActualHealth; }
         void SetActualHealth(int nValue) { nActualHealth = nValue; }
         int GetMaxHealth() const { return nMaxHealth; }
         int GetCharacterLevel() const { return nCharacterLevel; }
 
+		void SetRace(RaceType Type) { Race = Type; }
 		RaceType GetRace() const { return Race; }
-
+		void SetClass(ClassType Type) { Class = Type; }
 		ClassType GetClass() const { return Class; }
 
 		//Abilitys
@@ -142,8 +149,103 @@ class CUnit : public CObjectUnit
 		void SetAbility(AbilityType Abil, int nValue) { Ability[Abil] = nValue; }
 
 		//Skills
-		bool IsSkillTrained(SkillType SkillT) const { return Skill[SkillT]; }
-		void TrainSkill(SkillType SkillT) { Skill[SkillT] = true; }
+		int GetSkill(int index)
+		{
+			if(SkillList[index])
+				return SkillList[index];
+
+			return 0;
+		}
+
+		bool IsSkillTrained(int Index) const 
+		{ 
+			for(int i = 0;i < SkillList.size();i++)
+			{
+				if(!SkillList[i]) continue;
+
+				if(SkillList[i] == Index)
+					return true;
+			}
+
+			return false;
+		}
+
+		void TrainSkill(int Index)
+		{ 
+			//If Unit Are Trained Already
+			for(int i=0; i<SkillList.size(); ++i)
+			{
+				if(!SkillList[i]) continue;
+				if(SkillList[i] == Index) return;
+			}
+			SkillList.push_back(Index);
+		}
+
+		void UnTrainSkill(int Index)
+		{
+			for(int i = 0;i < SkillList.size();i++)
+			{
+				if(!SkillList[i]) continue;
+
+				if(SkillList[i] == Index)
+				{
+					SkillList.erase(SkillList.begin() + i);
+					return;
+				}
+			}
+		}
+
+
+		//Feats
+		int GetFeat(int index)
+		{
+			if(FeatList[index])
+				return FeatList[index];
+
+			return 0;
+		}
+
+		bool IsFeatTrained(int Index) const 
+		{ 
+			for(int i = 0;i < FeatList.size();i++)
+			{
+				if(!FeatList[i]) continue;
+
+				if(FeatList[i] == Index)
+					return true;
+			}
+
+			return false;
+		}
+
+		void TrainFeat(int Index)
+		{ 
+			//If Unit Are Trained Already
+			for(int i=0; i<FeatList.size(); ++i)
+			{
+				if(!FeatList[i]) continue;
+				if(FeatList[i] == Index) return;
+			}
+			FeatList.push_back(Index);
+		}
+
+		void UnTrainFeat(int Index)
+		{
+			for(int i = 0;i < FeatList.size();i++)
+			{
+				if(!FeatList[i]) continue;
+
+				if(FeatList[i] == Index)
+				{
+					FeatList.erase(FeatList.begin() + i);
+					return;
+				}
+			}
+		}
+
+
+
+
 		//bool CheckSkill(SkillType SkillT, int DificultyClass);
 		//AbilityType GetSkillAbility(SkillType SkillT);
 

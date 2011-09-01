@@ -15,10 +15,8 @@ CInterfaceCharacterCreator::CInterfaceCharacterCreator()
     nActualStep = 0;
     Surf_StepTitle = NULL;
 
-
-	//Selected Variables
-	Race = RACE_NULL;
-	Class = CLASS_NULL;
+	//Race = RACE_NORACE;
+	//Class = CLASS_NOCLASS;
 
 	//Abilitys Step
 	for(int i=0; i<ABILITY_MAX; ++i)
@@ -29,7 +27,8 @@ CInterfaceCharacterCreator::CInterfaceCharacterCreator()
 			Ability[i] = 10;
 	}
 
-	AbilityPoints = 0;  //points to spend
+	SkillPoints = 0;
+	AbilityPoints = 22;  //points to spend
 	SelectedAbi = ABILITY_STRENGHT;
 	SurfAbilityPoints = NULL;
 
@@ -38,6 +37,8 @@ CInterfaceCharacterCreator::CInterfaceCharacterCreator()
 		SurfAbility[i] = NULL;
 	}
 
+	//Step: Feats
+	FeatPoints = 1; 
 }
 
 bool CInterfaceCharacterCreator::OnLoad()
@@ -55,6 +56,7 @@ void CInterfaceCharacterCreator::OnLoop()
 	CInterface::OnLoop();
 	CleanupStepSurface();
 	LoadStepSurface();
+	UpdateSurface();
 }
 
 void CInterfaceCharacterCreator::OnRender(SDL_Surface* Surf_Display)
@@ -73,12 +75,27 @@ void CInterfaceCharacterCreator::OnRender(SDL_Surface* Surf_Display)
 
 	if(SurfAbilityPoints)
 		CSurface::OnDraw(Surf_Display, SurfAbilityPoints, 350, 200 + 7*35);
+
+	for(int i=0; i<10; ++i)
+	{
+		if(!Stat[i]) continue;
+
+		CSurface::OnDraw(Surf_Display, Stat[i], 950, 200 + i*35);
+	}
 }
 
 void CInterfaceCharacterCreator::OnCleanup()
 {
     CInterface::OnCleanup();
 	CleanupStep();
+
+	for(int i=0; i<10; ++i)
+	{
+		if(Stat[i]) 
+			SDL_FreeSurface(Stat[i]);
+
+		Stat[i] = NULL;
+	}
 }
 
 void CInterfaceCharacterCreator::OnButtonActivate(ButtonType Type)
@@ -108,23 +125,23 @@ void CInterfaceCharacterCreator::OnButtonActivate(ButtonType Type)
         }
 
 		//Choose Race Buttons
-		case BUTTON_CREATECHAR_DRAGONBORN: Race = RACE_DRAGONBORN; break;
-		case BUTTON_CREATECHAR_DWARF: Race = RACE_DWARF; break;
-		case BUTTON_CREATECHAR_ELADRIN: Race = RACE_ELADRIN; break;
-		case BUTTON_CREATECHAR_ELF:Race = RACE_ELF; break;
-		case BUTTON_CREATECHAR_HALFELF: Race = RACE_HALFELF; break;
-		case BUTTON_CREATECHAR_HALFLING:Race = RACE_HALFLING; break;
-		case BUTTON_CREATECHAR_HUMAN:Race = RACE_HUMAN; break;
-		case BUTTON_CREATECHAR_TIEFLING: Race = RACE_TIEFLING; break;
+		case BUTTON_CREATECHAR_DRAGONBORN:	Char.SetRace(RACE_DRAGONBORN);	break;
+		case BUTTON_CREATECHAR_DWARF:		Char.SetRace(RACE_DWARF);		break;
+		case BUTTON_CREATECHAR_ELADRIN:		Char.SetRace(RACE_ELADRIN);		break;
+		case BUTTON_CREATECHAR_ELF:			Char.SetRace(RACE_ELF);			break;
+		case BUTTON_CREATECHAR_HALFELF:		Char.SetRace(RACE_HALFELF);		break;
+		case BUTTON_CREATECHAR_HALFLING:	Char.SetRace(RACE_HALFLING);	break;
+		case BUTTON_CREATECHAR_HUMAN:		Char.SetRace(RACE_HUMAN);		break;
+		case BUTTON_CREATECHAR_TIEFLING:	Char.SetRace(RACE_TIEFLING);	break;
 
-		case BUTTON_CREATECHAR_CLERIC: Class = CLASS_CLERIC; break;
-		case BUTTON_CREATECHAR_FIGHTER: Class = CLASS_FIGHTER; break;
-		case BUTTON_CREATECHAR_PALADIN: Class = CLASS_PALADIN; break;
-		case BUTTON_CREATECHAR_RANGER: Class = CLASS_RANGER; break;
-		case BUTTON_CREATECHAR_ROGUE: Class = CLASS_ROGUE; break;
-		case BUTTON_CREATECHAR_WARLOCK: Class = CLASS_WARLOCK; break;
-		case BUTTON_CREATECHAR_WARLORD: Class = CLASS_WARLORD; break;
-		case BUTTON_CREATECHAR_WIZARD: Class = CLASS_WIZARD; break;
+		case BUTTON_CREATECHAR_CLERIC:		Char.SetClass(CLASS_CLERIC); break;
+		case BUTTON_CREATECHAR_FIGHTER:		Char.SetClass(CLASS_FIGHTER); break;
+		case BUTTON_CREATECHAR_PALADIN:		Char.SetClass(CLASS_PALADIN); break;
+		case BUTTON_CREATECHAR_RANGER:		Char.SetClass(CLASS_RANGER); break;
+		case BUTTON_CREATECHAR_ROGUE:		Char.SetClass(CLASS_ROGUE); break;
+		case BUTTON_CREATECHAR_WARLOCK:		Char.SetClass(CLASS_WARLOCK); break;
+		case BUTTON_CREATECHAR_WARLORD:		Char.SetClass(CLASS_WARLORD); break;
+		case BUTTON_CREATECHAR_WIZARD:		Char.SetClass(CLASS_WIZARD); break;
 
 		case BUTTON_CREATECHAR_STR: SelectedAbi = ABILITY_STRENGHT; break;
 		case BUTTON_CREATECHAR_CON: SelectedAbi = ABILITY_CONSTITUTION; break;
@@ -135,7 +152,34 @@ void CInterfaceCharacterCreator::OnButtonActivate(ButtonType Type)
 		case BUTTON_CREATECHAR_INCREASE: IncreaseAbility(); break;
 		case BUTTON_CREATECHAR_DECREASE: DecreaseAbility(); break;
 
+		case BUTTON_CREATECHAR_SKILL_ACROBATICS:
+		case BUTTON_CREATECHAR_SKILL_ARCANA:
+		case BUTTON_CREATECHAR_SKILL_ATHLETICS:
+		case BUTTON_CREATECHAR_SKILL_BLUFF:
+		case BUTTON_CREATECHAR_SKILL_DIPLOMACY:
+		case BUTTON_CREATECHAR_SKILL_DUNGEONEERING: 
+		case BUTTON_CREATECHAR_SKILL_ENDURANCE:
+		case BUTTON_CREATECHAR_SKILL_HEAL:
+		case BUTTON_CREATECHAR_SKILL_HISTORY:
+		case BUTTON_CREATECHAR_SKILL_INSIGHT:
+		case BUTTON_CREATECHAR_SKILL_INTIMIDATE:
+		case BUTTON_CREATECHAR_SKILL_NATURE:
+		case BUTTON_CREATECHAR_SKILL_PERCEPTION:
+		case BUTTON_CREATECHAR_SKILL_RELIGION:
+		case BUTTON_CREATECHAR_SKILL_STEALTH:
+		case BUTTON_CREATECHAR_SKILL_STREETWISE: { SelectSkill(Type); break; }
+
         default: break;
+    }
+
+
+}
+
+void CInterfaceCharacterCreator::OnButtonActivate(int Type)
+{
+	if(Type > 999 && Type < 1086)
+    {
+        SelectFeat(Type); 
     }
 }
 
@@ -144,6 +188,7 @@ void CInterfaceCharacterCreator::LoadStep()
     CleanupStep(); //Cleanup previous step
 
    //Button Param
+	int ButtonIndex = 0;
     ButtonType eType;
     int x;
     int y;
@@ -255,12 +300,63 @@ void CInterfaceCharacterCreator::LoadStep()
         case STEP_SKILLS: 
 		{
 			strTitle = "CHOOSE YOUR SKILLS";
+
+			SkillList.clear();
+
+			GetTrainedSkills();
+			GetClassSkillPoints();
+			GetAvailableSkills();
+
+			for(int i=0; i<SkillList.size(); ++i)
+			{
+				if(!SkillList[i]) continue;
+
+				eType = static_cast<ButtonType>(SkillList[i]);
+				
+				x = 300;
+				y = 200 + i*35;
+
+				CButton *pButton = new CButton(x, y, eType);
+
+				if(pButton->OnLoad() == false)
+					continue;
+ 
+				ButtonsList.push_back(pButton);
+			}
+
 			break;
 		}
 
         case STEP_FEATS: 
 		{
 			strTitle = "CHOOSE YOUR FEATS";
+
+			FeatList.clear();
+
+			if(Char.GetRace() == RACE_HUMAN)
+				FeatPoints = 2; //Humans Gain 2
+
+			//GetAutomaticFeats(); // get all automatic learned feats
+			GenerateAvailableFeatsList();
+
+			//show feats without learned feats
+			for(int i=0; i<FeatList.size(); ++i)
+			{
+				if(!FeatList[i]) continue;
+
+				ButtonIndex = FeatList[i];
+				
+				x = 300;
+				y = 200 + i*35;
+
+				CButton *pButton = new CButton(x, y, ButtonIndex);
+
+				if(pButton->OnLoad() == false)
+					continue;
+ 
+				ButtonsList.push_back(pButton);
+			}
+
 			break;
 		}
 
@@ -318,6 +414,8 @@ void CInterfaceCharacterCreator::LoadStep()
  
         ButtonsList.push_back(pButton);
     }
+
+
 
 	//Load Surfaces(steptyp)
 
@@ -409,7 +507,6 @@ void CInterfaceCharacterCreator::LoadStepSurface()
 		}
 		default: break;
 	}
-
 }
 
 void CInterfaceCharacterCreator::CleanupStepSurface()
@@ -437,32 +534,343 @@ void CInterfaceCharacterCreator::CleanupStepSurface()
 	}
 }
 
+#define MAXSHOW 10
+void CInterfaceCharacterCreator::UpdateSurface()
+{
+	for(int i=0; i<MAXSHOW; ++i)
+	{
+		if(Stat[i]) 
+			SDL_FreeSurface(Stat[i]);
+
+		Stat[i] = NULL;
+	}
+
+	/*Render In Right Table all Choosen Atributes*/
+	std::string string = GetRaceName(Char.GetRace());
+	Stat[0] = CSurface::RenderText("Race: " + string);
+	string = GetClassName(Char.GetClass());
+	Stat[1] = CSurface::RenderText("Class: " + string);
+
+	int pos = 2;
+	for(int i=0; i<Char.SkillList.size(); ++i)
+	{
+		if(!Char.SkillList[i]) continue;
+
+		string = GetSkillName(Char.GetSkill(i));
+		Stat[pos] = CSurface::RenderText(string);
+		++pos;
+	}
+
+	for(int i=0; i<Char.FeatList.size(); ++i)
+	{
+		if(!Char.FeatList[i]) continue;
+
+		string = GetFeatName(Char.GetFeat(i));
+		Stat[pos] = CSurface::RenderText(string);
+		++pos;
+	}
+}
+
+void CInterfaceCharacterCreator::SelectSkill(ButtonType Type)
+{
+	//If We Already Trained On This Skill
+	for(int i=0; i<Char.SkillList.size(); ++i)
+	{
+		if(!Char.SkillList[i]) continue;
+
+		if(Char.IsSkillTrained(static_cast<int>(Type)))
+		{
+			Char.UnTrainSkill(static_cast<int>(Type));
+			++SkillPoints;
+			return;
+		}
+	}
+
+	if(SkillPoints > 0)
+	{
+		Char.TrainSkill(static_cast<int>(Type));
+		--SkillPoints;
+	}
+}
+
+//Completed
 void CInterfaceCharacterCreator::GetTrainedSkills()
 {
-	switch(Class)
+	switch(Char.GetClass())
 	{
-		case CLASS_CLERIC:
-		{
-			Skill[SKILL_RELIGION] = true;
-			break;
-		}
-		case CLASS_FIGHTER:
-		case CLASS_PALADIN:
-		case CLASS_RANGER:
-		case CLASS_ROGUE:
-		case CLASS_WARLOCK:
+		case CLASS_CLERIC: 
+		case CLASS_PALADIN: Char.TrainSkill(113); break;
+		case CLASS_RANGER:	Char.TrainSkill(105); Char.TrainSkill(111); break;
+		case CLASS_ROGUE:	Char.TrainSkill(114); Char.TrainSkill(116); break;
+		case CLASS_WIZARD:	Char.TrainSkill(101); break;
+		case CLASS_WARLOCK: 
 		case CLASS_WARLORD:
-		case CLASS_WIZARD:
+		case CLASS_FIGHTER: break;
 		default: break;
 	}
 }
 
-int CInterfaceCharacterCreator::GetClassSkillPoints()
+//Completed
+void CInterfaceCharacterCreator::GetClassSkillPoints()
 {
+	switch(Char.GetClass())
+	{
+		case CLASS_CLERIC: 
+		case CLASS_FIGHTER:
+		case CLASS_WIZARD:
+		case CLASS_PALADIN: SkillPoints = 3; break;
+		case CLASS_RANGER:
+		case CLASS_ROGUE: 
+		case CLASS_WARLOCK:
+		case CLASS_WARLORD: SkillPoints = 4; break;
+		default: break;
+	}
 }
+
+int AvailableSkill[7][6] =
+{
+	{ 101, 104, 107, 108, 109, 0 }, // Cleric
+};
+
+//Completed
 void CInterfaceCharacterCreator::GetAvailableSkills()
 {
+	int index = 0;
+	for(int i=0; i<20; ++i)
+	{
+		switch(Char.GetClass())
+		{
+			case CLASS_CLERIC:
+			{
+				switch(i)
+				{
+					case 0: index = 101; break;
+					case 1: index = 104; break;
+					case 2: index = 107; break;
+					case 3: index = 108; break;
+					case 4: index = 109; break;
+					default: return;
+				}
+				break;
+			}
+			case CLASS_FIGHTER: 
+			{
+				switch(i)
+				{
+					case 0: index = 102; break;
+					case 1: index = 106; break;
+					case 2: index = 107; break;
+					case 3: index = 110; break;
+					case 4: index = 115; break;
+					default: return;
+				}
+				break;
+			}
+			case CLASS_PALADIN:
+			{
+				switch(i)
+				{
+					case 0: index = 104; break;
+					case 1: index = 106; break;
+					case 2: index = 107; break;
+					case 3: index = 108; break;
+					case 4: index = 109; break;
+					case 5: index = 110; break;
+					default: return;
+				}
+				break;
+			}
+			case CLASS_RANGER:
+			{
+				switch(i)
+				{
+					case 0: index = 100; break;
+					case 1: index = 102; break;
+					case 2: index = 106; break;
+					case 3: index = 107; break;
+					case 4: index = 112; break;
+					case 5: index = 114; break;
+					default: return;
+				}
+				break;
+			}
+			case CLASS_ROGUE:
+			{
+				switch(i)
+				{
+					case 0: index = 100; break;
+					case 1: index = 102; break;
+					case 2: index = 103; break;
+					case 3: index = 105; break;
+					case 4: index = 109; break;
+					case 5: index = 110; break;
+					case 6: index = 112; break;
+					case 7: index = 115; break;
+					default: return;
+				}
+				break;
+			}
+			case CLASS_WARLOCK:
+			{
+				switch(i)
+				{
+					case 0: index = 101; break;
+					case 1: index = 103; break;
+					case 2: index = 108; break;
+					case 3: index = 109; break;
+					case 4: index = 110; break;
+					case 5: index = 113; break;
+					case 6: index = 115; break;
+					case 7: index = 116; break;
+					default: return;
+				}
+				break;
+			}
+			case CLASS_WARLORD:
+			{
+				switch(i)
+				{
+					case 0: index = 102; break;
+					case 1: index = 104; break;
+					case 2: index = 106; break;
+					case 3: index = 107; break;
+					case 4: index = 108; break;
+					case 5: index = 110; break;
+					default: return;
+				}
+				break;
+			}
+			case CLASS_WIZARD:
+			{
+				switch(i)
+				{
+					case 0: index = 104; break;
+					case 1: index = 105; break;
+					case 2: index = 108; break;
+					case 3: index = 109; break;
+					case 4: index = 111; break;
+					case 5: index = 113; break;
+					default: return;
+				}
+				break;
+			}
+			default: break;
+		}
+		SkillList.push_back(index);
+	}
 }
-int CInterfaceCharacterCreator::GetRaceSkillPoints()
+
+void CInterfaceCharacterCreator::GetRaceSkillPoints()
 {
+}
+
+//### Step:: Feats ###//
+void CInterfaceCharacterCreator::SelectFeat(int Type)
+{
+	//If We Already Trained On This Feat
+	for(int i=0; i<Char.FeatList.size(); ++i)
+	{
+		if(!Char.FeatList[i]) continue;
+
+		if(Char.IsFeatTrained(Type))
+		{
+			Char.UnTrainFeat(Type);
+			++FeatPoints;
+			return;
+		}
+	}
+
+	if(FeatPoints > 0)
+	{
+		Char.TrainFeat(Type);
+		--FeatPoints;
+	}
+}
+
+void CInterfaceCharacterCreator::GenerateAvailableFeatsList()
+{
+	//If We Already Trained On This Feat
+	for(int FeatIndex = HeroicFeatsBegin; FeatIndex < 1010/*HeroicFeatsEnd*/; ++FeatIndex)
+	{
+		if(!Char.IsFeatTrained(FeatIndex))
+		{
+			FeatList.push_back(FeatIndex);
+		}
+	}
+}
+
+
+
+
+
+
+
+//Methods For Text
+std::string CInterfaceCharacterCreator::GetRaceName(RaceType Type)
+{
+	std::string Race = "not choosen yet";
+	switch(Type)
+	{
+		case RACE_DRAGONBORN:	Race = "Dragon Born";	break;
+		case RACE_DWARF:		Race = "Dwarf";			break;
+		case RACE_ELADRIN:		Race = "Eladrin";		break;
+		case RACE_ELF:			Race = "Elf";			break;
+		case RACE_HALFELF:		Race = "Half Elf";		break;
+		case RACE_HALFLING:		Race = "Halfling";		break;
+		case RACE_HUMAN:		Race = "Human";			break;
+		case RACE_TIEFLING:		Race = "Tiefling";		break;
+		default: break; 
+	}
+	return Race;
+}
+
+std::string CInterfaceCharacterCreator::GetClassName(ClassType Type)
+{
+	std::string Class = "not choosen yet";
+	switch(Type)
+	{
+		case CLASS_CLERIC:	Class = "Cleric";	break;
+		case CLASS_FIGHTER:	Class = "Fighter";	break;
+		case CLASS_PALADIN:	Class = "Paladin";	break;
+		case CLASS_RANGER:	Class = "Ranger";	break;
+		case CLASS_ROGUE:	Class = "Rogue";	break;
+		case CLASS_WARLOCK:	Class = "Warlock";	break;
+		case CLASS_WARLORD:	Class = "Warlord";	break;
+		case CLASS_WIZARD:	Class = "Wizard";	break;
+		default: break; 
+	}
+	return Class;
+}
+
+std::string CInterfaceCharacterCreator::GetSkillName(int Index)
+{
+	std::string string = "error";
+
+	switch(Index)
+	{
+		case SKILL_ACROBATICS: string = "Acrobatics"; break;
+		case SKILL_ARCANA: string = "Arcana"; break;
+		case SKILL_ATHLETICS: string = "Athletics"; break;
+		case SKILL_BLUFF: string = "Bluff"; break;
+		case SKILL_DIPLOMACY: string = "Diplomacy"; break; 
+		case SKILL_DUNGEONEERING: string = "Dungeoneering"; break;
+		case SKILL_ENDURANCE: string = "Endurance"; break;
+		case SKILL_HEAL: string = "Heal"; break;
+		case SKILL_HISTORY: string = "History"; break;
+		case SKILL_INSIGHT: string = "Insight"; break;
+		case SKILL_INTIMIDATE: string = "Intimidate"; break;
+		case SKILL_NATURE: string = "Nature"; break;
+		case SKILL_PERCEPTION: string = "Perception"; break;
+		case SKILL_RELIGION: string = "Religion"; break;
+		case SKILL_STEALTH: string = "Stealth"; break;
+		case SKILL_STREETWISE: string = "Streetwise"; break;
+		case SKILL_THIEVERY: string = "Thievery"; break;
+		default: break; 
+	}
+	return string;
+}
+
+std::string CInterfaceCharacterCreator::GetFeatName(int Index)
+{
+	return FeatName[Index - 1000]; //Table In FeatDefines.h
 }
