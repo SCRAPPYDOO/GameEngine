@@ -210,10 +210,10 @@ enum FeatType
 
 static std::string FeatName[HeroicFeatsEnd - 1] =
 {
-	"ActionSurge",
-	"AgileHunter",
+	"Action Surge",
+	"Agile Hunter",
 	"Alertness",
-	"ArmorOfBahamut",
+	"Armor Of Bahamut",
 };
 
 #endif

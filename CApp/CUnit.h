@@ -37,7 +37,6 @@ enum ClassType
 	CLASS_WARLORD,
 	CLASS_WIZARD,
 
-	CLASS_MAX,
 	CLASS_NOCLASS,
 };
 
@@ -95,11 +94,6 @@ enum UnitFlag
     UNIT_FLAG_LOOTABLE  = 0x40,
 };
 
-struct Power
-{
-	int PowerIndex;
-};
-
 class CUnit : public CObjectUnit
 {
     public:
@@ -114,7 +108,7 @@ class CUnit : public CObjectUnit
 
 		std::vector <int> SkillList;
 		std::vector <int> FeatList;
-		std::vector <Power> SpellBook;
+		std::vector <int> PowerList;
 
     protected:
 		int UnitID;
@@ -200,10 +194,10 @@ class CUnit : public CObjectUnit
 
 
 		//Feats
-		int GetFeat(int index)
+		int GetFeat(int Index)
 		{
-			if(FeatList[index])
-				return FeatList[index];
+			if(FeatList[Index])
+				return FeatList[Index];
 
 			return 0;
 		}
@@ -247,12 +241,50 @@ class CUnit : public CObjectUnit
 		}
 
 		//Powers
-		bool IsPowerTrained(int PowerIndex)
+		int GetPower(int Index)
 		{
+			if(PowerList[Index])
+				return PowerList[Index];
+
+			return 0;
+		}
+
+		bool IsPowerTrained(int Index)
+		{
+			for(int i = 0;i < PowerList.size();i++)
+			{
+				if(!PowerList[i]) continue;
+
+				if(PowerList[i] == Index)
+					return true;
+			}
 			return false;
 		}
 
+		void TrainPower(int Index)
+		{ 
+			//If Unit Are Trained Already
+			for(int i=0; i< PowerList.size(); ++i)
+			{
+				if(!PowerList[i]) continue;
+				if(PowerList[i] == Index) return;
+			}
+			PowerList.push_back(Index);
+		}
 
+		void UnTrainPower(int Index)
+		{
+			for(int i = 0;i < PowerList.size();i++)
+			{
+				if(!PowerList[i]) continue;
+
+				if(PowerList[i] == Index)
+				{
+					PowerList.erase(PowerList.begin() + i);
+					return;
+				}
+			}
+		}
 
 		//bool CheckSkill(SkillType SkillT, int DificultyClass);
 		//AbilityType GetSkillAbility(SkillType SkillT);

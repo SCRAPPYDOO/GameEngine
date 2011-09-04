@@ -110,6 +110,12 @@ void CButton::Activate()
 		return;
 	}
 
+	if(ButtonIndex > 10000 && ButtonIndex < PowerIndexMax)
+    {
+        CInterfaceMenager::InterfaceMenager.InterfaceList[INTERFACE_CHARACTERCREATOR]->OnButtonActivate(ButtonIndex);
+		return;
+	}
+
     //eAnimationState = BUTTON_ANIME_ONCLICK;
 
     switch(eButtonType)

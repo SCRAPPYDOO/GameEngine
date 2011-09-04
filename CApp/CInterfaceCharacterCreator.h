@@ -77,7 +77,10 @@ class CInterfaceCharacterCreator : public CInterface
     protected:
 		CCharacter Char;
 
-		SDL_Surface* Stat[10];
+		//Left Panel With All Stats
+		std::vector <SDL_Surface*> PowerTextSurf;
+
+		SDL_Surface* Stat[15];
 
         int nActualStep;
 
@@ -108,6 +111,10 @@ class CInterfaceCharacterCreator : public CInterface
 		int DailyPower;
 		int UtilityPower;
 		std::vector <int> AvailablePowerList;
+
+
+
+		int pos;
 };
 
 #endif

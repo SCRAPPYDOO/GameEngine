@@ -39,6 +39,12 @@ CInterfaceCharacterCreator::CInterfaceCharacterCreator()
 
 	//Step: Feats
 	FeatPoints = 1; 
+
+	//Step Power
+	AtWillPower = 2;
+
+
+	pos = 2;
 }
 
 bool CInterfaceCharacterCreator::OnLoad()
@@ -80,7 +86,15 @@ void CInterfaceCharacterCreator::OnRender(SDL_Surface* Surf_Display)
 	{
 		if(!Stat[i]) continue;
 
-		CSurface::OnDraw(Surf_Display, Stat[i], 950, 200 + i*35);
+		CSurface::OnDraw(Surf_Display, Stat[i], 950, 100 + i*35);
+	}
+	
+	//Show Choosen Powers
+	for(int i=0; i<PowerTextSurf.size(); ++i)
+	{
+		if(!PowerTextSurf[i]) continue;
+
+		CSurface::OnDraw(Surf_Display, PowerTextSurf[i], 1050, 100 + i*35);
 	}
 }
 
@@ -96,6 +110,16 @@ void CInterfaceCharacterCreator::OnCleanup()
 
 		Stat[i] = NULL;
 	}
+
+	//Show Choosen Powers
+	for(int i=0; i<PowerTextSurf.size(); ++i)
+	{
+		if(PowerTextSurf[i]);
+			SDL_FreeSurface(PowerTextSurf[i]);
+
+		PowerTextSurf[i] = NULL;
+	}
+
 }
 
 void CInterfaceCharacterCreator::OnButtonActivate(ButtonType Type)
@@ -179,6 +203,11 @@ void CInterfaceCharacterCreator::OnButtonActivate(int Type)
 	if(Type >= HeroicFeatsBegin && Type < HeroicFeatsEnd) 
     {
         SelectFeat(Type); 
+    }
+
+	if(Type >= 10000 && Type < PowerIndexMax) 
+    {
+        SelectPower(Type); 
     }
 }
 
@@ -359,7 +388,6 @@ void CInterfaceCharacterCreator::LoadStep()
 			break;
 		}
 
-
         case STEP_POWERS: 
 		{
 			strTitle = "CHOOSE YOUR POWERS";
@@ -439,7 +467,6 @@ void CInterfaceCharacterCreator::LoadStep()
 
 
 	//Load Surfaces(steptyp)
-
 	Surf_StepTitle = CSurface::RenderText(strTitle);
 }
 
@@ -555,7 +582,7 @@ void CInterfaceCharacterCreator::CleanupStepSurface()
 	}
 }
 
-#define MAXSHOW 10
+#define MAXSHOW 15
 void CInterfaceCharacterCreator::UpdateSurface()
 {
 	for(int i=0; i<MAXSHOW; ++i)
@@ -572,7 +599,7 @@ void CInterfaceCharacterCreator::UpdateSurface()
 	string = GetClassName(Char.GetClass());
 	Stat[1] = CSurface::RenderText("Class: " + string);
 
-	int pos = 2;
+	pos = 2;
 	for(int i=0; i<Char.SkillList.size(); ++i)
 	{
 		if(!Char.SkillList[i]) continue;
@@ -589,6 +616,26 @@ void CInterfaceCharacterCreator::UpdateSurface()
 		string = GetFeatName(Char.GetFeat(i));
 		Stat[pos] = CSurface::RenderText(string);
 		++pos;
+	}
+
+	//Show Choosen Powers
+	for(int i=0; i<PowerTextSurf.size(); ++i)
+	{
+		if(PowerTextSurf[i]);
+			SDL_FreeSurface(PowerTextSurf[i]);
+
+		PowerTextSurf[i] = NULL;
+	}
+
+	PowerTextSurf.clear();
+
+	for(int i=0; i<Char.PowerList.size(); ++i)
+	{
+		if(!Char.PowerList[i]) continue;
+
+		string = GetPowerName(Char.GetPower(i));
+		
+		PowerTextSurf.push_back(CSurface::RenderText(string));
 	}
 }
 
@@ -648,16 +695,16 @@ void CInterfaceCharacterCreator::GetClassSkillPoints()
 	}
 }
 
-int AvailableSkill[7][6] =
+int AvailableSkill[7][8] =
 {
-	{ 101, 104, 107, 108, 109, 0 }, // Cleric
+	{ 101, 104, 107, 108, 109 }, // Cleric
 };
 
 //Completed
 void CInterfaceCharacterCreator::GetAvailableSkills()
 {
 	int index = 0;
-	for(int i=0; i<20; ++i)
+	for(int i=0; i<8; ++i)
 	{
 		switch(Char.GetClass())
 		{
@@ -816,17 +863,16 @@ int ClassFeatures[6][6] =
 
 void CInterfaceCharacterCreator::GetClassFeatures()
 {
-	int Class = static_cast<int>(Char.GetClass());
 	for(int i = 0; i<6; ++i)
 	{
-		Char.TrainFeat(ClassFeatures[Class][i]);
+		Char.TrainFeat(ClassFeatures[Char.GetClass()][i]);
 	}
 }
 
 void CInterfaceCharacterCreator::GenerateAvailableFeatsList()
 {
 	//If We Already Trained On This Feat
-	for(int FeatIndex = HeroicFeatsBegin; FeatIndex < 1010/*HeroicFeatsEnd*/; ++FeatIndex)
+	for(int FeatIndex = HeroicFeatsBegin; FeatIndex < 1010/*HeroicFeatsEnd*/; ++FeatIndex) //Dopuki nie  posortujemy wyswietlania
 	{
 		if(!Char.IsFeatTrained(FeatIndex))
 		{
@@ -838,34 +884,40 @@ void CInterfaceCharacterCreator::GenerateAvailableFeatsList()
 //### Step:: Powers ###//
 void CInterfaceCharacterCreator::SelectPower(int PowerIndex)
 {
-	//////If We Already Trained On This Feat
-	////for(int i=0; i<Char.FeatList.size(); ++i)
-	////{
-	////	if(!Char.FeatList[i]) continue;
+	//If We Already Trained On This Power
+	for(int i=0; i<Char.PowerList.size(); ++i)
+	{
+		if(!Char.PowerList[i]) continue;
 
-	////	if(Char.IsFeatTrained(Type))
-	////	{
-	////		Char.UnTrainFeat(Type);
-	////		++FeatPoints;
-	////		return;
-	////	}
-	////}
+		if(Char.IsPowerTrained(PowerIndex))
+		{
+			Char.UnTrainPower(PowerIndex);
+			++AtWillPower;
+			return;
+		}
+	}
 
-	////if(FeatPoints > 0)
-	////{
-	////	Char.TrainFeat(Type);
-	////	--FeatPoints;
-	////}
+	if(AtWillPower > 0)
+	{
+		Char.TrainPower(PowerIndex);
+		--AtWillPower;
+	}
 }
+
 void CInterfaceCharacterCreator::GetClassPower()
 {
-
+	for(int i = 0; i<6; ++i)
+	{
+		Char.TrainPower(ClassFeaturePowers[static_cast<int>(Char.GetClass())][i]);
+	}
 }
 
 void CInterfaceCharacterCreator::GenerateAvailablePowerList()
 {
+	//int PowerIndexMax = 
+
 	//If We Already Trained On This Feat
-	for(int PowerIndex = PowerIndexBegin; PowerIndex < PowerIndexMax; ++PowerIndex)
+	for(int PowerIndex = ClassPowersBeginEnd[Char.GetClass()][0]; PowerIndex < ClassPowersBeginEnd[Char.GetClass()][1]; ++PowerIndex)
 	{
 		if(!Char.IsPowerTrained(PowerIndex))
 		{
