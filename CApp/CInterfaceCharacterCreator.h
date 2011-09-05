@@ -67,6 +67,7 @@ class CInterfaceCharacterCreator : public CInterface
 		void SelectPower(int PowerIndex);
 		void GetClassPower();
 		void GenerateAvailablePowerList();
+		void GenerateAvailablePowerList(int PowerType);
 
 		//text generator
 		std::string GetRaceName(RaceType Type);

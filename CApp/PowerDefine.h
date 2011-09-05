@@ -28,25 +28,48 @@ enum PowerIndex
 	PowerIndexMax,
 };
 
+enum PowerType
+{
+	TYPE_ATWILL,
+	TYPE_ENCOUNTER,
+	TYPE_DAILY,
+	TYPE_UTILITY,
+};
+
 static int ClassFeaturePowers[CLASS_MAX][6] = //Powers Automatically Added To Player with Selected Class
 {
 	{ 10000, 10001, 10002},
 	{ },
 };
 
-static std::string PowerName[PowerIndexMax - 1] =
+static struct Power
 {
-	"Divine Fortune", //Cleric
-	"Turn Undead",
-	"Healing Word",
-	"Lance of Faith",
-	"Priest’s Shield",
+	int Index;
+	std::string Name;
+	int Class;
+	int Type;
+	int Level;
+};
+
+static Power PowerTable[PowerIndexMax] = 
+{
+	{ 10000, "Divine Fortune", 0, 1, 1},
+	{ 10001, "Turn Undead", 0, 1, 1},
+	{ 10002, "Healing Word", 0, 1, 1},
+	{ 10003, "Lance of Faith", 0, 0, 1},
+	{ 10004, "Priest’s Shield", 0, 0, 1},
 };
 
 static std::string GetPowerName(int Index)
 {
-	return PowerName[Index - 10000];
-}
+	for(int i=0; i<PowerIndexMax; ++i)
+	{
+		if(PowerTable[i].Index == Index)
+			return PowerTable[i].Name;
+	}
+
+	return "No Name At This Index";
+};
 
 #endif
 

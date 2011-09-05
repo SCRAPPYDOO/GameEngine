@@ -392,25 +392,32 @@ void CInterfaceCharacterCreator::LoadStep()
 		{
 			strTitle = "CHOOSE YOUR POWERS";
 
-			AvailablePowerList.clear();
+			//AvailablePowerList.clear();
 			GetClassPower();
-			GenerateAvailablePowerList();
+			//GenerateAvailablePowerList();
 
-			for(int i=0; i<AvailablePowerList.size(); ++i)
+			for(int PowerType=0; PowerType<3; ++PowerType)
 			{
-				if(!AvailablePowerList[i]) continue;
+				AvailablePowerList.clear();
 
-				ButtonIndex = AvailablePowerList[i];
+				GenerateAvailablePowerList(PowerType);
+
+				for(int i=0; i<AvailablePowerList.size(); ++i)
+				{
+					if(!AvailablePowerList[i]) continue;
+
+					ButtonIndex = AvailablePowerList[i];
 				
-				x = 300;
-				y = 200 + i*35;
+					x = 300;
+					y = 200 + i*35;
 
-				CButton *pButton = new CButton(x, y, ButtonIndex);
+					CButton *pButton = new CButton(x, y, ButtonIndex);
 
-				if(pButton->OnLoad() == false)
-					continue;
+					if(pButton->OnLoad() == false)
+						continue;
  
-				ButtonsList.push_back(pButton);
+					ButtonsList.push_back(pButton);
+				}
 			}
 
 			break;
@@ -695,136 +702,28 @@ void CInterfaceCharacterCreator::GetClassSkillPoints()
 	}
 }
 
-int AvailableSkill[7][8] =
+int AvailableSkill[8][8] =
 {
 	{ 101, 104, 107, 108, 109 }, // Cleric
+	{ 102, 106, 107, 110, 115 }, // Fighter
+	{ 104, 106, 107, 108, 109, 110 }, // Paladin
+	{ 100, 102, 106, 107, 112, 114 }, // Ranger
+	{ 100, 102, 103, 105, 109, 110, 112, 115 }, // Rogue
+	{ 101, 103, 108, 109, 110, 113, 115, 116 }, // Warlock
+	{ 102, 104, 106, 107, 108, 110 }, // Warlord
+	{ 104, 105, 108, 109, 111, 113 }, // Wizard
 };
 
 //Completed
 void CInterfaceCharacterCreator::GetAvailableSkills()
 {
+	ClassType Class = Char.GetClass();
+
 	int index = 0;
 	for(int i=0; i<8; ++i)
 	{
-		switch(Char.GetClass())
-		{
-			case CLASS_CLERIC:
-			{
-				switch(i)
-				{
-					case 0: index = 101; break;
-					case 1: index = 104; break;
-					case 2: index = 107; break;
-					case 3: index = 108; break;
-					case 4: index = 109; break;
-					default: return;
-				}
-				break;
-			}
-			case CLASS_FIGHTER: 
-			{
-				switch(i)
-				{
-					case 0: index = 102; break;
-					case 1: index = 106; break;
-					case 2: index = 107; break;
-					case 3: index = 110; break;
-					case 4: index = 115; break;
-					default: return;
-				}
-				break;
-			}
-			case CLASS_PALADIN:
-			{
-				switch(i)
-				{
-					case 0: index = 104; break;
-					case 1: index = 106; break;
-					case 2: index = 107; break;
-					case 3: index = 108; break;
-					case 4: index = 109; break;
-					case 5: index = 110; break;
-					default: return;
-				}
-				break;
-			}
-			case CLASS_RANGER:
-			{
-				switch(i)
-				{
-					case 0: index = 100; break;
-					case 1: index = 102; break;
-					case 2: index = 106; break;
-					case 3: index = 107; break;
-					case 4: index = 112; break;
-					case 5: index = 114; break;
-					default: return;
-				}
-				break;
-			}
-			case CLASS_ROGUE:
-			{
-				switch(i)
-				{
-					case 0: index = 100; break;
-					case 1: index = 102; break;
-					case 2: index = 103; break;
-					case 3: index = 105; break;
-					case 4: index = 109; break;
-					case 5: index = 110; break;
-					case 6: index = 112; break;
-					case 7: index = 115; break;
-					default: return;
-				}
-				break;
-			}
-			case CLASS_WARLOCK:
-			{
-				switch(i)
-				{
-					case 0: index = 101; break;
-					case 1: index = 103; break;
-					case 2: index = 108; break;
-					case 3: index = 109; break;
-					case 4: index = 110; break;
-					case 5: index = 113; break;
-					case 6: index = 115; break;
-					case 7: index = 116; break;
-					default: return;
-				}
-				break;
-			}
-			case CLASS_WARLORD:
-			{
-				switch(i)
-				{
-					case 0: index = 102; break;
-					case 1: index = 104; break;
-					case 2: index = 106; break;
-					case 3: index = 107; break;
-					case 4: index = 108; break;
-					case 5: index = 110; break;
-					default: return;
-				}
-				break;
-			}
-			case CLASS_WIZARD:
-			{
-				switch(i)
-				{
-					case 0: index = 104; break;
-					case 1: index = 105; break;
-					case 2: index = 108; break;
-					case 3: index = 109; break;
-					case 4: index = 111; break;
-					case 5: index = 113; break;
-					default: return;
-				}
-				break;
-			}
-			default: break;
-		}
-		SkillList.push_back(index);
+		if(index = AvailableSkill[Class][i]) 
+			SkillList.push_back(index);
 	}
 }
 
@@ -855,7 +754,7 @@ void CInterfaceCharacterCreator::SelectFeat(int Type)
 	}
 }
 
-int ClassFeatures[6][6] =
+int ClassFeatures[8][6] =
 {
 	{ 1086, 1087, 1088, 1089 }, //cleric
 	{  },
@@ -908,7 +807,7 @@ void CInterfaceCharacterCreator::GetClassPower()
 {
 	for(int i = 0; i<6; ++i)
 	{
-		Char.TrainPower(ClassFeaturePowers[static_cast<int>(Char.GetClass())][i]);
+		Char.TrainPower(ClassFeaturePowers[Char.GetClass()][i]);
 	}
 }
 
@@ -922,6 +821,24 @@ void CInterfaceCharacterCreator::GenerateAvailablePowerList()
 		if(!Char.IsPowerTrained(PowerIndex))
 		{
 			AvailablePowerList.push_back(PowerIndex);
+		}
+	}
+}
+
+void CInterfaceCharacterCreator::GenerateAvailablePowerList(int PowerType)
+{
+	int Class = Char.GetClass();
+	for(int i=0; i<PowerIndexMax; ++i)
+	{
+		if(PowerTable[i].Level == 1)
+		{
+			if(PowerTable[i].Type == PowerType && PowerTable[i].Class == Class)
+			{
+				if(!Char.IsPowerTrained(PowerTable[i].Index))
+				{
+					AvailablePowerList.push_back(PowerTable[i].Index);
+				}
+			}
 		}
 	}
 }
