@@ -222,5 +222,11 @@
     <ClInclude Include="PowerDefine.h">
       <Filter>Character</Filter>
     </ClInclude>
+    <ClInclude Include="RaceDefine.h">
+      <Filter>Character</Filter>
+    </ClInclude>
+    <ClInclude Include="CDice.h">
+      <Filter>Engine</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

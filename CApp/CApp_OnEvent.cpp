@@ -15,7 +15,6 @@ void CApp::OnKeyDown(SDLKey sym, SDLMod mod, Uint16 unicode)
             {
                 case TEST:
                 {
-                    CPlayer::Player.pPlayerCharacter->SetActualHealth(5);
 			        if(!CInterfaceMenager::InterfaceMenager.InterfaceList[INTERFACE_GAMEMENU])
 			        {
 				        CInterfaceMenager::InterfaceMenager.LoadInterface(INTERFACE_GAMEMENU);
@@ -91,7 +90,8 @@ void CApp::OnRButtonDown(int x,int y)
     if(CApp::eGameState == MAIN_MENU) //We Dont Use RButton In Menu                                       
         return;
 
-    CPlayer::Player.pPlayerCharacter->SetActualHealth(55);
+	if(CPlayer::Player.pPlayerCharacter)
+		CPlayer::Player.pPlayerCharacter->SetActualHealth(55);
 }
 
 void CApp::OnRButtonUp(int mX, int mY)
@@ -111,6 +111,8 @@ void CApp::OnRButtonUp(int mX, int mY)
 
             if(/*!pUnit->IsAlive() &&*/ pUnit->HasFlag(UNIT_FLAG_LOOTABLE))
             {
+				//Open okno Lootu o ID mobka a jezlei nie  istnieje stworz
+				//Prevent przed podwojnym stworzeniem lootu
 				if(CInterfaceMenager::InterfaceMenager.InterfaceList[INTERFACE_LOOT] != NULL) return;
 
 				CInterfaceMenager::InterfaceMenager.LoadInterface(INTERFACE_LOOT);

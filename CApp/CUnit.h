@@ -4,6 +4,7 @@
 #include "CObjectUnit.h"
 #include "FeatDefines.h"
 #include "PowerDefine.h"
+#include "RaceDefine.h"
 
 enum UnitType
 {
@@ -11,20 +12,42 @@ enum UnitType
     ENTITY_TYPE_PLAYER
 };
 
-enum RaceType
+enum GenderType
 {
-	RACE_DRAGONBORN,
-	RACE_DWARF,
-	RACE_ELADRIN,
-	RACE_ELF,
-	RACE_HALFELF,
-	RACE_HALFLING,
-	RACE_HUMAN,
-	RACE_TIEFLING,
-
-	RACE_MAX,
-	RACE_NORACE,
+	GENDER_M,
+	GENDER_F,
 };
+
+enum AligmentType
+{
+	AligmentGood,
+	AligmentLawfulGood,
+	AligmentEvil,
+	AligmentChaoticEvil,
+	AligmentUnaligned,
+};
+
+struct Aligment
+{
+	int Index;
+	std::string Name;
+};
+
+static Aligment AligmentTable[5] =
+{
+	{ 0, "Good"},
+	{ 1, "Lawful Good"},
+	{ 2, "Evil:"},
+	{ 3, "Chaotic Evil"},
+	{ 4, "Unaligned:"},
+};
+
+enum DeityType
+{
+
+};
+
+
 
 enum ClassType
 {
@@ -59,6 +82,14 @@ enum AbilityType
 	ABILITY_WISDOM,
 	ABILITY_CHARISMA,
 	ABILITY_MAX,
+};
+
+enum DefenseType
+{
+	DEF_ARMOR,
+	DEF_FORTITUDE,
+	DEF_REFLEX,
+	DEF_WILL,
 };
 
 enum SkillType
@@ -109,6 +140,7 @@ class CUnit : public CObjectUnit
 		std::vector <int> SkillList;
 		std::vector <int> FeatList;
 		std::vector <int> PowerList;
+		std::vector <int> LangList;
 
     protected:
 		int UnitID;
@@ -119,9 +151,21 @@ class CUnit : public CObjectUnit
         int nCharacterLevel;
 
 		RaceType Race;
-
+		SizeType Size;
 		ClassType Class;
+		ParagonClassType ParagonPath;
+		EpicClassType EpicDestiny;
+		int Experience;
+		int Age;
+		GenderType Gender;
+		int Height, Weight;
+		AligmentType Aligment;
+		DeityType Deity;
+		VisionType Vision;
 
+		int Speed;
+
+		int Level;
 		int Ability[ABILITY_MAX];
 
 
@@ -133,17 +177,21 @@ class CUnit : public CObjectUnit
         std::string GetName() const { return cCharacterName; }
         int GetActualHealth() const { return nActualHealth; }
         void SetActualHealth(int nValue) { nActualHealth = nValue; }
+		void ModifyHealth(int nValue) { nActualHealth += nValue; }
         int GetMaxHealth() const { return nMaxHealth; }
         int GetCharacterLevel() const { return nCharacterLevel; }
 
-		void SetRace(RaceType Type) { Race = Type; }
+		//On Race Selection
+		void SetRace(RaceType Type);
 		RaceType GetRace() const { return Race; }
-		void SetClass(ClassType Type) { Class = Type; }
+		void SetClass(ClassType Type);
 		ClassType GetClass() const { return Class; }
 
 		//Abilitys
 		int GetAbility(AbilityType Abil) const { return Ability[Abil]; }
 		void SetAbility(AbilityType Abil, int nValue) { Ability[Abil] = nValue; }
+		void IncreaseAbility(AbilityType Abil, int nValue) { Ability[Abil] += nValue; }
+		void DecreaseAbility(AbilityType Abil, int nValue) { Ability[Abil] -= nValue; }
 
 		//Skills
 		int GetSkill(int index)
@@ -289,8 +337,22 @@ class CUnit : public CObjectUnit
 		//bool CheckSkill(SkillType SkillT, int DificultyClass);
 		//AbilityType GetSkillAbility(SkillType SkillT);
 
+		//Abilitys
+		int CUnit::GetAbilityMod(AbilityType eAbility) const;
 
-
+		//Initiative
+		int GetInitiativeMod() const;
+		int GetInitiative() const;
+		//Defenses
+		int GetDefense(DefenseType Defense) const;
+		//Speed
+		void SetSpeed(int nValue) { Speed = nValue; }
+		int GetSpeed() const { return Speed; }
+		//Languages
+		void LearnLanguage(int LangIndex);
+		//Size
+		SizeType GetSize() const { return Size; }
+		VisionType GetVision() const { return Vision; }
 
 
         bool HasFlag(UnitFlag Flag) const { if(nUnitFlag & Flag) return true; return false; }

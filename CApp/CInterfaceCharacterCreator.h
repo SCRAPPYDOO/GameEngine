@@ -18,6 +18,8 @@ enum StepType
 	STEP_EQUIP,
 	STEP_CALCULATE,
 	STEP_DETAILS,
+	STEP_ALIGMENT,
+	STEP_DIETY,
 
     STEP_NAME = 10,
 };
@@ -67,32 +69,24 @@ class CInterfaceCharacterCreator : public CInterface
 		void SelectPower(int PowerIndex);
 		void GetClassPower();
 		void GenerateAvailablePowerList();
-		void GenerateAvailablePowerList(int PowerType);
 
 		//text generator
-		std::string GetRaceName(RaceType Type);
 		std::string GetClassName(ClassType Type);
 		std::string GetSkillName(int Index);
 		std::string GetFeatName(int Index);
 
     protected:
-		CCharacter Char;
+		CUnit *Char;
 
 		//Left Panel With All Stats
 		std::vector <SDL_Surface*> PowerTextSurf;
+		SDL_Surface* Stat[25];
 
-		SDL_Surface* Stat[15];
-
-        int nActualStep;
+        int nActualStep; //Actual Step
 
         SDL_Surface* Surf_StepTitle;
 
-		//Selected Variables
-		RaceType Race;
-		ClassType Class;
-
 		//Abilitys Step
-		int Ability[ABILITY_MAX];  //abilitys for char
 		int AbilityPoints;  //points to spend
 		AbilityType SelectedAbi;
 		SDL_Surface* SurfAbilityPoints;
@@ -107,13 +101,12 @@ class CInterfaceCharacterCreator : public CInterface
 		std::vector <int> FeatList;
 
 		//Step: Powers
-		int AtWillPower;
-		int EncounterPower;
-		int DailyPower;
-		int UtilityPower;
-		std::vector <int> AvailablePowerList;
+		int PowerPoints[4]; //Available Points to Spend on Powers
+		std::vector <int> AvailablePowerList; //List for generate avvailable powers
 
 
+		//Step: FellTheNumbers
+		void SetAbility();
 
 		int pos;
 };

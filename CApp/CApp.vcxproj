@@ -111,6 +111,7 @@
     <ClInclude Include="CButton.h" />
     <ClInclude Include="CCamera.h" />
     <ClInclude Include="CCharacter.h" />
+    <ClInclude Include="CDice.h" />
     <ClInclude Include="CEvent.h" />
     <ClInclude Include="CFrameControler.h" />
     <ClInclude Include="CInterface.h" />
@@ -139,6 +140,7 @@
     <ClInclude Include="Define.h" />
     <ClInclude Include="FeatDefines.h" />
     <ClInclude Include="PowerDefine.h" />
+    <ClInclude Include="RaceDefine.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -110,7 +110,7 @@ void CButton::Activate()
 		return;
 	}
 
-	if(ButtonIndex > 10000 && ButtonIndex < PowerIndexMax)
+	if(ButtonIndex > 10000 && ButtonIndex < 20000)  //Przedzial ID dla Powers
     {
         CInterfaceMenager::InterfaceMenager.InterfaceList[INTERFACE_CHARACTERCREATOR]->OnButtonActivate(ButtonIndex);
 		return;
