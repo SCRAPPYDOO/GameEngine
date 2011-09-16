@@ -373,7 +373,6 @@ void CInterfaceCharacterCreator::LoadStep()
 			if(Char->GetRace() == RACE_HUMAN)
 				FeatPoints = 2; //Humans Gain 2
 
-			GetClassFeatures(); // get all automatic learned feats
 			GenerateAvailableFeatsList();
 
 			//show feats without learned feats
@@ -828,20 +827,6 @@ void CInterfaceCharacterCreator::SelectFeat(int Type)
 	{
 		Char->TrainFeat(Type);
 		--FeatPoints;
-	}
-}
-
-int ClassFeatures[8][6] =
-{
-	{ 1086, 1087, 1088, 1089 }, //cleric
-	{  },
-};
-
-void CInterfaceCharacterCreator::GetClassFeatures()
-{
-	for(int i = 0; i<6; ++i)
-	{
-		Char->TrainFeat(ClassFeatures[Char->GetClass()][i]);
 	}
 }
 

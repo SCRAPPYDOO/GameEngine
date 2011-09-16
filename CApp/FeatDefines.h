@@ -58,7 +58,6 @@ enum FeatType
 	FeatJackOfAllTrades,
 	FeatKordsFavor, 
 	FeatLethalHunter,
-	FeatHuntersQuarry,
 	FeatLightStep,
 	FeatStealth,
 	FeatLinguist, 
@@ -70,7 +69,6 @@ enum FeatType
 	FeatNimbleBlade,
 	FeatPelorsRadiance, 
 	FeatPotentChallenge, 
-	FeatCombatChallenge, 
 	FeatPowerAttack, 
 	FeatPowerfulCharge, 
 	FeatPreciseHunter, 
@@ -97,11 +95,51 @@ enum FeatType
 	FeatWintertouched,
 
 	//Class Feats Cleric
-	ChannelDivinity, 
-	HealersLore, 
-	HealingWord, 
-	RitualCasting,
+	FeatChannelDivinity, 
+	FeatHealersLore, 
+	FeatHealingWord, 
+	FeatRitualCasting,
 
+	//Class Feats Figther
+	FeatCombatChallenge, 
+	FeatCombatSuperiority,
+	FeatFighterWeaponTalentOne,
+	FeatFighterWeaponTalentTwo,
+
+	//Paladins Feat
+	//FeatChannelDivinity, 
+	FeatDivineChallenge, 
+	FeatLayOnHands, 
+
+	//Ranger
+	FeatFightingStyleArcher, 
+	FeatFightingStyleBlade,
+	FeatHuntersQuarry,
+	FeatPrimeShot,
+
+	//Rogue
+	FeatFirstStrike, 
+	FeatRogueTactics, 
+	FeatRogueWeaponTalent, 
+	FeatSneakAttack,
+
+	//Warlock
+	FeatEldritchBlast, 
+	FeatEldritchPact, 
+	//FeatPrimeShot,
+	FeatShadowWalk, 
+	FeatWarlocksCurse,
+
+	//Warlord
+	FeatCombatLeader, 
+	FeatCommandingPresence, 
+	FeatinspiringWord,
+
+	//Wizard
+	FeatArcaneImplementMastery, 
+	FeatCantrips,
+	//FeatRitualCasting, 
+	FeatSpellbook,
 
 ////Paragon Tier Feats
 //Action Recovery Human Gain extra saving throws by spending action point

@@ -64,14 +64,14 @@ static struct RaceTableStruct
 
 static RaceTableStruct RaceTable[RACE_MAX] =
 {
-	{ 0, "Dragon Born", SIZE_MEDIUM, VisionNormal, 6, },
+	{ 0, "Dragon Born", SIZE_MEDIUM, VisionNormal,   6, },
 	{ 1, "Dwarf",		SIZE_MEDIUM, VisionLowLight, 5},
-	{ 2, "Eladrin",		SIZE_MEDIUM, VisionLowLight},
-	{ 3, "Elf",			SIZE_MEDIUM, VisionLowLight},
-	{ 4, "Half Elf",	SIZE_MEDIUM, VisionLowLight},
-	{ 5, "Halfling",	SIZE_SMALL , VisionNormal},
-	{ 6, "Human",		SIZE_MEDIUM, VisionNormal},
-	{ 7, "Tiefling",	SIZE_MEDIUM, VisionLowLight},
+	{ 2, "Eladrin",		SIZE_MEDIUM, VisionLowLight, 6},
+	{ 3, "Elf",			SIZE_MEDIUM, VisionLowLight, 7},
+	{ 4, "Half Elf",	SIZE_MEDIUM, VisionLowLight, 6},
+	{ 5, "Halfling",	SIZE_SMALL , VisionNormal,   6},
+	{ 6, "Human",		SIZE_MEDIUM, VisionNormal,   6},
+	{ 7, "Tiefling",	SIZE_MEDIUM, VisionLowLight, 6},
 };
 
 //Methods of access to race table

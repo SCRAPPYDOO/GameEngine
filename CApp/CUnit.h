@@ -184,8 +184,11 @@ class CUnit : public CObjectUnit
 		//On Race Selection
 		void SetRace(RaceType Type);
 		RaceType GetRace() const { return Race; }
+
+
 		void SetClass(ClassType Type);
 		ClassType GetClass() const { return Class; }
+		void SetClassFeatures();
 
 		//Abilitys
 		int GetAbility(AbilityType Abil) const { return Ability[Abil]; }

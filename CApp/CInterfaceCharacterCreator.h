@@ -62,7 +62,6 @@ class CInterfaceCharacterCreator : public CInterface
 
 		//Step: Feats
 		void SelectFeat(int Type);
-		void GetClassFeatures();
 		void GenerateAvailableFeatsList();
 
 		//step: Powers

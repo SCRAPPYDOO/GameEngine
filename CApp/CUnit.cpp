@@ -90,8 +90,17 @@ void CUnit::SetRace(RaceType Type)
 		Ability[GetRaceAbility(Race,1)] +=2;
 	}
 
-	//if(Race == RACE_DRAGONBORN)
-	//	TrainPower(PowerDragonBreath);
+	if(Race == RACE_DRAGONBORN)
+		TrainPower(10082);
+
+	if(Race == RACE_ELADRIN)
+		TrainPower(10083);
+
+	if(Race == RACE_ELF)
+		TrainPower(10084);
+
+	if(Race == RACE_HALFLING)
+		TrainPower(10085);
 }
 
 void CUnit::LearnLanguage(int LangIndex)
@@ -104,11 +113,29 @@ void CUnit::LearnLanguage(int LangIndex)
 	LangList.push_back(LangIndex);
 }
 
+//Class
 void CUnit::SetClass(ClassType Type) 
 { 
 	Class = Type; 
-
+	SetClassFeatures();
 }
+
+
+
+int ClassFeatures[8][6] =
+{
+	{ FeatChannelDivinity, FeatHealersLore, FeatHealingWord, FeatRitualCasting }, //cleric
+	{ FeatCombatChallenge, FeatCombatSuperiority},
+};
+
+void CUnit::SetClassFeatures()
+{
+	for(int i = 0; i<6; ++i)
+	{
+		TrainFeat(ClassFeatures[Class][i]);
+	}
+}
+
 
 //Abilitys
 int CUnit::GetAbilityMod(AbilityType eAbility) const
