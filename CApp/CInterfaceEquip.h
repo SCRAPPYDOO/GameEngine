@@ -13,62 +13,36 @@
     Bag->ButtonPanel
 */
 
-#define BAG_MAX_SLOTS   4
 #define BAG_MAX_X       8
 #define BAG_MAX_Y       8
+#define SLOT_W_H		30
 
 //#define INTERFACE_BAG_W 577
 //#define INTERFACE_BAG_H 598
-
-enum BAGSLOT
-{
-    BAG_ONE,
-    BAG_TWO,
-    BAG_THREE,
-    BAG_FOUR,
-};
-
-enum SlotType
-{
-    SLOT_DEFAULT,
-    SLOT_BAG,
-
-    SLOT_MAINHAND,
-    SLOT_SECONDHAND,
-
-    SLOT_HEAD,
-    SLOT_HANDS,
-    SLOT_CHEST,
-    SLOT_BOOTS,
-    SLOT_AMMO,
-    SLOT_BELT,
-    SLOT_NECK,
-    SLOT_RING,
-};
 
 class CInterfaceEquip : public CInterface
 {
     public:
         CInterfaceEquip();
         ~CInterfaceEquip() {}
-
-    protected:
-        BAGSLOT ActualBag;
  
     public: //Virtual
         bool OnLoad();
+		void OnRender(SDL_Surface* Surf_Display);
         void OnCleanup();
 
     public: //Own
-        BAGSLOT GetActualBag() const { return ActualBag; }
-        void SetActualBag(BAGSLOT Slot) { ActualBag = Slot; }
-
-        void SwitchBag(BAGSLOT NewBag);
         void SaveBag();
         void CleanUpBag();
-        void LoadBag(BAGSLOT);
+        void LoadBag();
 
         bool AddButtonToSlot(CButton* pButton, int mX, int mY);
+
+		CButton* AddItemToSlot(CButton* pButton, int mX, int mY);
+
+	private:
+		CButton* ItemSlot[BAG_MAX_X][BAG_MAX_Y];
+
 };
 
 #endif

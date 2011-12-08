@@ -3,10 +3,17 @@
 
 #include "CInterface.h"
 
+struct Loot
+{
+	int nGuid;   //Guid of unit
+	std::vector <int> UnitLootList;
+};
+
 class CInterfaceLoot : public CInterface
 {
     public:
 		CInterfaceLoot();
+		CInterfaceLoot(int nGuid, int nID);
         ~CInterfaceLoot() {}
 
 	public:	
@@ -16,7 +23,11 @@ class CInterfaceLoot : public CInterface
         void OnCleanup();
 
 		void OnButtonActivate(ButtonType Type);
-		void LoadLoot(int UnitID) {}
+		void LoadLoot(int nGuid, int nID);
+
+	private:
+		std::vector <int> LootBoxList;
+		std::vector <Loot> LootListHandler;
 };
 
 #endif

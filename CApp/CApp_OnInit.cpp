@@ -23,12 +23,19 @@ bool CApp::OnInit()
     if(CInterfaceMenager::InterfaceMenager.LoadInterface() == false)
         return false;
 
-    ////Test Character don delete this for now
-    //CUnit* unit = new CCharacter();
-    //unit->OnLoad();
-    //CUnitMenager::UnitList.push_back(unit);
-    //CPlayer::Player.pPlayerCharacter = unit;
+	//DEBUG 
+	//Created terst units
 
+    //Test Character don delete this for now
+	CUnit* unit = new CCharacter();
+	unit->OnLoad();
+	CUnitMenager::UnitList.push_back(unit);
+	CPlayer::Player.pPlayerCharacter = unit;
+
+    //Test Character don delete this for now
+	CUnit* punit = new CCharacter();
+	punit->OnLoad();
+	CUnitMenager::UnitList.push_back(punit);
     return true;
 }
 

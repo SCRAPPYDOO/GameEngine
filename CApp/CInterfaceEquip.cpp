@@ -4,10 +4,9 @@
 
 CInterfaceEquip::CInterfaceEquip()
 {
-    nPosX = 400;
+    nPosX = 300;
     nPosY = 200;
 
-    ActualBag = BAG_ONE;
     eInterfaceType = INTERFACE_EQUIP;
 }
 
@@ -16,9 +15,14 @@ bool CInterfaceEquip::OnLoad()
     if(CInterface::OnLoad() == false)
         return false;
 
-    LoadBag(ActualBag);
-
     return true;
+}
+
+void CInterfaceEquip::OnRender(SDL_Surface* Surf_Display)
+{
+	CInterface::OnRender(Surf_Display);
+
+
 }
 
 void CInterfaceEquip::OnCleanup()
@@ -29,27 +33,10 @@ void CInterfaceEquip::OnCleanup()
     CInterface::OnCleanup();
 }
 
-void CInterfaceEquip::SwitchBag(BAGSLOT NewBag)
-{
-    if(ActualBag == NewBag)
-        return;
-
-    SaveBag();
-    CleanUpBag();
-    LoadBag(NewBag);
-}
 
 void CInterfaceEquip::SaveBag()
 {
     //Open a file for writing 
-    switch(ActualBag)
-    {
-        case 0:
-        case 1:
-        case 2:
-        case 3:
-        default: break;
-    }
 
     std::ofstream save( "./save/bag1_save" ); 
 
@@ -74,7 +61,7 @@ void CInterfaceEquip::CleanUpBag()
     }
 }
 
-void CInterfaceEquip::LoadBag(BAGSLOT BagSlot)
+void CInterfaceEquip::LoadBag()
 {
     //int upleftX = nPosX + 10;
     //int upLeftY = nPosY + 100;
@@ -104,64 +91,134 @@ void CInterfaceEquip::LoadBag(BAGSLOT BagSlot)
 
 bool CInterfaceEquip::AddButtonToSlot(CButton* pButton, int mX, int mY)
 {
-    if(pButton->GetButtonClass() != BUTTONCLASS_ITEM)
-        return false;
+	//Only Items Can Be Added To Equpment
+ //   if(pButton->GetButtonClass() != BUTTONCLASS_ITEM)
+	//{
+	//	if(CInterfaceMenager::InterfaceMenager.InterfaceList[INTERFACE_MASAGEWINDOW])
+	//		CInterfaceMenager::InterfaceMenager.InterfaceList[INTERFACE_MASAGEWINDOW]->AddMsg("Mozes Dodac Do Equip Tylko Item");
+
+ //       return false;
+	//}
+
 
     //For bag slots
-    for(int x = 0; x < INTERFACE_BAG_MAXSLOT_X; ++x) 
+    for(int x = 0; x < BAG_MAX_X; ++x) 
     {   
-        for(int y = 0; y < INTERFACE_BAG_MAXSLOT_Y; ++y) 
+        for(int y = 0; y < BAG_MAX_Y; ++y) 
         {   
-            if( ( mX > nPosX + 10 + x*100 + 29 ) && ( mX < nPosX + 10 + x*33 + 29 + INTERFACE_EQUIPMENT_SLOT_H_W) && ( mY > nPosY + 100 + y*33 ) && ( mY < nPosY + 100 + y*33 + INTERFACE_EQUIPMENT_SLOT_H_W) )
+            if( ( mX > nPosX + 10 + x*30) && ( mX < nPosX + 10 + x*30 + SLOT_W_H) && ( mY > nPosY + 10 + y*30 ) && ( mY < nPosY + 10 + y*30 + SLOT_W_H) )
             {      
                 //ToDo: Need to check if on slot  is any aother button then return false
                 if(CButton *Button = GetButton(mX, mY))
                     if(Button != NULL)
                         return false;
+				
+				int nX = nPosX + 10 + x*30;
+				int nY = nPosY + 10 + y*30;
+				//If Slot Is Empty We SetUp Porper Coordinates To Button
+                pButton->SetPositionX(nX);
+                pButton->SetPositionY(nY);
 
-                pButton->SetPositionX(nPosX + 10 + x*33);
-                pButton->SetPositionY(nPosY + 100 + y*33);
+				//Check If Button Is Already In Same Interface Just Change Place
+				//Prevent Double Add 1 Button to Button List
+				for(int i = 0;i < ButtonsList.size();i++) 
+				{   
+					if(!ButtonsList[i]) continue;
+					if(ButtonsList[i] == pButton)
+						return true;
+				}
+
                 ButtonsList.push_back(pButton);
                 return true;
             }
         }
     }
 
+	//return false;
     //for equip slots
-    for(int x = 0; x < 2; ++x) 
-    {   
-        for(int y = 0; y < 6; ++y) 
-        {   
-            if( ( mX > nPosX + 10 + x*33 ) && ( mX < nPosX + 10 + x*33 + 30) && ( mY > nPosY + 100 + y*33 ) && ( mY < nPosY + 100 + y*33 + 30 ) )
-            {
-                switch(y)
-                {
-                    case 0: 
-                    {
-                        //if(x == 0 || ItemType_Ammo != pButton->GetItemType())
-                        //    return false;
-                        //break;
-                    }
-                    case 1:
-                    {
-                        //if(x == 0 && ItemType_Weapon == pButton->GetItemType() || x == 1 && ( ItemType_Weapon == pButton->GetItemType() || ItemType_Shield == pButton->GetItemType() /* || or offhand) */ ))
-                        //    break;
+    //for(int x = 0; x < 2; ++x) 
+    //{   
+    //    for(int y = 0; y < 6; ++y) 
+    //    {   
+    //        if( ( mX > nPosX + 10 + x*33 ) && ( mX < nPosX + 10 + x*33 + 30) && ( mY > nPosY + 100 + y*33 ) && ( mY < nPosY + 100 + y*33 + 30 ) )
+    //        {
+    //            switch(y)
+    //            {
+    //                case 0: 
+    //                {
+    //                    //if(x == 0 || ItemType_Ammo != pButton->GetItemType())
+    //                    //    return false;
+    //                    //break;
+    //                }
+    //                case 1:
+    //                {
+    //                    //if(x == 0 && ItemType_Weapon == pButton->GetItemType() || x == 1 && ( ItemType_Weapon == pButton->GetItemType() || ItemType_Shield == pButton->GetItemType() /* || or offhand) */ ))
+    //                    //    break;
   
 
-                    }
-                    case 2:
-                    case 3:
-                    case 4:
-                    case 5:
-                    default: return false;
-                }
-                //Add Button if no return false;
-                return true;
-            }
-        }
-    }
-    return false;
+    //                }
+    //                case 2:
+    //                case 3:
+    //                case 4:
+    //                case 5:
+    //                default: return false;
+    //            }
+    //            //Add Button if no return false;
+    //            return true;
+    //        }
+    //    }
+    //}
+	return false;
 }
+
+CButton* CInterfaceEquip::AddItemToSlot(CButton* pButton, int mX, int mY)
+{
+	//if(pButton->GetButtonClass() != BUTTONCLASS_ITEM)
+	//	return pButton;
+
+ //   //For bag slots
+ //   for(int x = 0; x < BAG_MAX_X; ++x) 
+ //   {   
+ //       for(int y = 0; y < BAG_MAX_Y; ++y) 
+ //       {   
+ //           if( ( mX > nPosX + 10 + x*33 + 29 ) && ( mX < nPosX + 10 + x*33 + 29 + INTERFACE_EQUIPMENT_SLOT_H_W) && ( mY > nPosY + 100 + y*33 ) && ( mY < nPosY + 100 + y*33 + INTERFACE_EQUIPMENT_SLOT_H_W) )
+ //           {      
+ //               //Need to check if on slot  is any aother button then return this button to handle mouse
+	//			if(ItemSlot[x][y])
+	//				return ItemSlot[x][y];
+
+	//			ItemSlot[x][y] = pButton;
+ //           }
+ //       }
+ //   }
+	//return NULL;
+}
+//
+//jestem nad  interface
+//	Additem to slot
+//	if return null
+
+//button na  pozycji x y
+//	bierzmy go myszka i prznosimy do interfacu
+//	gdy sie dodaje zmeinia pozycje
+//
+//
+//	loot all
+//	lista buttonow -> add do lista buttonow
+//	i u
+//	suniecie
+//
+//
+//	transfer z interfacu do interfacu po spelnieniu warunkow
+//
+//	czyli klikamy na buttonz interfacu a zapisajumey interface
+//
+//
+//	klik prawym
+//	if
+//	CInterface = get interface x y
+//	if
+//		CButton = get nbutton x y
 
 
 

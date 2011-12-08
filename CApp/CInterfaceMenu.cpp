@@ -95,7 +95,6 @@ void CInterfaceMenu::OnCleanup()
 				SDL_FreeSurface(Surf[i][x]);
 			Surf[i][x] = NULL;
 		}
-
 	}
 }
 

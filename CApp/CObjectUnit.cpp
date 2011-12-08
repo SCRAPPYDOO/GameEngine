@@ -26,7 +26,7 @@ CObjectUnit::CObjectUnit()
     fGoY = 0;   
     fNewX = 0;  //position where we are going to
     fNewY = 0;  
-    fSpeed = 0; 
+    fSpeed = 1; 
 
     nUnitMovementFlag = 0;
 
@@ -38,15 +38,18 @@ bool CObjectUnit::OnLoad()
 {
     if((Surf_Unit = CSurface::OnLoad("./anim/1.png")) == NULL) 
     {
-        //CInterfaceMenager::InterfaceMenager.InterfaceList[INTERFACE_MASAGEWINDOW]->AddMsg("Unit Image Not Loaded");
+        CInterfaceMenager::InterfaceMenager.InterfaceList[INTERFACE_MASAGEWINDOW]->AddMsg("Unit Image Not Loaded");
         return false;
     }
+
+	Anim_Control.MaxFrames = 8;
 
     return true;
 }
 
 void CObjectUnit::OnLoop() 
 {
+	OnMoveToPoint();
     OnAnimate();
 }
 
@@ -57,7 +60,8 @@ void CObjectUnit::OnRender(SDL_Surface* Surf_Display)
     int nCurrentFrameX = CurrentFrameCol * nWidth;
     int nCurrentFrameY = (CurrentFrameRow + Anim_Control.GetCurrentFrame()) * nHeight;
 
-    CSurface::OnDraw(Surf_Display, Surf_Unit, GetAnimPosX(), GetAnimPosY(), nCurrentFrameX, nCurrentFrameY, nWidth, nHeight);
+    //CSurface::OnDraw(Surf_Display, Surf_Unit, GetAnimPosX(), GetAnimPosY(), nCurrentFrameX, nCurrentFrameY, nWidth, nHeight);
+	CSurface::OnDraw(Surf_Display, Surf_Unit, GetAnimPosX(), GetAnimPosY(), nCurrentFrameX, nCurrentFrameY, nWidth, nHeight);
     //CSurface::OnDraw(Surf_Display, Surf_Unit, fPosX, fPosY);
 }
 
@@ -81,6 +85,9 @@ void CObjectUnit::OnMoveToPoint(int nGoPosX, int nGoPosY)
     //nUnitMovementFlag = UNIT_MOVEMENT_FLAG_WALK;
     fGoX = static_cast<float>(nGoPosX);
     fGoY = static_cast<float>(nGoPosY);
+
+	if(CInterfaceMenager::InterfaceMenager.InterfaceList[INTERFACE_MASAGEWINDOW])
+		CInterfaceMenager::InterfaceMenager.InterfaceList[INTERFACE_MASAGEWINDOW]->AddMsg("Ide Do Pktu");
 }
 
 void CObjectUnit::OnMoveToPoint()
@@ -125,11 +132,12 @@ void CObjectUnit::OnMoveToPoint()
     if(fPosY != fGoY)
         fNewY = fPosY + fSpeed*vectorY; 
 
-
     if(!IsInColision())
     {
         fPosX = fNewX; 
         fPosY = fNewY;
+		//if(CInterfaceMenager::InterfaceMenager.InterfaceList[INTERFACE_MASAGEWINDOW])
+		//CInterfaceMenager::InterfaceMenager.InterfaceList[INTERFACE_MASAGEWINDOW]->AddMsg("Ide Do Pktu");
     }
     else
     {

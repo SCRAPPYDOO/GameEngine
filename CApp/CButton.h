@@ -15,7 +15,7 @@ enum ButtonClass
     BUTTONCLASS_BUTTON,
     BUTTONCLASS_ITEM,
     BUTTONCLASS_SPELL,
-    BUTTONCLASS_SHORTCURT,
+    BUTTONCLASS_SHORTCUT,
 };
 
 enum ButtonType
@@ -205,7 +205,7 @@ class CButton
 		{ 
 			x = nNextX - nDistX; 
             y = nNextY - nDistY; 
-            eButtonState = BUTTONSTATE_MOVED; 
+            
 		}
 
         virtual void OnMoveWithInterface(int nX, int nY) { x += nX; y += nY; }

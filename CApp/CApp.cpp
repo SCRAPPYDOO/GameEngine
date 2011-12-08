@@ -6,6 +6,9 @@ CApp CApp::GameControl;
 CInterface*     CApp::pSelectedInterface;
 CButton*        CApp::pSelectedButton;
 
+CInterface*		CApp::pOldButtonInterface;
+CButton*		CApp::pSelectedMovedButton;
+
 CApp::CApp() 
 {
     Surf_Display = NULL;			//Main Window
@@ -14,6 +17,9 @@ CApp::CApp()
 
     pSelectedInterface = NULL;
     pSelectedButton = NULL;
+
+	pOldButtonInterface = NULL;
+	pSelectedMovedButton = NULL;
 
     Running = true;					//Main Loop
 }

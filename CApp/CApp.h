@@ -43,6 +43,9 @@ class CApp : public CEvent
         static CInterface* pSelectedInterface;
         static CButton* pSelectedButton;
 
+		static CInterface* pOldButtonInterface;
+		static CButton* pSelectedMovedButton;
+
     private:
         bool            Running;
 
@@ -64,7 +67,7 @@ class CApp : public CEvent
 
             void OnMouseMove(int mX, int mY, int relX, int relY, bool Left,bool Right,bool Middle);
 
-			void OnRButtonDown(int x,int y);
+			void OnRButtonDown(int mX,int mY);
             void OnRButtonUp(int mX, int mY);
 			void OnLButtonDown(int x,int y);
             void OnLButtonUp(int x,int y);

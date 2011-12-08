@@ -14,7 +14,7 @@ CCharacter::CCharacter()
     fGoY = 0;   
     fNewX = 0;  //position where we are going to
     fNewY = 0;  
-    fSpeed = 0; 
+    fSpeed = 0.1; 
 
     nUnitFlag = 0;
     nUnitMovementFlag = 0;

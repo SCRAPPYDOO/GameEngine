@@ -26,7 +26,7 @@ class CPlayer
 		void LoadCharacter(int CharID) 
 		{
 			//zaladuj wszytko z plikuj lub z bazy
-			pPlayerCharacter = new CCharacter();
+			//pPlayerCharacter = new CCharacter();
 			//pPlayerCharacter->LoadCharFromFile(CharID);
 			//dodaj do listy unitow
 		}

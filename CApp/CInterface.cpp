@@ -36,19 +36,11 @@ bool CInterface::OnLoad()
         }
         case INTERFACE_PLAYERINFO:
         {
-            nPosX = 5;
-            nPosY = 5;
+            nPosX = 0.5 * WWIDTH - 0.5 * INTERFACE_PLAYERINFO_W;
+            nPosY = WHEIGHT - INTERFACE_PLAYERINFO_H;
             nWidht = INTERFACE_PLAYERINFO_W;
             nHeight = INTERFACE_PLAYERINFO_H;
-            SurfName = "./interface/interface_unitinfo_surf.png"; break;
-        }
-        case INTERFACE_BUTTON_PANEL: 
-        {
-            nPosX = 0.5 * WWIDTH - 0.5 * INTERFACE_BUTTON_PANEL_W;
-            nPosY = WHEIGHT - INTERFACE_BUTTON_PANEL_H;
-            nWidht = INTERFACE_BUTTON_PANEL_W;
-            nHeight = INTERFACE_BUTTON_PANEL_H;
-            SurfName = "./interface/interface_button_surf.png"; break;
+            SurfName = "./interface/Panel.png"; break;
         }
         case INTERFACE_GAMEMENU: 
         {
@@ -61,7 +53,7 @@ bool CInterface::OnLoad()
         case INTERFACE_CHARACTERPANEL: 
         {
             nPosX = 0.5 * WWIDTH - 0.5 * INTERFACE_CHARACTERPANEL_W;
-            nPosY = WHEIGHT - INTERFACE_CHARACTERPANEL_H - INTERFACE_BUTTON_PANEL_H;
+            nPosY = 0;
             nWidht = INTERFACE_CHARACTERPANEL_W;
             nHeight = INTERFACE_CHARACTERPANEL_H; 
             SurfName = "./interface/surf_character_panel.png"; break;
@@ -106,19 +98,16 @@ bool CInterface::OnLoad()
             nHeight = INTERFACE_CHARACTERSHEET_H; 
             SurfName = "./interface/interface_charactersheet_surf.png"; break;
         }
-
-        case INTERFACE_TARGET:
-        {
-            nPosX = 0.5 * WWIDTH - 0.5 * INTERFACE_PLAYERINFO_W;
-            nPosY = 5;
-            nWidht = INTERFACE_PLAYERINFO_W;
-            nHeight = INTERFACE_PLAYERINFO_H;
-            SurfName = "./interface/interface_unitinfo_surf.png"; break;
-        }
-
         case INTERFACE_CHARACTERCREATOR:
         {
             SurfName = "./interface/interface_character_creator.png"; break;
+        }
+        case INTERFACE_INFOWINDOW:
+        {
+            nPosX = 800;
+            nPosY = 800;
+            nWidht = 10;
+            nHeight = 10;     
         }
 
         default: break;
@@ -395,41 +384,50 @@ bool CInterface::AddButtonToSlot(CButton* pButton, int mX, int mY)
 {
     switch(eInterfaceType)
     {
-        case INTERFACE_BUTTON_PANEL:
-        {
-            for(int i=0; i<INTERFACE_BUTTON_PANEL_MAXSLOTS; ++i)
-            {
-                if( ( mX > nPosX + 33*i +3 ) && ( mX < nPosX + 33*i +3 + 30) && ( mY > nPosY + 3 ) && ( mY < nPosY + 3 + 30 ) )
-                {
-                    //If there is button on slot we need to remove him
-                    if(CButton* pOtherButton = GetButton(mX, mY))
-                    {
-                        pOtherButton->OnCleanup();
-                        DeleteButtonFromSlot(pOtherButton);
-                    }
+		case INTERFACE_EQUIP:
+		{
 
-                    if(pButton->GetButtonClass() == BUTTONCLASS_SHORTCURT)
-                    {
-                        pButton->SetPositionX(nPosX + 33*i +3);
-                        pButton->SetPositionY(nPosY + 3);
-                        ButtonsList.push_back(pButton);
-                        return true;
-                    }
 
-                    CButton* pShortcut = new CButton(nPosX + 33*i +3,  nPosY + 3, pButton->GetButtonType());
-                
-                    if(!pShortcut || !pShortcut->OnLoad())
-                        return false;
+		}
 
-                    pShortcut->SetButtonClass(BUTTONCLASS_SHORTCURT);
 
-                    ButtonsList.push_back(pShortcut);
-                    return false;
-                }
-            }
 
-            return false;
-        }
+
+        //case INTERFACE_BUTTON_PANEL:
+        //{
+        //    for(int i=0; i<INTERFACE_BUTTON_PANEL_MAXSLOTS; ++i)
+        //    {
+        //        if( ( mX > nPosX + 33*i +3 ) && ( mX < nPosX + 33*i +3 + 30) && ( mY > nPosY + 3 ) && ( mY < nPosY + 3 + 30 ) )
+        //        {
+        //            //If there is button on slot we need to remove him
+        //            if(CButton* pOtherButton = GetButton(mX, mY))
+        //            {
+        //                pOtherButton->OnCleanup();
+        //                DeleteButtonFromSlot(pOtherButton);
+        //            }
+
+        //            if(pButton->GetButtonClass() == BUTTONCLASS_SHORTCURT)
+        //            {
+        //                pButton->SetPositionX(nPosX + 33*i +3);
+        //                pButton->SetPositionY(nPosY + 3);
+        //                ButtonsList.push_back(pButton);
+        //                return true;
+        //            }
+
+        //            CButton* pShortcut = new CButton(nPosX + 33*i +3,  nPosY + 3, pButton->GetButtonType());
+        //        
+        //            if(!pShortcut || !pShortcut->OnLoad())
+        //                return false;
+
+        //            pShortcut->SetButtonClass(BUTTONCLASS_SHORTCURT);
+
+        //            ButtonsList.push_back(pShortcut);
+        //            return false;
+        //        }
+        //    }
+
+        //    return false;
+        //}
 
         default: return false;
     }

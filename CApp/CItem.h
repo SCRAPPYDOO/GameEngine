@@ -5,23 +5,27 @@
 #include "CApp.h"
 #include "CButton.h"
 
-/*
-    INTERFACE_BAG
-    INTERFACE_EQUIPMENT
-*/
-#define MAX_BAG_SLOTS   4
-
 class CItem : public CButton
 {
     public:
-        CItem();
+        CItem()
+		{
+			eButtonClass = BUTTONCLASS_ITEM;
+
+		}
         CItem(InterfaceType eType);
         ~CItem() {}
 
     public:
-        bool OnLoad();
-        void OnRender(SDL_Surface* Surf_Display);
-        void OnCleanup();
+        //bool OnLoad();
+        //void OnRender(SDL_Surface* Surf_Display);
+        //void OnCleanup();
+
+
+	private:
+		int nItemID;
+		int nItemGUID;
+		int nItemCount;
 };
 
 #endif

@@ -78,7 +78,7 @@ bool CButton::OnLoad(ButtonType eType)
 		default: break;
 	}
 
-    this->eButtonType = eType;
+    //this->eButtonType = eType;
 
     if((pButtonSurface = CSurface::OnLoad(Surf_Name)) == false)
         return false;
@@ -257,7 +257,32 @@ void CButton::Activate()
             }
             break;
         }
-        case BUTTON_LOOT_LOOTALL: break;
+
+        case BUTTON_LOOT_LOOTALL: 
+		{
+			CInterface* loot = CInterfaceMenager::InterfaceMenager.InterfaceList[INTERFACE_LOOT];
+			CInterface* equip = CInterfaceMenager::InterfaceMenager.InterfaceList[INTERFACE_EQUIP];
+
+			//for( int i=0; i< loot->ItemList.size(); ++i)
+			//{
+			//	if(!ItemList[i]) continue;
+
+			//	if(equip->AddItem(ItemList[i]))
+			//	{
+			//		//add msg equipment is full
+			//		return;
+			//	}
+			//	
+			//	ItemList[i] = NULL;
+			//}
+
+
+
+
+			//CInterfaceMenager::InterfaceMenager.InterfaceList[INTERFACE_LOOT]->OnButtonActivate(ButtonIndex);
+			//CInterfaceMenager::InterfaceMenager.InterfaceList[INTERFACE_EQUIP]->AddItem(
+			break;
+		}
 
         //SpellBook
         case BUTTON_SPELLBOOK_QUIT:         
@@ -361,7 +386,7 @@ void CButton::OnDrop(int mX, int mY)
         else 
         {
             //spell and shortcut delete
-            if(eButtonClass == BUTTONCLASS_SHORTCURT || eButtonClass == BUTTONCLASS_SPELL)
+            if(eButtonClass == BUTTONCLASS_SHORTCUT || eButtonClass == BUTTONCLASS_SPELL)
             {
                 OnCleanup();
                 return;

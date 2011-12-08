@@ -7,6 +7,7 @@
 #include "CInterfaceMenu.h"
 #include "CInterfaceCharacterCreator.h"
 #include "CInterfaceLoot.h"
+#include "CInterfaceInfoWindow.h"
 
 CInterfaceMenager CInterfaceMenager::InterfaceMenager;
 
@@ -36,15 +37,14 @@ bool CInterfaceMenager::LoadInterface()
         {
             InterfaceType eType;
 
-            for(int i=0; i<6; ++i)
+            for(int i=0; i<4; ++i)
             {
                 switch(i)
                 {
-                    case 0: eType = INTERFACE_PLAYERINFO; break;      
-                    case 1: eType = INTERFACE_BUTTON_PANEL; break;           
-                    case 2: eType = INTERFACE_CHARACTERPANEL; break;
-                    case 4: eType = INTERFACE_MASAGEWINDOW; break;
-                    case 5: eType = INTERFACE_TARGET; break;
+                    case 0: eType = INTERFACE_PLAYERINFO; break;                
+                    case 1: eType = INTERFACE_CHARACTERPANEL; break;
+                    case 2: eType = INTERFACE_MASAGEWINDOW; break;
+					case 3: eType = INTERFACE_INFOWINDOW; break;
                     default: break;
                 }
 
@@ -69,7 +69,6 @@ bool CInterfaceMenager::LoadInterface(InterfaceType eType)
     {
         case INTERFACE_MAINMENU: pInterface = new CInterfaceMenu(); break;
         case INTERFACE_PLAYERINFO: pInterface = new CInterfaceUnit(); break;
-        case INTERFACE_BUTTON_PANEL: pInterface = new CInterface(eType); break;
         case INTERFACE_GAMEMENU: pInterface = new CInterface(eType); break;
         case INTERFACE_CHARACTERPANEL: pInterface = new CInterface(eType); break;
         case INTERFACE_EQUIP: pInterface = new CInterfaceEquip(); break;
@@ -77,9 +76,10 @@ bool CInterfaceMenager::LoadInterface(InterfaceType eType)
         case INTERFACE_SPELLBOOK: pInterface = new CInterface(eType); break;
         case INTERFACE_MASAGEWINDOW: pInterface = new CInterfaceMsgWindow(); break;
         case INTERFACE_CHARACTERSHEET: pInterface = new CInterfaceCharSheet(); break;
-        case INTERFACE_TARGET: pInterface = new CInterfaceUnit(eType); break;
         case INTERFACE_CHARACTERCREATOR: pInterface = new CInterfaceCharacterCreator(); break;
-        default: return false;
+		case INTERFACE_INFOWINDOW: pInterface = new CInterfaceInfoWindow(); break;
+
+		default: return false;
     }
 
     if(pInterface && pInterface->OnLoad() == false)
@@ -124,3 +124,18 @@ CInterface* CInterfaceMenager::GetInterface(int nPosX, int nPosY)
 
     return NULL;
 }
+
+void CInterfaceMenager::MoveInterfaceToTop(CInterface* pInterface)
+{
+	//for(int it=0; it<InterfaceList.size(); ++it)
+	//{
+	//	if(InterfaceList[it] == NULL) continue;
+
+	//	if(InterfaceList[it] == pInterface)
+	//	{
+	//		//InterfaceList.erase(InterfaceList[it]);
+	//		InterfaceList.insert(InterfaceList.begin(), pInterface);
+	//		
+	//	}
+	//}
+};

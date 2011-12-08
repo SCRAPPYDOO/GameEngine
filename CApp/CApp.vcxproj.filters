@@ -118,6 +118,12 @@
     <ClCompile Include="CInterfaceLoot.cpp">
       <Filter>Interface</Filter>
     </ClCompile>
+    <ClCompile Include="CInterfaceInfoWindow.cpp">
+      <Filter>Interface</Filter>
+    </ClCompile>
+    <ClCompile Include="CInterfaceAbilityWindow.cpp">
+      <Filter>Interface</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CAnimation.h">
@@ -227,6 +233,15 @@
     </ClInclude>
     <ClInclude Include="CDice.h">
       <Filter>Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="CInterfaceInfoWindow.h">
+      <Filter>Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="CInterfaceAbilityWindow.h">
+      <Filter>Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="CButtonShortcut.h">
+      <Filter>Interface</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

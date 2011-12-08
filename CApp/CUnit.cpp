@@ -19,7 +19,7 @@ CUnit::CUnit()
     fGoY = 0;   
     fNewX = 0;  //position where we are going to
     fNewY = 0;  
-    fSpeed = 0; 
+    fSpeed = 1; 
 
     nUnitFlag = 0;
     nUnitMovementFlag = 0;
@@ -52,7 +52,7 @@ bool CUnit::OnLoad()
 
     nUnitFlag = nUnitFlag | UNIT_FLAG_GOSSIP | UNIT_FLAG_LOOTABLE;
 
-    //CInterfaceMenager::InterfaceMenager.InterfaceList[INTERFACE_MASAGEWINDOW]->AddMsg("Unit Image Loaded");
+    /*CInterfaceMenager::InterfaceMenager.InterfaceList[INTERFACE_MASAGEWINDOW]->AddMsg("Unit Image Loaded");*/
 
     return true;
 }
@@ -206,7 +206,7 @@ int CUnit::GetInitiative() const
 int CUnit::GetDefense(DefenseType Defense) const
 {
 	int Basic = 10 + 0.5 * Level;
-    int nDefense, nRacialBonus, nFeatBonus = 0, nPowerBonus = 0, nClassBonus = 0;
+    int nDefense = 0, nRacialBonus = 0, nFeatBonus = 0, nPowerBonus = 0, nClassBonus = 0;
 
     switch(Defense)
     {

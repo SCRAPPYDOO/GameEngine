@@ -59,6 +59,7 @@ class CObjectUnit
         float GetPosY() const { return fPosY; }
         int GetWidht() const { return nWidth; }
         int GetHeight() const { return nHeight; }
+		void SetNewPosition(float x, float y) { fPosX = x; fPosY = y; }
           
     public: //Movement Methods                                 
         virtual void OnMoveToPoint();                                                   //trigered by MovementGenerator

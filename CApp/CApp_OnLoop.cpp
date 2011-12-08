@@ -14,6 +14,13 @@ void CApp::OnLoop()
         CUnitMenager::UnitList[i]->OnLoop();
     }
 
+    for(int i = 0;i < CUnitMenager::UnitList.size();i++) 
+    {
+        if(!CUnitMenager::UnitList[i]) continue;
+
+        CUnitMenager::UnitList[i]->OnMoveToPoint();
+    }
+
     for(int i = 0;i < MAX_INTERFACEOBJECTS ;i++) //Update Interface Variables
 	{
         if(!CInterfaceMenager::InterfaceMenager.InterfaceList[i]) continue;

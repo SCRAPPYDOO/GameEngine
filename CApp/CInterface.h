@@ -2,6 +2,7 @@
     #define _CINTERFACE_H_
 
 #include "CButton.h"
+
 #include "CPlayer.h"
 #include <string>
 #include <sstream>
@@ -13,8 +14,9 @@
 
 #define INTERFACE_MAINMENU_W 1280
 #define INTERFACE_MAINMENU_H 720
-#define INTERFACE_PLAYERINFO_W 89
-#define INTERFACE_PLAYERINFO_H 89
+//Main Panel
+#define INTERFACE_PLAYERINFO_W 786
+#define INTERFACE_PLAYERINFO_H 107
 #define INTERFACE_BUTTON_PANEL_W 1280
 #define INTERFACE_BUTTON_PANEL_H 48
 #define INTERFACE_GAMEMENU_W 414
@@ -22,8 +24,8 @@
 #define INTERFACE_CHARACTERPANEL_W 412
 #define INTERFACE_CHARACTERPANEL_H 32
 
-#define INTERFACE_EQUIPMENT_W 577
-#define INTERFACE_EQUIPMENT_H 598
+#define INTERFACE_EQUIPMENT_W 500
+#define INTERFACE_EQUIPMENT_H 300
 #define INTERFACE_EQUIPMENT_SLOT_H_W 59
 
 #define INTERFACE_CHARACTERSHEET_W 639
@@ -49,7 +51,6 @@ enum InterfaceType
 {
     INTERFACE_MAINMENU          = 0,
     INTERFACE_PLAYERINFO        = 1,
-    INTERFACE_BUTTON_PANEL      = 2,
     INTERFACE_GAMEMENU          = 3,
     INTERFACE_CHARACTERPANEL    = 4,
     INTERFACE_EQUIP             = 6,
@@ -58,12 +59,12 @@ enum InterfaceType
     INTERFACE_LOOT              = 9,
     INTERFACE_SPELLBOOK         = 10,
     INTERFACE_MASAGEWINDOW      = 11,
-    INTERFACE_TARGET            = 12,
 	INTERFACE_CHARACTERCREATOR  = 13,
+	INTERFACE_INFOWINDOW,
     //If U ADD new Interface Update Value Below
 };
 
-#define MAX_INTERFACEOBJECTS 14
+#define MAX_INTERFACEOBJECTS 15
 
 enum InterfaceFlag
 {
@@ -104,6 +105,7 @@ class CInterface
         virtual void DeleteButtonFromSlot(CButton* pButton);
 
         virtual void AddMsg(char* msg) {}
+		virtual void AddUnitPointer(CUnit* Unit) {}
 
 	public:
         virtual bool OnLoad();	

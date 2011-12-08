@@ -77,6 +77,9 @@ void CInterfaceCharSheet::UpdateInterface()
 {
 	CleanUpSurface();
 
+	if(CPlayer::Player.pPlayerCharacter == NULL)
+		return;
+
     for(int i=0; i<INTERFACE_CHARSHEET_MAX; ++i)
     { 
         std::string strText = "";
