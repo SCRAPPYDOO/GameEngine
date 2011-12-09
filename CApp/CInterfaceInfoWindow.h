@@ -11,6 +11,8 @@ class CInterfaceInfoWindow : public CInterface
 
     private:
 		CUnit* pUnit;
+		CButton* pButton;
+
 		std::vector <SDL_Surface*> SurfaceTable;
 
 		//static CInterfaceInfoWindow InfoWindow;
@@ -25,8 +27,9 @@ class CInterfaceInfoWindow : public CInterface
 		void OnLoopCleanUp();
 		void CleanUpPointers();
 
-		void AddUnitPointer(CUnit* Unit) { SetUnit(Unit); }
+		void AddUnitPointer(CUnit* Unit = NULL, CButton* Button = NULL) { SetUnit(Unit); SetButton(Button); }
 		void SetUnit(CUnit* Unit);
+		void SetButton(CButton* pButton);
 };
 
 #endif

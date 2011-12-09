@@ -46,11 +46,20 @@ void CApp::OnMouseMove(int mX, int mY, int relX, int relY, bool Left,bool Right,
 	{
 		if(CUnit* pUnit = CUnitMenager::GetUnit(mX, mY))
 		{
-			CInterfaceMenager::InterfaceMenager.InterfaceList[INTERFACE_INFOWINDOW]->AddUnitPointer(pUnit);
+			CInterfaceMenager::InterfaceMenager.InterfaceList[INTERFACE_INFOWINDOW]->AddUnitPointer(pUnit, NULL);
+		}
+		else if(CInterface* pInterface = CInterfaceMenager::InterfaceMenager.GetInterface(mX, mY))
+		{
+			//Add Interface Pointer
+
+            if(CButton* Button = pInterface->GetButton(mX, mY))
+            {
+				CInterfaceMenager::InterfaceMenager.InterfaceList[INTERFACE_INFOWINDOW]->AddUnitPointer(NULL, Button);
+			}
 		}
 		else
 		{
-			CInterfaceMenager::InterfaceMenager.InterfaceList[INTERFACE_INFOWINDOW]->AddUnitPointer(NULL);
+			CInterfaceMenager::InterfaceMenager.InterfaceList[INTERFACE_INFOWINDOW]->AddUnitPointer(NULL, NULL);
 		}
 	}
 

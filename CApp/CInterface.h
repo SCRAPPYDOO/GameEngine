@@ -105,7 +105,7 @@ class CInterface
         virtual void DeleteButtonFromSlot(CButton* pButton);
 
         virtual void AddMsg(char* msg) {}
-		virtual void AddUnitPointer(CUnit* Unit) {}
+		virtual void AddUnitPointer(CUnit* Unit = NULL, CButton* Button = NULL) {}
 
 	public:
         virtual bool OnLoad();	

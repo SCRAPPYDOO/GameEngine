@@ -34,6 +34,9 @@ class CButtonShortcut : public CButton
 			return false;
 		}
 
+
+
+
 		void Activate()
 		{
 			if(pOriginalButton)

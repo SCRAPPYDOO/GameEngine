@@ -8,8 +8,8 @@
 enum InterfaceUnitDefines
 {
 	SLOT_W_H = 30,
-	SLOT_MAX_X = 2,
-	SLOT_MAX_Y = 8,
+	SLOT_MAX_X = 8,
+	SLOT_MAX_Y = 2,
     HEALTHBARRANGE = 100,
     HEALTHBARHEIGHT = 20,
 };

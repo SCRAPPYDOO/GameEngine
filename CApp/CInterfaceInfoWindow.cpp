@@ -5,6 +5,7 @@
 CInterfaceInfoWindow::CInterfaceInfoWindow()
 {
 	pUnit = NULL;
+	pButton = NULL;
 
     eInterfaceType = INTERFACE_INFOWINDOW;
 
@@ -35,6 +36,12 @@ void CInterfaceInfoWindow::OnLoop()
 		tempsurf =  CSurface::RenderText(name);
 
 		SurfaceTable.push_back(tempsurf);
+	}
+
+	if(pButton)
+	{
+
+
 	}
 
 	//if(pItem)
@@ -84,4 +91,9 @@ void CInterfaceInfoWindow::CleanUpPointers()
 void CInterfaceInfoWindow::SetUnit(CUnit* Unit)
 {
 	pUnit = Unit;
+}
+
+void CInterfaceInfoWindow::SetButton(CButton* Button)
+{
+	pButton = Button;
 }
