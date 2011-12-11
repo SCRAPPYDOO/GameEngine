@@ -10,10 +10,38 @@ class CItem : public CButton
     public:
         CItem()
 		{
-			eButtonClass = BUTTONCLASS_ITEM;
+			x = 0;
+			y = 0;
+			w = 30;
+			h = 30;
+			nButtonFlag = 0;
+			nPreviousX = x;
+			nPreviousY = y;
 
+			pButtonSurface = NULL;
+			eButtonState = BUTTONSTATE_UNSELECTED;
+			eAnimationState = BUTTON_ANIME_NORMAL;
+			eButtonClass = BUTTONCLASS_ITEM;
 		}
-        CItem(InterfaceType eType);
+
+        CItem(int ItemID, int ItemCount, int X, int Y )
+		{
+			nItemID = ItemID;
+			nItemCount = ItemCount;
+			x = 0;
+			y = 0;
+			w = 30;
+			h = 30;
+			nButtonFlag = 0;
+			nPreviousX = x;
+			nPreviousY = y;
+
+			pButtonSurface = NULL;
+			eButtonState = BUTTONSTATE_UNSELECTED;
+			eAnimationState = BUTTON_ANIME_NORMAL;
+			eButtonClass = BUTTONCLASS_ITEM;
+		}
+
         ~CItem() {}
 
     public:
@@ -26,6 +54,9 @@ class CItem : public CButton
 		int nItemID;
 		int nItemGUID;
 		int nItemCount;
+
+	public:
+		void GenerateGUID();
 };
 
 #endif

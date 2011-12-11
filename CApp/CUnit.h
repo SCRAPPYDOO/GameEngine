@@ -5,6 +5,7 @@
 #include "FeatDefines.h"
 #include "PowerDefine.h"
 #include "RaceDefine.h"
+#include "CButton.h"
 
 enum UnitType
 {
@@ -125,6 +126,9 @@ enum UnitFlag
     UNIT_FLAG_LOOTABLE  = 0x40,
 };
 
+#define BAG_MAX_X       8
+#define BAG_MAX_Y       8
+
 class CUnit : public CObjectUnit
 {
     public:
@@ -141,6 +145,9 @@ class CUnit : public CObjectUnit
 		std::vector <int> FeatList;
 		std::vector <int> PowerList;
 		std::vector <int> LangList;
+
+		//std::vector <CButton*> ItemList;
+		CButton* ItemListTable[BAG_MAX_X][BAG_MAX_Y];
 
     protected:
 		int UnitID;
@@ -363,6 +370,10 @@ class CUnit : public CObjectUnit
 
     public: //Def Methods
         bool IsAlive() const { if(nActualHealth > 0) return true; return false; }
+
+	//Item Bag Methods Add Delete And Other
+	public:
+		//void AddItem(CButton* CItemPointer);
 };
 
 #endif

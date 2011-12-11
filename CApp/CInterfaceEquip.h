@@ -13,9 +13,9 @@
     Bag->ButtonPanel
 */
 
-#define BAG_MAX_X       8
-#define BAG_MAX_Y       8
+
 #define SLOT_W_H		30
+#define DISTANSE_SLOT_TO_SLOT 5
 
 //#define INTERFACE_BAG_W 577
 //#define INTERFACE_BAG_H 598
@@ -32,17 +32,16 @@ class CInterfaceEquip : public CInterface
         void OnCleanup();
 
     public: //Own
-        void SaveBag();
-        void CleanUpBag();
-        void LoadBag();
+        //void SaveBag();
+        //void CleanUpBag();
+        //void LoadBag();
 
         bool AddButtonToSlot(CButton* pButton, int mX, int mY);
 
-		CButton* AddItemToSlot(CButton* pButton, int mX, int mY);
+		/*CButton* AddItemToSlot(CButton* pButton, int mX, int mY);*/
 
-	private:
-		CButton* ItemSlot[BAG_MAX_X][BAG_MAX_Y];
-
+		void OnMouseMove(int mX, int mY, int relX, int relY, bool Left,bool Right,bool Middle);
+		CButton* GetButton(int nPosX, int nPosY) const;
 };
 
 #endif
