@@ -3,6 +3,18 @@
 
 #include "CInterface.h"
 
+//#include "CInterfaceUnit.h"
+//#include "CInterfaceEquip.h"
+//#include "CInterfaceMsgWindow.h"
+//#include "CInterfaceCharSheet.h"
+//#include "CInterfaceMenu.h"
+//#include "CInterfaceCharacterCreator.h"
+//#include "CInterfaceLoot.h"
+//#include "CInterfaceInfoWindow.h"
+//#include "CInterfaceSkillbook.h"
+
+//class CInterface;
+
 class CInterfaceMenager
 {
     public:

@@ -28,8 +28,8 @@
 #define INTERFACE_EQUIPMENT_H 300
 #define INTERFACE_EQUIPMENT_SLOT_H_W 59
 
-#define INTERFACE_CHARACTERSHEET_W 639
-#define INTERFACE_CHARACTERSHEET_H 319
+#define INTERFACE_CHARACTERSHEET_W 702
+#define INTERFACE_CHARACTERSHEET_H 521
 #define INTERFACE_AREAMAP_W
 #define INTERFACE_AREAMAP_H
 #define INTERFACE_LOOT_W
@@ -61,10 +61,11 @@ enum InterfaceType
     INTERFACE_MASAGEWINDOW      = 11,
 	INTERFACE_CHARACTERCREATOR  = 13,
 	INTERFACE_INFOWINDOW,
+	INTERFACE_SKILL,
     //If U ADD new Interface Update Value Below
 };
 
-#define MAX_INTERFACEOBJECTS 15
+#define MAX_INTERFACEOBJECTS 16
 
 enum InterfaceFlag
 {
@@ -100,9 +101,10 @@ class CInterface
         bool IsInterfaceOnPos(int nX, int nY);
 
         virtual CButton* GetButton(int nPosX, int nPosY) const;
-        virtual void AddButtonToSlot(CButton* pButton) { ButtonsList.push_back(pButton); }
-        virtual bool AddButtonToSlot(CButton* pButton, int mX, int mY);
-        virtual void DeleteButtonFromSlot(CButton* pButton);
+		virtual CItem* GetItem(int nPosX, int nPosY) const { return NULL; }
+        virtual void AddButtonToSlot(CButton* pButton) { }
+		virtual bool AddButtonToSlot(CButton* pButton, int mX, int mY) { return false; }
+		virtual void DeleteButtonFromSlot(CButton* pButton) { }
 
         virtual void AddMsg(char* msg) {}
 		virtual void AddUnitPointer(CUnit* Unit = NULL, CButton* Button = NULL) {}

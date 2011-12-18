@@ -93,8 +93,10 @@
     <ClCompile Include="CInterfaceMenager.cpp" />
     <ClCompile Include="CInterfaceMenu.cpp" />
     <ClCompile Include="CInterfaceMsgWindow.cpp" />
+    <ClCompile Include="CInterfaceSkillbook.cpp" />
     <ClCompile Include="CItem.cpp" />
     <ClCompile Include="CMap.cpp" />
+    <ClCompile Include="CMouse.cpp" />
     <ClCompile Include="CMovementGenerator.cpp" />
     <ClCompile Include="CObject.cpp" />
     <ClCompile Include="CObjectMenager.cpp" />
@@ -128,9 +130,11 @@
     <ClInclude Include="CInterfaceMenager.h" />
     <ClInclude Include="CInterfaceMenu.h" />
     <ClInclude Include="CInterfaceMsgWindow.h" />
+    <ClInclude Include="CInterfaceSkillbook.h" />
     <ClInclude Include="CItem.h" />
     <ClInclude Include="CMap.h" />
     <ClInclude Include="CMasage.h" />
+    <ClInclude Include="CMouse.h" />
     <ClInclude Include="CMovementGenerator.h" />
     <ClInclude Include="CMySQL.h" />
     <ClInclude Include="CObject.h" />

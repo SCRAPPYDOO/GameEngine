@@ -22,12 +22,13 @@
 
 
 #include "CInterfaceMenager.h"
-#include "CButton.h"
-
+//#include "CButton.h"
+#include "CItem.h"
 #include "CObjectMenager.h"
 #include "CUnitMenager.h"
 
 #include "CPlayer.h"
+#include "CMouse.h"
 
 class CInterface;
 class CButton;

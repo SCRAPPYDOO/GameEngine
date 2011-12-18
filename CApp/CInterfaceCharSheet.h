@@ -2,6 +2,7 @@
     #define _CINTERFACECHARSHEET_H_
 
 #include "CInterface.h"
+#include "CItem.h"
 
 #define INTERFACE_CHARSHEET_MAX 10
  
@@ -23,6 +24,13 @@ class CInterfaceCharSheet : public CInterface
 
         void CleanUpSurface();
         void UpdateInterface();
+
+		//Rquiped Items Secvtion
+        bool AddButtonToSlot(CButton* pButton, int mX, int mY);
+
+		void OnMouseMove(int mX, int mY, int relX, int relY, bool Left,bool Right,bool Middle);
+		CButton* GetButton(int nPosX, int nPosY) const;
+
 };
 
 #endif

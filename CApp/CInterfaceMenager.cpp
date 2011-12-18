@@ -8,6 +8,7 @@
 #include "CInterfaceCharacterCreator.h"
 #include "CInterfaceLoot.h"
 #include "CInterfaceInfoWindow.h"
+#include "CInterfaceSkillbook.h"
 
 CInterfaceMenager CInterfaceMenager::InterfaceMenager;
 
@@ -78,6 +79,7 @@ bool CInterfaceMenager::LoadInterface(InterfaceType eType)
         case INTERFACE_CHARACTERSHEET: pInterface = new CInterfaceCharSheet(); break;
         case INTERFACE_CHARACTERCREATOR: pInterface = new CInterfaceCharacterCreator(); break;
 		case INTERFACE_INFOWINDOW: pInterface = new CInterfaceInfoWindow(); break;
+		case INTERFACE_SKILL: pInterface = new CInterfaceSkill(); break;
 
 		default: return false;
     }

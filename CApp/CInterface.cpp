@@ -58,14 +58,6 @@ bool CInterface::OnLoad()
             nHeight = INTERFACE_CHARACTERPANEL_H; 
             SurfName = "./interface/surf_character_panel.png"; break;
         }
-        case INTERFACE_EQUIP:
-        {
-            nPosX = 0.5 * WWIDTH - 0.5 * INTERFACE_EQUIPMENT_W;
-            nPosY = 0.5 * WHEIGHT - 0.5 * INTERFACE_EQUIPMENT_H;
-            nWidht = INTERFACE_EQUIPMENT_W;
-            nHeight = INTERFACE_EQUIPMENT_H;
-            SurfName = "./interface/interface_equpment_surf.png"; break;
-        }
         case INTERFACE_LOOT:
         {
             nPosX = 1000;
@@ -85,14 +77,14 @@ bool CInterface::OnLoad()
         case INTERFACE_MASAGEWINDOW:
         {
             nPosX = 50;
-            nPosY = 400;
+            nPosY = WHEIGHT - 200;
             nWidht = 100;
             nHeight = 100; 
             SurfName = "./interface/interface_massagewindow_surf.png"; break;
         }
         case INTERFACE_CHARACTERSHEET:
         {
-            nPosX = 0.5 * WWIDTH - 0.5 * INTERFACE_CHARACTERSHEET_W;
+            nPosX = 30;
             nPosY = 0.5 * WHEIGHT - 0.5 * INTERFACE_CHARACTERSHEET_H;
             nWidht = INTERFACE_CHARACTERSHEET_W;
             nHeight = INTERFACE_CHARACTERSHEET_H; 
@@ -102,6 +94,7 @@ bool CInterface::OnLoad()
         {
             SurfName = "./interface/interface_character_creator.png"; break;
         }
+
         case INTERFACE_INFOWINDOW:
         {
             nPosX = 800;
@@ -109,6 +102,11 @@ bool CInterface::OnLoad()
             nWidht = 10;
             nHeight = 10;     
         }
+
+		case INTERFACE_SKILL:
+		{
+			SurfName = "./interface/interface_skillbook.png"; break;
+		}
 
         default: break;
     }
@@ -123,7 +121,12 @@ bool CInterface::OnLoad()
 
 void CInterface::OnLoop()
 {
-    UpdateButtonsPosition();
+    for(int i = 0;i < ButtonsList.size();i++) 
+    {   
+        if(!ButtonsList[i]) continue;
+
+        ButtonsList[i]->OnLoop();
+    }
 }
 
 void CInterface::OnRender(SDL_Surface* Surf_Display)
@@ -351,7 +354,6 @@ void CInterface::LoadButtons()
             break;
         }
 
-
         default: break;
     }
 }
@@ -369,66 +371,66 @@ CButton* CInterface::GetButton(int nPosX, int nPosY) const
     return NULL;
 }
 
-void CInterface::DeleteButtonFromSlot(CButton* pButton)
-{
-    for(int i = 0;i < ButtonsList.size();i++) 
-    {   
-        if(!ButtonsList[i]) continue;
+//void CInterface::DeleteButtonFromSlot(CButton* pButton)
+//{
+//    for(int i = 0;i < ButtonsList.size();i++) 
+//    {   
+//        if(!ButtonsList[i]) continue;
+//
+//        if(ButtonsList[i] == pButton)
+//            ButtonsList[i] = NULL;
+//    }
+//}
 
-        if(ButtonsList[i] == pButton)
-            ButtonsList[i] = NULL;
-    }
-}
-
-bool CInterface::AddButtonToSlot(CButton* pButton, int mX, int mY)
-{
-    switch(eInterfaceType)
-    {
-		case INTERFACE_EQUIP:
-		{
-
-
-		}
-
-
-
-
-        //case INTERFACE_BUTTON_PANEL:
-        //{
-        //    for(int i=0; i<INTERFACE_BUTTON_PANEL_MAXSLOTS; ++i)
-        //    {
-        //        if( ( mX > nPosX + 33*i +3 ) && ( mX < nPosX + 33*i +3 + 30) && ( mY > nPosY + 3 ) && ( mY < nPosY + 3 + 30 ) )
-        //        {
-        //            //If there is button on slot we need to remove him
-        //            if(CButton* pOtherButton = GetButton(mX, mY))
-        //            {
-        //                pOtherButton->OnCleanup();
-        //                DeleteButtonFromSlot(pOtherButton);
-        //            }
-
-        //            if(pButton->GetButtonClass() == BUTTONCLASS_SHORTCURT)
-        //            {
-        //                pButton->SetPositionX(nPosX + 33*i +3);
-        //                pButton->SetPositionY(nPosY + 3);
-        //                ButtonsList.push_back(pButton);
-        //                return true;
-        //            }
-
-        //            CButton* pShortcut = new CButton(nPosX + 33*i +3,  nPosY + 3, pButton->GetButtonType());
-        //        
-        //            if(!pShortcut || !pShortcut->OnLoad())
-        //                return false;
-
-        //            pShortcut->SetButtonClass(BUTTONCLASS_SHORTCURT);
-
-        //            ButtonsList.push_back(pShortcut);
-        //            return false;
-        //        }
-        //    }
-
-        //    return false;
-        //}
-
-        default: return false;
-    }
-}
+//bool CInterface::AddButtonToSlot(CButton* pButton, int mX, int mY)
+//{
+//    switch(eInterfaceType)
+//    {
+//		case INTERFACE_EQUIP:
+//		{
+//
+//
+//		}
+//
+//
+//
+//
+//        //case INTERFACE_BUTTON_PANEL:
+//        //{
+//        //    for(int i=0; i<INTERFACE_BUTTON_PANEL_MAXSLOTS; ++i)
+//        //    {
+//        //        if( ( mX > nPosX + 33*i +3 ) && ( mX < nPosX + 33*i +3 + 30) && ( mY > nPosY + 3 ) && ( mY < nPosY + 3 + 30 ) )
+//        //        {
+//        //            //If there is button on slot we need to remove him
+//        //            if(CButton* pOtherButton = GetButton(mX, mY))
+//        //            {
+//        //                pOtherButton->OnCleanup();
+//        //                DeleteButtonFromSlot(pOtherButton);
+//        //            }
+//
+//        //            if(pButton->GetButtonClass() == BUTTONCLASS_SHORTCURT)
+//        //            {
+//        //                pButton->SetPositionX(nPosX + 33*i +3);
+//        //                pButton->SetPositionY(nPosY + 3);
+//        //                ButtonsList.push_back(pButton);
+//        //                return true;
+//        //            }
+//
+//        //            CButton* pShortcut = new CButton(nPosX + 33*i +3,  nPosY + 3, pButton->GetButtonType());
+//        //        
+//        //            if(!pShortcut || !pShortcut->OnLoad())
+//        //                return false;
+//
+//        //            pShortcut->SetButtonClass(BUTTONCLASS_SHORTCURT);
+//
+//        //            ButtonsList.push_back(pShortcut);
+//        //            return false;
+//        //        }
+//        //    }
+//
+//        //    return false;
+//        //}
+//
+//        default: return false;
+//    }
+//}

@@ -4,6 +4,8 @@
 
 CButton::CButton(int nPosX, int nPosY, ButtonType Type)    //Used by button panel on create
 {
+	ButtonName = "Button Name";
+
 	x = nPosX;
 	y = nPosY;
 	w = 30;
@@ -22,7 +24,7 @@ CButton::CButton(int nPosX, int nPosY, ButtonType Type)    //Used by button pane
 CButton::CButton(int nPosX, int nPosY, int Type)    //Used by button panel on create
 {
 	ButtonIndex = Type;
-
+	ButtonName = "Button Name";
 	x = nPosX;
 	y = nPosY;
 	w = 30;
@@ -75,6 +77,11 @@ bool CButton::OnLoad(ButtonType eType)
             //nButtonFlag += BUTTONFLAG_LOOT;
             break;
         }
+
+		case 70: Surf_Name = "./buttons/70.png"; w = 30; h = 30; break;
+		case 71: Surf_Name = "./buttons/71.png"; w = 30; h = 30; break;
+		case 72: Surf_Name = "./buttons/72.png"; w = 30; h = 30; break;
+
 		default: break;
 	}
 
@@ -86,12 +93,28 @@ bool CButton::OnLoad(ButtonType eType)
     return true;
 }
 
+void CButton::OnLoop()
+{
+	if(IsButtonOnPos(CMouse::Mouse.x, CMouse::Mouse.y))
+        eAnimationState = BUTTON_ANIME_ONMOTION;
+    else
+        eAnimationState = BUTTON_ANIME_NORMAL; 
+}
+
 void CButton::OnRender(SDL_Surface* Surf_Display)
 {
     if(Surf_Display == NULL || pButtonSurface == NULL)
         return;
 	
     CSurface::OnDraw(Surf_Display, pButtonSurface, x, y, w*eAnimationState, 0, w, h);
+}
+
+void CButton::OnRender(SDL_Surface* Surf_Display, int PosX, int PosY)
+{
+    if(Surf_Display == NULL || pButtonSurface == NULL)
+        return;
+	
+    CSurface::OnDraw(Surf_Display, pButtonSurface, PosX, PosY, w*eAnimationState, 0, w, h);
 }
 
 void CButton::OnCleanup()
@@ -213,13 +236,13 @@ void CButton::Activate()
         }
         case BUTTON_CHARPANEL_SPELLBOOK:
         {
-			if(!CInterfaceMenager::InterfaceMenager.InterfaceList[INTERFACE_SPELLBOOK])
+			if(!CInterfaceMenager::InterfaceMenager.InterfaceList[INTERFACE_SKILL])
 			{
                 CInterfaceMenager::InterfaceMenager.InterfaceList[INTERFACE_MASAGEWINDOW]->AddMsg("Enter to SpellBook !!");
-				CInterfaceMenager::InterfaceMenager.LoadInterface(INTERFACE_SPELLBOOK);
+				CInterfaceMenager::InterfaceMenager.LoadInterface(INTERFACE_SKILL);
 			}
 			else
-				CInterfaceMenager::InterfaceMenager.CleanUpInterface(INTERFACE_SPELLBOOK);
+				CInterfaceMenager::InterfaceMenager.CleanUpInterface(INTERFACE_SKILL);
 
             break;
         }
@@ -340,6 +363,15 @@ void CButton::Activate()
 		case BUTTON_CREATECHAR_SKILL_STREETWISE:
         {
             CInterfaceMenager::InterfaceMenager.InterfaceList[INTERFACE_CHARACTERCREATOR]->OnButtonActivate(eButtonType);
+            break;
+        }
+
+		//Interface Skill Ability List
+		case BUTTON_SKILL_QUIT:
+		case BUTTON_SKILL_UP:
+		case BUTTON_SKILL_DOWN:
+        {
+            CInterfaceMenager::InterfaceMenager.InterfaceList[INTERFACE_SKILL]->OnButtonActivate(eButtonType);
             break;
         }
 

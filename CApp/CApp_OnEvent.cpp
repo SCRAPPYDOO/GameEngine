@@ -41,6 +41,9 @@ void CApp::OnKeyUp(SDLKey sym, SDLMod mod, Uint16 unicode)
 
 void CApp::OnMouseMove(int mX, int mY, int relX, int relY, bool Left,bool Right,bool Middle)
 { 
+	CMouse::Mouse.x = mX;
+	CMouse::Mouse.y = mY;
+
 	//Send Masage That Mouse is Over Target and Need to Show Short Info
 	if(CApp::eGameState == TEST)
 	{

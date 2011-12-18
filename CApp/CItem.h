@@ -12,8 +12,8 @@ class CItem : public CButton
 		{
 			x = 0;
 			y = 0;
-			w = 30;
-			h = 30;
+			w = 45;
+			h = 45;
 			nButtonFlag = 0;
 			nPreviousX = x;
 			nPreviousY = y;
@@ -28,10 +28,10 @@ class CItem : public CButton
 		{
 			nItemID = ItemID;
 			nItemCount = ItemCount;
-			x = 0;
-			y = 0;
-			w = 30;
-			h = 30;
+			x = X;
+			y = Y;
+			w = 45;
+			h = 45;
 			nButtonFlag = 0;
 			nPreviousX = x;
 			nPreviousY = y;
@@ -40,12 +40,13 @@ class CItem : public CButton
 			eButtonState = BUTTONSTATE_UNSELECTED;
 			eAnimationState = BUTTON_ANIME_NORMAL;
 			eButtonClass = BUTTONCLASS_ITEM;
+			eButtonType = BUTTON_CHARPANEL_CHARSHEET;
 		}
 
         ~CItem() {}
 
     public:
-        //bool OnLoad();
+        bool OnLoad();
         //void OnRender(SDL_Surface* Surf_Display);
         //void OnCleanup();
 
@@ -56,7 +57,14 @@ class CItem : public CButton
 		int nItemCount;
 
 	public:
+
+
+
 		void GenerateGUID();
+
+
+		//GetBonusType()
+		//GetBonus
 };
 
 #endif

@@ -53,6 +53,11 @@ enum ButtonType
 
     BUTTON_PANEL_LOCK       = 60,
 
+    BUTTON_SKILL_QUIT = 70,
+	BUTTON_SKILL_UP	= 71,
+	BUTTON_SKILL_DOWN = 72,
+
+
    //Create Character Buttons
     BUTTON_CREATECHAR_NEXT  = 130,
     BUTTON_CREATECHAR_BACK = 131,
@@ -158,10 +163,14 @@ class CButton
         int nDistX, nDistY;
         int nPreviousX, nPreviousY;
 
+		std::string ButtonName;
+
     public:
         virtual bool OnLoad();
 		virtual bool OnLoad(ButtonType eType);
+		virtual void OnLoop();
 		virtual void OnRender(SDL_Surface* Surf_Display);
+		virtual void OnRender(SDL_Surface* Surf_Display, int PosX, int PosY);
         virtual void OnCleanup();
 
     public: //Methods for variables
@@ -198,6 +207,8 @@ class CButton
 
 			return false;
 		}
+
+		std::string GetName() { return ButtonName; }
 
     public:
         virtual void Activate();

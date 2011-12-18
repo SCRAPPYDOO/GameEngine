@@ -5,6 +5,7 @@
 #include "FeatDefines.h"
 #include "PowerDefine.h"
 #include "RaceDefine.h"
+//#include "CItem.h"
 #include "CButton.h"
 
 enum UnitType
@@ -129,6 +130,31 @@ enum UnitFlag
 #define BAG_MAX_X       8
 #define BAG_MAX_Y       8
 
+#define MAX_EQUIPED_ITEMS 16
+enum EquipSlot
+{
+	EQUIP_HEAD,
+	EQUIP_CHEST,
+	EQUIP_WRISTS,
+	EQUIP_RING,
+	EQUIP_RING2,	
+	EQUIP_BOOTS,
+	EQUIP_HANDS,
+	EQUIP_BELT,
+	EQUIP_CLOAK,
+	EQUIP_NECKLACE,
+	EQUIP_WEAPON,
+	EQUIP_SHIELD,
+	EQUIP_AMMO,
+
+
+	EQUIP_TRINCKET,
+	EQUIP_EYES,
+	EQUIP_QUIVER,
+};
+
+class CItem;
+
 class CUnit : public CObjectUnit
 {
     public:
@@ -146,8 +172,15 @@ class CUnit : public CObjectUnit
 		std::vector <int> PowerList;
 		std::vector <int> LangList;
 
-		//std::vector <CButton*> ItemList;
+		//List of Items In Bag
 		CButton* ItemListTable[BAG_MAX_X][BAG_MAX_Y];
+		//CItem* ItemList[BAG_MAX_X][BAG_MAX_Y];
+		//List of Items Weared On Char
+		CButton* ItemEquipedList[MAX_EQUIPED_ITEMS];
+		//List of Skills
+		std::vector <CButton*> AbilityList;
+		//CButton* SkillList
+
 
     protected:
 		int UnitID;

@@ -124,6 +124,12 @@
     <ClCompile Include="CInterfaceAbilityWindow.cpp">
       <Filter>Interface</Filter>
     </ClCompile>
+    <ClCompile Include="CInterfaceSkillbook.cpp">
+      <Filter>Interface</Filter>
+    </ClCompile>
+    <ClCompile Include="CMouse.cpp">
+      <Filter>Engine</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CAnimation.h">
@@ -242,6 +248,12 @@
     </ClInclude>
     <ClInclude Include="CButtonShortcut.h">
       <Filter>Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="CInterfaceSkillbook.h">
+      <Filter>Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="CMouse.h">
+      <Filter>Engine</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

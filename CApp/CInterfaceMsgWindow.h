@@ -13,6 +13,8 @@ class CInterfaceMsgWindow : public CInterface
         ~CInterfaceMsgWindow() {}
 
     private:
+		int MaxMsgLines;
+
         std::string MasageList[INTERFACE_MSGWINDOW_MAX_TEXT_LINES];
         SDL_Surface *Masage[INTERFACE_MSGWINDOW_MAX_TEXT_LINES];
 

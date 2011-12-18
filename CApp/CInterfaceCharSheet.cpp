@@ -53,6 +53,13 @@ void CInterfaceCharSheet::OnRender(SDL_Surface* Surf_Display)
 
         CSurface::OnDraw(Surf_Display, TextSurface[i], nPosX + TxtPosition[i][0], nPosY + TxtPosition[i][1]);
     }
+
+	for(int n = 0; n < MAX_EQUIPED_ITEMS; ++n) 
+	{   
+		if(!CPlayer::Player.pPlayerCharacter->ItemEquipedList[n]) continue;
+		
+		CPlayer::Player.pPlayerCharacter->ItemEquipedList[n]->OnRender(Surf_Display);
+	}
 }    
 
 void CInterfaceCharSheet::OnCleanup()
@@ -106,3 +113,97 @@ void CInterfaceCharSheet::UpdateInterface()
     }  
 }
 
+int EquipSlots[16][2] =
+{
+	{ 438, 36},
+	{ 438, 76},
+	{ 438,116},
+	{ 438,156},
+	{ 438,196},
+	{ 438,236},
+	{ 438,276},
+	{ 438,316},
+	{ 622, 36},
+	{ 622, 76},
+	{ 622,116},
+	{ 622,156},
+	{ 622,196},
+	{ 622,236},
+	{ 622,276},
+	{ 622,316},
+};
+
+
+bool CInterfaceCharSheet::AddButtonToSlot(CButton* pButton, int mX, int mY)
+{
+	if(CPlayer::Player.pPlayerCharacter == NULL) return false;
+	//Restriction with add ability button and other
+	//Only Items Can Be Added To Equpment
+    if(pButton->GetButtonClass() != BUTTONCLASS_ITEM)
+	{
+		if(CInterfaceMenager::InterfaceMenager.InterfaceList[INTERFACE_MASAGEWINDOW])
+			CInterfaceMenager::InterfaceMenager.InterfaceList[INTERFACE_MASAGEWINDOW]->AddMsg("Mozes Dodac Do Equip Tylko Item");
+
+        return false;
+	}
+
+    //For bag slots
+
+    for(int x = 0; x < MAX_EQUIPED_ITEMS; ++x) 
+    {   
+        if( ( mX > nPosX + EquipSlots[x][0]) && ( mX < nPosX + EquipSlots[x][0] + 30) && ( mY > nPosY + EquipSlots[x][1] ) && ( mY < nPosY + EquipSlots[x][1] + 30) )
+        {      
+			if(CPlayer::Player.pPlayerCharacter->ItemEquipedList[x] != NULL)
+				return false;
+
+			for(int n = 0; n < MAX_EQUIPED_ITEMS; ++n) 
+			{   
+				if(!CPlayer::Player.pPlayerCharacter->ItemEquipedList[n]) continue;
+
+				if(CPlayer::Player.pPlayerCharacter->ItemEquipedList[n] == pButton)
+					CPlayer::Player.pPlayerCharacter->ItemEquipedList[n] = NULL;
+			}
+
+			int nX = nPosX + EquipSlots[x][0];
+			int nY = nPosY + EquipSlots[x][1];
+            pButton->SetPositionX(nX);
+            pButton->SetPositionY(nY);
+
+			CPlayer::Player.pPlayerCharacter->ItemEquipedList[x] = pButton;
+
+            return true;
+        }
+    }
+
+	return false;
+}
+
+void CInterfaceCharSheet::OnMouseMove(int mX, int mY, int relX, int relY, bool Left,bool Right,bool Middle)
+{
+	CInterface::OnMouseMove( mX, mY, relX, relY, Left, Right, Middle);
+
+	if(CPlayer::Player.pPlayerCharacter == NULL) return;
+
+	for(int n = 0; n < MAX_EQUIPED_ITEMS; ++n) 
+	{   
+		if(!CPlayer::Player.pPlayerCharacter->ItemEquipedList[n]) continue;
+		
+		CPlayer::Player.pPlayerCharacter->ItemEquipedList[n]->OnMouseMove( mX, mY, relX, relY, Left, Right, Middle);
+	}
+}
+
+CButton* CInterfaceCharSheet::GetButton(int nPosX, int nPosY) const
+{
+	if(CButton* Button = CInterface::GetButton( nPosX, nPosY))
+		return Button;
+
+	for(int n = 0; n < MAX_EQUIPED_ITEMS; ++n) 
+	{   
+		if(!CPlayer::Player.pPlayerCharacter->ItemEquipedList[n]) continue;
+		
+		if(CPlayer::Player.pPlayerCharacter->ItemEquipedList[n]->IsButtonOnPos(nPosX, nPosY))
+			return CPlayer::Player.pPlayerCharacter->ItemEquipedList[n]; 
+	}
+
+    return NULL;
+}

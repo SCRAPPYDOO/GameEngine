@@ -38,6 +38,8 @@ CUnit::CUnit()
 	}
 
 	LangList.clear();
+
+	AbilityList.clear();
 }
 
 bool CUnit::OnLoad() 
