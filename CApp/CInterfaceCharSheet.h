@@ -25,11 +25,10 @@ class CInterfaceCharSheet : public CInterface
         void CleanUpSurface();
         void UpdateInterface();
 
-		//Rquiped Items Secvtion
         bool AddButtonToSlot(CButton* pButton, int mX, int mY);
-
 		void OnMouseMove(int mX, int mY, int relX, int relY, bool Left,bool Right,bool Middle);
 		CButton* GetButton(int nPosX, int nPosY) const;
+		void DeleteButtonFromSlot(CButton* pButton);
 
 };
 

@@ -133,6 +133,17 @@ int EquipSlots[16][2] =
 	{ 622,316},
 };
 
+int ItemSlot[8][2] =
+{
+	{ItemTypeHead,		ItemTypeEyes,},
+	{ItemTypeChest,		ItemTypeTrincket,},
+	{ItemTypeBoots,		ItemTypeQuiver,},
+	{ItemTypeWrists,	ItemTypeAmmo,},
+	{ItemTypeCloak,		ItemTypeShield,},
+	{ItemTypeBelt,		ItemTypeWeapon,},
+	{ItemTypeRing,		ItemTypeNecklace,},
+	{ItemTypeRing,		ItemTypeHands,},
+};
 
 bool CInterfaceCharSheet::AddButtonToSlot(CButton* pButton, int mX, int mY)
 {
@@ -148,13 +159,34 @@ bool CInterfaceCharSheet::AddButtonToSlot(CButton* pButton, int mX, int mY)
 	}
 
     //For bag slots
+	int x = 0;
+	int SecondRowX = 440;
+	int number = 0;
 
-    for(int x = 0; x < MAX_EQUIPED_ITEMS; ++x) 
+    for(int y = 0; y < MAX_EQUIPED_ITEMS; ++y) 
     {   
-        if( ( mX > nPosX + EquipSlots[x][0]) && ( mX < nPosX + EquipSlots[x][0] + 30) && ( mY > nPosY + EquipSlots[x][1] ) && ( mY < nPosY + EquipSlots[x][1] + 30) )
-        {      
-			if(CPlayer::Player.pPlayerCharacter->ItemEquipedList[x] != NULL)
+
+		if( y > 7)
+		{
+			if( x == 1)
 				return false;
+			y = 0;
+			x = 1;
+			SecondRowX = 485;
+
+
+		}
+
+        if( ( mX > nPosX + SecondRowX + x*(SLOT_W_H + 5)) && ( mX < nPosX + SecondRowX + x*(SLOT_W_H + 5) + SLOT_W_H) && ( mY > nPosY + 10 +  y*(SLOT_W_H + 5) ) && ( mY < nPosY + 10 +  y*(SLOT_W_H + 5) + SLOT_W_H) )
+        {      
+			if(CPlayer::Player.pPlayerCharacter->ItemEquipedList[number] != NULL)
+				return false;
+
+			//if(ItemSlot[y][x] != ItemTable[pButton->GetID()].ItemType) 
+			//{
+			//	CInterfaceMenager::InterfaceMenager.InterfaceList[INTERFACE_MASAGEWINDOW]->AddMsg("DEBUG: Invalid Slot Item");
+			//	return false;
+			//}
 
 			for(int n = 0; n < MAX_EQUIPED_ITEMS; ++n) 
 			{   
@@ -164,15 +196,18 @@ bool CInterfaceCharSheet::AddButtonToSlot(CButton* pButton, int mX, int mY)
 					CPlayer::Player.pPlayerCharacter->ItemEquipedList[n] = NULL;
 			}
 
-			int nX = nPosX + EquipSlots[x][0];
-			int nY = nPosY + EquipSlots[x][1];
+			int nX = nPosX + SecondRowX + x*(SLOT_W_H + 5);
+			int nY = nPosY + 10 + y*(SLOT_W_H + 5);
             pButton->SetPositionX(nX);
             pButton->SetPositionY(nY);
 
-			CPlayer::Player.pPlayerCharacter->ItemEquipedList[x] = pButton;
+			CPlayer::Player.pPlayerCharacter->ItemEquipedList[number] = pButton;
 
-            return true;
+			return true;
         }
+
+
+		++number;
     }
 
 	return false;
@@ -206,4 +241,15 @@ CButton* CInterfaceCharSheet::GetButton(int nPosX, int nPosY) const
 	}
 
     return NULL;
+}
+
+void CInterfaceCharSheet::DeleteButtonFromSlot(CButton* pButton) 
+{ 
+	for(int n = 0; n < MAX_EQUIPED_ITEMS; ++n) 
+	{   
+		if(!CPlayer::Player.pPlayerCharacter->ItemEquipedList[n]) continue;
+		
+		if(CPlayer::Player.pPlayerCharacter->ItemEquipedList[n] == pButton)
+			CPlayer::Player.pPlayerCharacter->ItemEquipedList[n] = NULL; 
+	}
 }

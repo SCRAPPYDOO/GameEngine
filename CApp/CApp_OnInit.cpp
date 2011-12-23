@@ -55,25 +55,26 @@ bool CApp::OnInit()
        unit->AbilityList.push_back(pButton);
     }
 
-    for(int i=0; i<5; ++i)
+    for(int i=0; i<3; ++i)
     {
+		int b = 0;
         switch(i)
         {
 
-            case 0: eType = BUTTON_CHARPANEL_CHARSHEET; x = 1  ; y = 1; break;
-            case 1: eType = BUTTON_CHARPANEL_CHARSHEET; x = 1    ; y = 1; break;
-			case 2: eType = BUTTON_CHARPANEL_CHARSHEET; x = 1  ; y = 1; break;	
+            case 0: b = 0;; x = 1  ; y = 1; break;
+            case 1: b = 1;; x = 1    ; y = 1; break;
+			case 2: b = 0;; x = 1  ; y = 1; break;	
             default: break;
         }
 
-        CButton *pButton = new CItem(1, 1, 1, 1);
-
-		unit->ItemListTable[i][0] = pButton;
+        CButton *pButton = new CItem(b, 1, 1, 1);
 
         if(pButton->OnLoad() == false)
             break;
 
-       unit->AbilityList.push_back(pButton);
+		unit->ItemListTable[i][0] = pButton;
+
+        unit->AbilityList.push_back(pButton);
     }
 
     //Test Character don delete this for now

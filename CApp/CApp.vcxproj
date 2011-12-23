@@ -130,6 +130,7 @@
     <ClInclude Include="CInterfaceMenager.h" />
     <ClInclude Include="CInterfaceMenu.h" />
     <ClInclude Include="CInterfaceMsgWindow.h" />
+    <ClInclude Include="CInterfaceShop.h" />
     <ClInclude Include="CInterfaceSkillbook.h" />
     <ClInclude Include="CItem.h" />
     <ClInclude Include="CMap.h" />
@@ -148,6 +149,7 @@
     <ClInclude Include="CUnitMenager.h" />
     <ClInclude Include="Define.h" />
     <ClInclude Include="FeatDefines.h" />
+    <ClInclude Include="ItemDefines.h" />
     <ClInclude Include="PowerDefine.h" />
     <ClInclude Include="RaceDefine.h" />
   </ItemGroup>

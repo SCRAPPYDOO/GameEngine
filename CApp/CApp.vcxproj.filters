@@ -255,5 +255,11 @@
     <ClInclude Include="CMouse.h">
       <Filter>Engine</Filter>
     </ClInclude>
+    <ClInclude Include="ItemDefines.h">
+      <Filter>Character</Filter>
+    </ClInclude>
+    <ClInclude Include="CInterfaceShop.h">
+      <Filter>Interface</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

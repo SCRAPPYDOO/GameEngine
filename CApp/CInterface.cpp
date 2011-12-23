@@ -76,10 +76,6 @@ bool CInterface::OnLoad()
         }
         case INTERFACE_MASAGEWINDOW:
         {
-            nPosX = 50;
-            nPosY = WHEIGHT - 200;
-            nWidht = 100;
-            nHeight = 100; 
             SurfName = "./interface/interface_massagewindow_surf.png"; break;
         }
         case INTERFACE_CHARACTERSHEET:

@@ -1,5 +1,5 @@
 #include "CInterfaceInfoWindow.h"
-
+#include "CItem.h"
 //CInterfaceInfoWindow CInterfaceInfoWindow::InfoWindow;
 
 CInterfaceInfoWindow::CInterfaceInfoWindow()
@@ -28,6 +28,24 @@ void CInterfaceInfoWindow::OnLoop()
 	CInterface::OnLoop();
 	OnLoopCleanUp();
 
+	if(CUnit* Unit = CUnitMenager::GetUnit(CMouse::Mouse.x, CMouse::Mouse.y))
+	{
+		pUnit = Unit;
+	}
+	else if(CInterface* pInterface = CInterfaceMenager::InterfaceMenager.GetInterface(CMouse::Mouse.x, CMouse::Mouse.y))
+	{
+		//Add Interface Pointer
+
+        if(CButton* Button = pInterface->GetButton(CMouse::Mouse.x, CMouse::Mouse.y))
+        {
+			pButton = Button;
+		}
+	}
+	else
+	{
+		CleanUpPointers();
+	}
+
 	//Mysz musi wyslac info ze  wskaznik jest na Unit
 	if(pUnit)
 	{
@@ -40,8 +58,21 @@ void CInterfaceInfoWindow::OnLoop()
 
 	if(pButton)
 	{
+		switch(pButton->GetButtonClass())
+		{
+			case BUTTONCLASS_ITEM:
+			{
+				std::string name = ItemTable[pButton->GetID()].Name;
+				SDL_Surface* tempsurf = NULL;
+				tempsurf =  CSurface::RenderText(name);
 
+				SurfaceTable.push_back(tempsurf);
 
+			}
+
+			default: break;
+
+		}
 	}
 
 	//if(pItem)
@@ -85,7 +116,7 @@ void CInterfaceInfoWindow::OnLoopCleanUp()
 void CInterfaceInfoWindow::CleanUpPointers()
 {
 	pUnit = NULL;
-
+	pButton = NULL;
 }
 
 void CInterfaceInfoWindow::SetUnit(CUnit* Unit)

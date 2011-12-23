@@ -18,6 +18,7 @@ class CInterfaceEquip : public CInterface
  
     public: //Virtual
         bool OnLoad();
+		void OnLoop();
 		void OnRender(SDL_Surface* Surf_Display);
         void OnCleanup();
 

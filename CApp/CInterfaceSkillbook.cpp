@@ -2,8 +2,8 @@
 
 CInterfaceSkill::CInterfaceSkill()
 {
-    nPosX = 200;
-    nPosY = 200;
+    nPosX = 10;
+    nPosY = 10;
 
     nWidht = 200;
     nHeight = 200;

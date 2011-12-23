@@ -112,12 +112,6 @@ enum ButtonType
     BUTTON_DEFAULT	                = 100000,
 };
 
-enum ItemType
-{
-    ItemType_Weapon,
-    ItemType_Shield,
-};
-
 enum ButtonState
 {
     BUTTONSTATE_UNSELECTED = 0,
@@ -224,6 +218,8 @@ class CButton
         virtual bool IsButtonOnPos(int mX, int mY);
         virtual void OnDrop(int mX, int mY);  //if left button up with button pointed
         virtual void OnMouseMove(int mX, int mY, int relX, int relY, bool Left,bool Right,bool Middle); 
+
+		virtual int GetID() { return ButtonIndex; }
 };
 
 #endif

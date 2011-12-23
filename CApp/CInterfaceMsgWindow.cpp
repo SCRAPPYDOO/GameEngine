@@ -2,6 +2,11 @@
 
 CInterfaceMsgWindow::CInterfaceMsgWindow()
 {
+    nPosX = 10;
+    nPosY = WHEIGHT - 200;
+    nWidht = 350;
+    nHeight = 200; 
+
     eInterfaceType = INTERFACE_MASAGEWINDOW;
 
     for(int i = 0;i < INTERFACE_MSGWINDOW_MAX_TEXT_LINES;i++) 

@@ -37,6 +37,21 @@ bool CInterfaceEquip::OnLoad()
     return true;
 }
 
+void CInterfaceEquip::OnLoop()
+{
+	CInterface::OnLoop();
+
+	for(int n = 0; n < BAG_MAX_X; ++n) 
+	{   
+		for(int m = 0; m < BAG_MAX_Y; ++m) 
+		{   
+			if(!CPlayer::Player.pPlayerCharacter->ItemListTable[n][m]) continue;
+
+			CPlayer::Player.pPlayerCharacter->ItemListTable[n][m]->OnLoop();
+		}
+	}
+}
+
 void CInterfaceEquip::OnRender(SDL_Surface* Surf_Display)
 {
 	CInterface::OnRender(Surf_Display);

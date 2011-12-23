@@ -44,27 +44,27 @@ void CApp::OnMouseMove(int mX, int mY, int relX, int relY, bool Left,bool Right,
 	CMouse::Mouse.x = mX;
 	CMouse::Mouse.y = mY;
 
-	//Send Masage That Mouse is Over Target and Need to Show Short Info
-	if(CApp::eGameState == TEST)
-	{
-		if(CUnit* pUnit = CUnitMenager::GetUnit(mX, mY))
-		{
-			CInterfaceMenager::InterfaceMenager.InterfaceList[INTERFACE_INFOWINDOW]->AddUnitPointer(pUnit, NULL);
-		}
-		else if(CInterface* pInterface = CInterfaceMenager::InterfaceMenager.GetInterface(mX, mY))
-		{
-			//Add Interface Pointer
+	////Send Masage That Mouse is Over Target and Need to Show Short Info
+	//if(CApp::eGameState == TEST)
+	//{
+	//	if(CUnit* pUnit = CUnitMenager::GetUnit(mX, mY))
+	//	{
+	//		CInterfaceMenager::InterfaceMenager.InterfaceList[INTERFACE_INFOWINDOW]->AddUnitPointer(pUnit, NULL);
+	//	}
+	//	else if(CInterface* pInterface = CInterfaceMenager::InterfaceMenager.GetInterface(mX, mY))
+	//	{
+	//		//Add Interface Pointer
 
-            if(CButton* Button = pInterface->GetButton(mX, mY))
-            {
-				CInterfaceMenager::InterfaceMenager.InterfaceList[INTERFACE_INFOWINDOW]->AddUnitPointer(NULL, Button);
-			}
-		}
-		else
-		{
-			CInterfaceMenager::InterfaceMenager.InterfaceList[INTERFACE_INFOWINDOW]->AddUnitPointer(NULL, NULL);
-		}
-	}
+ //           if(CButton* Button = pInterface->GetButton(mX, mY))
+ //           {
+	//			CInterfaceMenager::InterfaceMenager.InterfaceList[INTERFACE_INFOWINDOW]->AddUnitPointer(NULL, Button);
+	//		}
+	//	}
+	//	else
+	//	{
+	//		CInterfaceMenager::InterfaceMenager.InterfaceList[INTERFACE_INFOWINDOW]->AddUnitPointer(NULL, NULL);
+	//	}
+	//}
 
 	//UpdateInterface()
 	//{

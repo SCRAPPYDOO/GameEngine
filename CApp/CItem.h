@@ -4,45 +4,15 @@
 #include "CSurface.h"
 #include "CApp.h"
 #include "CButton.h"
+#include "ItemDefines.h"
+
+#define SLOT_W_H  45
 
 class CItem : public CButton
 {
     public:
-        CItem()
-		{
-			x = 0;
-			y = 0;
-			w = 45;
-			h = 45;
-			nButtonFlag = 0;
-			nPreviousX = x;
-			nPreviousY = y;
-
-			pButtonSurface = NULL;
-			eButtonState = BUTTONSTATE_UNSELECTED;
-			eAnimationState = BUTTON_ANIME_NORMAL;
-			eButtonClass = BUTTONCLASS_ITEM;
-		}
-
-        CItem(int ItemID, int ItemCount, int X, int Y )
-		{
-			nItemID = ItemID;
-			nItemCount = ItemCount;
-			x = X;
-			y = Y;
-			w = 45;
-			h = 45;
-			nButtonFlag = 0;
-			nPreviousX = x;
-			nPreviousY = y;
-
-			pButtonSurface = NULL;
-			eButtonState = BUTTONSTATE_UNSELECTED;
-			eAnimationState = BUTTON_ANIME_NORMAL;
-			eButtonClass = BUTTONCLASS_ITEM;
-			eButtonType = BUTTON_CHARPANEL_CHARSHEET;
-		}
-
+        CItem();
+        CItem(int ItemID, int ItemCount, int X, int Y );
         ~CItem() {}
 
     public:
@@ -50,6 +20,7 @@ class CItem : public CButton
         //void OnRender(SDL_Surface* Surf_Display);
         //void OnCleanup();
 
+		void Activate() {}
 
 	private:
 		int nItemID;
@@ -57,10 +28,11 @@ class CItem : public CButton
 		int nItemCount;
 
 	public:
-
-
-
 		void GenerateGUID();
+
+		int GetID() { return nItemID; }
+		std::string GetItemName() { return ItemTable[nItemID].Name; }
+
 
 
 		//GetBonusType()
